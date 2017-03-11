@@ -1,0 +1,31 @@
+doctype html
+html
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+        block content
+            div(id="block-message" layout="row" style="font-size: 17px; text-align: center; margin-top: 90px;")
+                div Success! You can now continue.
+
+script.
+  // User may visit this page in inappbrowser or external browser.
+  // When using inappbrowser, we do nothing, client will handle.
+
+  // When user visit this page on external browser,
+  // he might be asked to open corresponding app, for example
+  // after user reset password in external browser or on Desktop,
+  // he will be redirected to this page, with our url scheme as openApp.
+  // What we should do here is:
+  // - if openApp is available, open that app.
+
+  if (navigator.userAgent.toLowerCase().indexOf("inappbrowser") === -1) {
+    // user is on external browser
+    var openApp = "#{openApp}";
+    if (openApp) {
+      // delay a bit while to allow user to see the message
+      setTimeout(function(){
+        window.location.href = openApp+'://';
+      }, 1600);
+    }
+  }

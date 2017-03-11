@@ -1,0 +1,164 @@
+extends layout_default
+
+block stylesheets
+    link(rel="stylesheet", href="/stylesheets/clinic.css")
+    link(rel="stylesheet", href="/stylesheets/side_nav.css")
+    link(rel="stylesheet", href="/stylesheets/card.css")
+    link(rel="stylesheet", href="/stylesheets/input.css")
+    link(rel="stylesheet", href="/stylesheets/alert.css")
+    link(rel="stylesheet", href="/stylesheets/tpl_clinic_staff_list.css")
+    link(rel="stylesheet", href="/stylesheets/tpl_clinic_staff_add.css")
+    link(rel="stylesheet", href="/stylesheets/tpl_clinic_staff_update.css")
+    link(rel="stylesheet", href="/stylesheets/tpl_clinic_patient_list.css")
+    link(rel="stylesheet", href="/stylesheets/tpl_clinic_patient_detail_programme.css")
+    //- link(rel="stylesheet", href="/stylesheets/tpl_clinic_patient_detail.css")
+    link(rel="stylesheet", href="/stylesheets/tpl_clinic_patient_programme_add.css")
+    link(rel="stylesheet", href="/stylesheets/tpl_clinic_patient_programme_update.css")
+    link(rel="stylesheet", href="/stylesheets/tpl_clinic_programme_template_list.css")
+    link(rel="stylesheet", href="/stylesheets/tpl_clinic_programme_template_add.css")
+    link(rel="stylesheet", href="/stylesheets/tpl_clinic_programme_template_update.css")
+    link(rel="stylesheet", href="/stylesheets/tpl_clinic_user_profile.css")
+    link(rel="stylesheet", href="/stylesheets/tpl_readings_blood_pressure.css")
+
+block menu
+    div(ng-controller="clinicSideNavController" layout="column")
+        md-content
+            div(class="logo") uCare
+            div(class="account marginTop30 marginRight20 marginBottom20 marginLeft20", layout="row", layout-align="start center" flex)
+                div(class="avatar md-48" ng-if="me.photo" ng-style="{'background':'url('+me.photo+') center center','background-size':'cover'}" style="border-radius:50%; font-size: 48px; height: 48px; width: 48px;")
+                md-icon(class="avatar md-48" style="width: 48px; height: 48px;" ng-if="!me.photo") account_circle
+                div(class="marginLeft5" layout="column" flex)
+                    div(layout-align="start center" ng-cloak="me.displayName") {{me.displayName}}
+                    div(layout-align="start center" ng-cloak="clinic.name") {{clinic.name}}
+            div(class="sideNavMenuItem bold" flex)
+                div(ng-class="selectedMenu == 'list_alert_centre' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goToSubMenu('list_alert_centre', 'threshold')" ng-if="!isAdmin")
+                    img(ng-src="{{selectedMenu == 'list_alert_centre'?'/images/icons/sidemenu/alert_centre_white.png':'/images/icons/sidemenu/alert_centre_grey.png'}}" class="md-sidenav-items" alt="alert_centre")
+                    div=t('menu_alertCenter')
+                    div(flex)
+                    div(class="countBox alertCountBox") {{alertscount}}
+                    //- div(ng-style="{display: {true:'block', false:'none'}[selectedMenu != 'clinic_setup']}" class="triangleCollapse")
+                    //- div(ng-style="{display: {true:'block', false:'none'}[selectedMenu == 'clinic_setup' || selectedSubMenu == 'clinic_profile' || selectedSubMenu == 'list_staff' || selectedSubMenu == 'list_programme_template']}" class="triangleExpand")
+                    //- div(ng-if="selectedMenu == 'list_alert_centre'" class="triangleLeft")
+                div(class="sideNavSubMenu" ng-class="selectedSubMenu == 'threshold' ? 'sideNavSubMenuSelected' : 'sideNavSubMenuNotSelected'" layout="row" layout-align="start center"
+                    ng-click="goToSubMenu('list_alert_centre', 'threshold')" ng-if="!isAdmin")
+                    //- div(ng-class="selectedSubMenu == 'threshold' ? 'sideNaveSubMenuTriangleSelected' : 'sideNaveSubMenuTriangleNotSelected'")
+                    div Threshold Alert
+                div(class="sideNavSubMenu sideNavSubMenu-last" ng-class="selectedSubMenu == 'other' ? 'sideNavSubMenuSelected' : 'sideNavSubMenuNotSelected'" layout="row" layout-align="start center"
+                    ng-click="goToSubMenu('list_alert_centre', 'other')" ng-if="!isAdmin")
+                    //- div(ng-class="selectedSubMenu == 'other' ? 'sideNaveSubMenuTriangleSelected' : 'sideNaveSubMenuTriangleNotSelected'")
+                    div Other Alerts
+                div(ng-class="selectedMenu == 'list_system_notification' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('list_system_notification')")
+                    img(ng-src="{{selectedMenu == 'list_system_notification'?'/images/icons/sidemenu/system_notifications_white.png':'/images/icons/sidemenu/system_notifications_grey.png'}}" class="md-sidenav-items" alt="alert_centre")
+                    div=t('menu_notification')
+                    div(flex)
+                    div(class="countBox") {{notificationscount}}
+                    //- div(ng-if="selectedMenu == 'list_system_notification'" class="triangleLeft")
+                div(ng-class="selectedMenu == 'clinic_setup' ? 'selected' : 'notSelected'" layout="row" layout-align="center center" ng-click="goToSubMenu('clinic_setup', 'clinic_profile')" ng-if="isAdmin")
+                    md-icon(class="icon sidenav marginRight5" ng-class="selectedMenu == 'clinic_setup' ? 'selectedMenu' : ''" md-svg-src='/images/icons/sidemenu/ic_settings.svg')
+                    div My Clinic Setup
+                    div(flex)
+                    //- div(ng-style="{display: {true:'block', false:'none'}[selectedMenu != 'clinic_setup']}" class="triangleCollapse")
+                    //- div(class="triangleExpand" style="border-top-color:black")
+                    //- div(ng-style="{display: {true:'none',false:'block'}[parameterSectionCollapsed]}"
+                    //- div(ng-if="selectedMenu == 'clinic_setup'" class="triangleLeft")
+                div(class="sideNavSubMenu" ng-class="selectedSubMenu == 'clinic_profile' ? 'sideNavSubMenuSelected' : 'sideNavSubMenuNotSelected'" layout="row" layout-align="start center"
+                    ng-click="goToSubMenu('clinic_setup', 'clinic_profile')" ng-if="isAdmin")
+                    //- div(ng-class="selectedSubMenu == 'clinic_profile' ? 'sideNaveSubMenuTriangleSelected' : 'sideNaveSubMenuTriangleNotSelected'")
+                    div My Clinic Profile
+                div(class="sideNavSubMenu" ng-class="selectedSubMenu == 'list_staff' ? 'sideNavSubMenuSelected' : 'sideNavSubMenuNotSelected'" layout="row" layout-align="start center"
+                    ng-click="goToSubMenu('clinic_setup', 'list_staff')" ng-if="isAdmin")
+                    //- div(ng-class="selectedSubMenu == 'list_staff' ? 'sideNaveSubMenuTriangleSelected' : 'sideNaveSubMenuTriangleNotSelected'")
+                    div My Care Team
+                div(class="sideNavSubMenu sideNavSubMenu-last" ng-class="selectedSubMenu == 'list_programme_template' ? 'sideNavSubMenuSelected' : 'sideNavSubMenuNotSelected'" layout="row" layout-align="start center"
+                    ng-click="goToSubMenu('clinic_setup', 'list_programme_template')" ng-if="isAdmin")
+                    //- div(ng-class="selectedSubMenu == 'list_programme_template' ? 'sideNaveSubMenuTriangleSelected' : 'sideNaveSubMenuTriangleNotSelected'")
+                    div Programme Protocol(s)
+                div(ng-class="selectedMenu == 'list_programme' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('list_programme')" ng-if="!isAdmin")
+                    img(ng-src="{{selectedMenu == 'list_programme'?'/images/icons/sidemenu/programmes_white.png':'/images/icons/sidemenu/programmes_grey.png'}}" class="md-sidenav-items" alt="alert_centre")
+                    div Programmes
+                    div(flex)
+                    //- div(class="countBox") 12
+                    //- div(ng-if="selectedMenu == 'list_programme'" class="triangleLeft")
+                div(ng-class="selectedMenu == 'list_my_patient' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('list_my_patient')" ng-if="!isAdmin")
+                    img(ng-src="{{selectedMenu == 'list_my_patient'?'/images/icons/sidemenu/my_care_recipients_white.png':'/images/icons/sidemenu/my_care_recipients_grey.png'}}" class="md-sidenav-items" alt="alert_centre")
+                    div My Patients
+                    div(flex)
+                    //- div(class="countBox") 12
+                    //- div(ng-if="selectedMenu == 'list_my_patient'" class="triangleLeft")
+                //- div(class="sideNavSubMenu sideNavSubMenuNotSelected" layout="row" layout-align="start center" ng-if="selectedPatient != undefined && selectedMenu == 'list_my_patient'")
+                    //- div star
+                    //- div(ng-cloak="selectedPatient.displayName") {{selectedPatient.displayName}}
+                div(ng-class="selectedMenu == 'list_patient' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('list_patient')" ng-if="isAdmin")
+                    img(ng-src="{{selectedMenu == 'list_patient'?'/images/icons/sidemenu/my_care_recipients_white.png':'/images/icons/sidemenu/my_care_recipients_grey.png'}}" class="md-sidenav-items" alt="alert_centre")
+                    div My Patients
+                    div(flex)
+                    //- div(class="countBox") 12
+                    //- div(ng-if="selectedMenu == 'list_patient'" class="triangleLeft")
+                div(ng-class="selectedMenu == 'update_user_profile' ? 'selected' : 'notSelected'" layout="row" layout-align="center center" ng-click="goTo('update_user_profile')")
+                    img(ng-src="{{selectedMenu == 'update_user_profile'?'/images/icons/sidemenu/my_profile_white.png':'/images/icons/sidemenu/my_profile_grey.png'}}" class="md-sidenav-items" alt="alert_centre")
+                    div My Profile
+                    div(flex)
+                    //- div(class="countBox") 12
+                    //- div(ng-if="selectedMenu == 'update_user_profile'" class="triangleLeft")
+                div(ng-class="selectedMenu == 'help' ? 'selected' : 'notSelected'" layout="row" layout-align="center center" ng-click="goTo('help')")
+                    img(ng-src="{{selectedMenu == 'help'?'/images/icons/sidemenu/help_white.png':'/images/icons/sidemenu/help_grey.png'}}" class="md-sidenav-items" alt="alert_centre")
+                    div Help
+                    div(flex)
+                    //- div(class="countBox") 12
+                    //- div(ng-if="selectedMenu == 'help'" class="triangleLeft")
+                div(class="notSelected" style="padding: 10px 0px 10px 20px" layout="row" ng-click="logout()")
+                    //- div star
+                    div Logout
+block content
+    md-toolbar(ng-hide="toolbarHidden")
+        div(class="md-toolbar-tools")
+            md-button(class="md-icon-button", aria-label="Settings", ng-click="toggleLeft()")
+                md-icon menu
+            div(layout="row", layout-align="start center" flex)
+                div(layout="row", ng-repeat="crumb in breadcrumb")
+                    div(style="cursor: pointer;" ng-click="goTo(crumb.url)", class="crumb", ng-class="{ 'last' : $last }") {{crumb.name}}
+                    div(ng-hide="$last", class="marginLeft10 marginRight10") >
+            md-button(class="md-icon-button avatar md-48 md-light", aria-label="Alert", ng-click="goToSubMenu('list_alert_centre', 'threshold')" ng-if="!isAdmin")
+                md-icon notifications
+            div(class="countBox alertCountBox floating marginRight10" ng-cloak="alertscount" ng-if="!isAdmin")  {{alertscount}}
+            md-button(class="md-icon-button avatar md-48 md-light" aria-label="Notification", ng-click="goTo('list_system_notification')")
+                md-icon message
+            div(class="countBox floating marginRight0" style="margin-left: -20px;" ng-cloak="notificationscount") {{notificationscount}}
+    div(layout="column", flex, ng-view)
+    include tpl/footer
+
+block script
+    script(src="/javascripts/clinic_index.js")
+    script(src="/javascripts/clinic_factory.js")
+    script(src="/javascripts/clinic_api.js")
+    script(src="/javascripts/constants.js")
+    script(src="/javascripts/clinic_side_nav.js")
+    script(src="/javascripts/ctrl_clinic_alert_centre.js")
+    script(src="/javascripts/ctrl_clinic_system_notification.js")
+    script(src="/javascripts/ctrl_clinic_profile.js")
+    script(src="/javascripts/ctrl_clinic_profile_base.js")
+    script(src="/javascripts/ctrl_clinic_user_profile_base.js")
+    script(src="/javascripts/ctrl_clinic_setup.js")
+    script(src="/javascripts/ctrl_clinic_staff_list.js")
+    script(src="/javascripts/ctrl_clinic_staff_add.js")
+    script(src="/javascripts/ctrl_clinic_staff_update.js")
+    script(src="/javascripts/ctrl_clinic_programme_list.js")
+    script(src="/javascripts/ctrl_clinic_programme_template_list.js")
+    script(src="/javascripts/ctrl_clinic_programme_template_add.js")
+    script(src="/javascripts/ctrl_clinic_programme_template_update.js")
+    script(src="/javascripts/ctrl_clinic_patient_list.js")
+    script(src="/javascripts/ctrl_clinic_patient_detail.js")
+    script(src="/javascripts/ctrl_clinic_patient_detail_programme.js")
+    script(src="/javascripts/ctrl_clinic_patient_programme_add.js")
+    script(src="/javascripts/ctrl_clinic_patient_programme_update.js")
+    script(src="/javascripts/ctrl_clinic_my_patient_list.js")
+    script(src="/javascripts/ctrl_clinic_terms.js")
+    script(src="/javascripts/ctrl_user_profile.js")
+    script(src="/javascripts/directive_general.js")
+    script(src="/javascripts/service_readings.js")
+    script(src="/javascripts/directive_readings.js")
+    script(src="/javascripts/error.js")
+
+    script.
+        var me = JSON.parse("!{me}");
+        var clinic = JSON.parse("!{clinic}");

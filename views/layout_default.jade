@@ -1,0 +1,43 @@
+doctype html
+html(ng-app="uCareApp")
+    head
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="/bower_components/angular-material/angular-material.min.css")
+        link(rel="stylesheet", href="/bower_components/font-awesome/css/font-awesome.min.css")
+        link(href="https://fonts.googleapis.com/icon?family=Material+Icons", rel="stylesheet")
+        link(href='https://fonts.googleapis.com/css?family=Lato:400,700', rel='stylesheet', type='text/css')
+        link(rel="stylesheet", href="/stylesheets/index.css")
+        link(rel="stylesheet", href="/stylesheets/common.css")
+        link(rel="stylesheet", href="/stylesheets/padding_margin.css")
+        link(rel="stylesheet", href="/stylesheets/font.css")
+        link(rel="stylesheet", href="/stylesheets/control.css")
+        link(rel="stylesheet" type="text/css" href="/bower_components/angularjs-slider/dist/rzslider.css")
+        block stylesheets
+        title {{title}}
+
+    body(layout="column", ng-controller="mainCtrl", flex)
+        section(layout="row", flex)
+            md-sidenav(class="sidemenu md-sidenav-left md-whiteframe-z2", ng-hide="toolbarHidden", md-component-id="left", md-is-locked-open="$mdMedia('min-width: 1600px')")
+                block menu
+            div(layout="column" flex)
+                block content
+
+        script(src="/bower_components/later/later.js")
+        script(src="/bower_components/angular/angular.min.js")
+        script(src="/bower_components/angular-animate/angular-animate.min.js")
+        script(src="/bower_components/angular-aria/angular-aria.min.js")
+        script(src="/bower_components/angular-messages/angular-messages.min.js")
+        script(src="/bower_components/angular-translate/angular-translate.min.js")
+        script(src="/bower_components/angular-route/angular-route.min.js")
+        script(src="/bower_components/angular-material/angular-material.min.js")
+        script(src='/bower_components/angular-google-chart/ng-google-chart.min.js')
+        script(src="/bower_components/moment/moment.js")
+        script(src="/bower_components/angular-moment/angular-moment.js")
+        script(src="/bower_components/angularjs-slider/dist/rzslider.min.js")
+        //- HighCharts
+        script(src="/bower_components/highcharts/highcharts.js")
+        script(src="/bower_components/highcharts/highcharts-more.js")
+        script(src="/bower_components/highcharts-ng/dist/highcharts-ng.js")
+        //- Lodash
+        script(src="/bower_components/ng-lodash/build/ng-lodash.min.js")
+        block script

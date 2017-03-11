@@ -1,0 +1,9 @@
+{
+  "realm": "polamikat",
+  "realm-public-key": "",
+  "auth-server-url": "http://localhost:port/auth",
+  "ssl-required": "none",
+  "resource": "polamikat-res",
+  "public-client": true,
+  "use-resource-role-mappings": true
+}
