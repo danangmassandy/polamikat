@@ -50,15 +50,15 @@ html(ng-app="polamikatHomePageApp")
                             thead
                                 tr
                                     th 
-                                        a(href="#")
+                                        a(href="#/")
                                             span No
                                     th 
-                                        a(href="#" ng-click="sortType = 'user.name'; sortReverse = !sortReverse")
+                                        a(href="#/" ng-click="sortType = 'user.name'; sortReverse = !sortReverse;")
                                             span Personil 
                                             span(class="fa fa-caret-up" ng-show="sortType == 'user.name' && sortReverse")
                                             span(class="fa fa-caret-down" ng-show="sortType == 'user.name' && !sortReverse")
                                     th 
-                                        a(href="#" ng-click="sortType = 'total'; sortReverse = !sortReverse")
+                                        a(href="#/" ng-click="sortType = 'total'; sortReverse = !sortReverse;")
                                             span Nilai 
                                             span(class="fa fa-caret-up" ng-show="sortType == 'total' && sortReverse")
                                             span(class="fa fa-caret-down" ng-show="sortType == 'total' && !sortReverse")
