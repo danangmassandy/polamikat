@@ -1,0 +1,333 @@
+div, button, md-icon, md-radio-button {   outline: none;  }
+
+button {    border: 0px;    }
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.lowercase {
+    text-transform: lowercase;
+}
+
+tbody, tr {
+    width:100%;
+}
+
+svg {
+    fill: inherit;
+}
+
+.icon {
+    fill: #C9C9C9;
+}
+
+.icon.button {
+    fill: #0ACCC8;
+}
+
+.icon.button.gray {
+    fill: #B6B6B6;
+}
+
+.icon.selectedMenu {
+    fill: white;
+}
+
+md-toolbar:not(.md-menu-toolbar) {
+    background-color: #4B4B4B;
+}
+
+@keyframes colors {
+	0% { stroke: #0ACCC8; }
+  100% { stroke: #0ACCC8; }
+}
+
+md-progress-circular path{
+  animation: colors 5.6s ease-in-out infinite;
+}
+
+.oddRow {
+    background-color: #F4F4F4;
+}
+
+.evenRow {
+    background-color: #F4F4F4;
+}
+
+md-content {
+    background-color: #ffffff;
+}
+
+.text {
+    word-wrap: break-word;
+}
+
+.subText {
+    color: #A5A5A5;
+    font-family: 'Regular';
+    font-size: 10px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+/*
+.chatbox .md-resize-wrapper{
+    height: 80px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.chatbox .md-resize-wrapper .chatboxArea{
+    height: 80px !important;
+    width: 100%;
+}
+*/
+
+.circle {
+	width: 44px;
+	height: 44px;
+
+    text-align: center;
+    font-size: 9px;
+
+    border-radius: 50%;
+    border: 1.5px solid #CCCCCE;
+}
+
+.action {
+     margin: 0px 0px 0px 0px;
+}
+
+.fullCircle {
+	width: 44px;
+	height: 44px;
+
+    text-align: center;
+    font-size: 9px;
+
+    border-radius: 50%;
+    border: 1.5px solid #CCCCCE;
+    background-color: #CCCCCE;
+
+    overflow: hidden;
+}
+
+.md-button.circleButton {
+    width: 36px !important;
+	height: 36px !important;
+
+    line-height: 0px !important;
+
+    text-align: center;
+    font-size: 36px;
+
+    border-radius: 50%;
+    background-color: #0ACCC8 !important;
+
+    overflow: hidden;
+}
+
+.md-button.circleButton.gray {
+    width: 36px !important;
+	height: 36px !important;
+
+    line-height: 0px !important;
+
+    text-align: center;
+    font-size: 36px;
+
+    border-radius: 50%;
+    background-color: #B5B5B5 !important;
+
+    overflow: hidden;
+}
+
+.wrapper {
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.countBox {
+    border-radius: 0px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: #0ACCC8;
+    color: white;
+
+    font-size: 11px;
+
+    border-radius: 2px;
+}
+.countBox.alertCountBox {
+    background-color: red;
+}
+
+.floating {
+    margin-left: -25px;
+    margin-top: -12px;
+    padding: 3px !important;
+    z-index: 1;
+}
+
+.section {
+    background-color: #0ACCC8;
+    color: white;
+}
+
+.label {
+    font-size: 12px;
+    color: #969696;
+}
+
+.value {
+    font-size: 14px;
+    color: #6E6E6E;
+}
+
+/* Break the word if exceeds container */
+.word-break {
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+/* smaller inset */
+.mbcss-inset {
+    height: 8px;
+}
+
+/* smaller inset */
+.mbcss-inset2 {
+    height: 15px;
+}
+
+/* Tab */
+md-tabs.md-default-theme md-ink-bar, md-tabs md-ink-bar {
+    color: #0ACCC8 !important;
+    background-color:#0ACCC8 !important;
+}
+
+md-tabs .md-tab.md-active {
+    color: #0ACCC8 !important;
+}
+
+/* List */
+.listHeader {
+    color: #505050;
+}
+
+.listContent {
+    color: #787878;
+}
+
+md-input-container.phone.md-input-focused label{
+    /*color: red !important;*/
+    margin-left: -70px;
+}
+
+/* Buttons */
+.twoButtonsBase {
+    height: 35px;
+    width: 90px;
+    border: transparent solid;
+    border-radius: 8px;
+}
+
+.twoButtonsFirst {
+    background-color: #C2C2C8;
+    color: #ffffff;
+}
+
+.twoButtonsSecond {
+    background-color: #6885E9;
+    color: #ffffff;
+}
+
+.oneButton {
+    height: 35px;
+    width: 90px;
+    border: transparent solid;
+    border-radius: 8px;
+    background-color: #C2C2C8;
+    color: #5d5a5a;
+}
+
+.plainButton {
+    background-color: white;
+    color: #A5A5A5;
+    padding: 0px 20px;
+    border: 1px solid #D8D8D8;
+    border-radius: 12px;
+    font-size: 12px;
+    min-width: 120px;
+}
+
+.md-resize-wrapper {
+    width: 100%;
+}
+
+:not(.icon).button {
+    background-color: #0ACCC8;
+    color: white;
+    padding: 0px 40px;
+    border-radius: 10px;
+    font-size: 12px;
+    min-width: 120px;
+}
+
+.pageButton {
+    background-color: white;
+    color: #A6A6A6;
+    border-radius: 0px;
+    border: 1px solid #A6A6A6;
+    margin: 3px;
+    min-width: 20px;
+    min-height: 20px;
+    width: 28px;
+    height: 28px;
+    line-height: 0px !important;
+    font-size: 12px;
+}
+
+.pageButton.disabled {
+    background-color: #E4E4E4;
+    color: #A6A6A6;
+}
+
+.md-button.pageButton:not([disabled]):hover {
+    background-color: #0ACCC8;
+    color: white;
+}
+
+/* divider line */
+md-divider.light {
+    background-color: #EEEFEF;
+    opacity: 0.5;
+}
+
+/* Profile */
+.profile {
+    font-size: 16px;
+    color: #0ACCC8;
+}

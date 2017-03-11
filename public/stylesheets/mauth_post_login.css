@@ -1,0 +1,20 @@
+.auth .welcomeText {
+    font-size: 28px;
+}
+
+.auth .logoText {
+    font-size: 56px;
+    margin-bottom: 20px;
+}
+
+.auth .signingUp {
+    height: 50px;
+}
+
+.auth .signingUp img {
+    width: 30px;
+    height: 30px;
+    -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
+}

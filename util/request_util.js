@@ -7,8 +7,6 @@ const Vasync = require('vasync');
 const constant = require("../util/constants");
 const log = Bunyan.createLogger({ name : "polamikat:checkAccessToken" });
 
-var pushProducerController = new PushProducerController();
-
 module.exports = {
     authenticate : function(req, res, next) {
         var token = req.kauth.grant.access_token;

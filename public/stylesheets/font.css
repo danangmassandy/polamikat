@@ -1,0 +1,19 @@
+@font-face {
+    font-family: 'Regular';
+    src: url('font/Lato-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Bold';
+    src: url('font/Lato-Bold.ttf');
+}
+
+.regular{  font-family: 'Regular';  }
+.bold{  font-family: 'Bold';  }
+
+.smallFont{  font-size: 12px;  }
+.smallMediumFont{  font-size: 14px;  }
+.mediumFont{  font-size: 16px;  }
+.mediumLargeFont{  font-size: 18px;  }
+.largeFont{  font-size: 22px;  }
+.xlargeFont{  font-size: 36px;  }

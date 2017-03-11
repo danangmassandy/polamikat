@@ -34,7 +34,9 @@ mongoose.Promise = global.Promise;
 REDIS_CLIENT = Redis.createClient(PROPERTIES.redis.url); //connecto to redis server
 
 // include routes here
+var index = require('./routes/index');
 var admin = require('./routes/admin');
+var a = require('./routes/a');
 
 
 
@@ -49,6 +51,7 @@ app.use(BodyParser.json());
 app.use(BodyParser.urlencoded({ extended: false }));
 app.use(CookieParser());
 app.use(Express.static(Path.join(__dirname, 'public')));
+app.use('/public', Express.static(Path.join(__dirname, PROPERTIES.resourcePaths.public)));
 
 var RedisStore = require('connect-redis')(session);
 
@@ -72,7 +75,9 @@ var keycloak = new Keycloak({
 app.use(keycloak.middleware());
 
 var isSystemAdministrator = function (token) {
-    if (!token.hasRole('admin')) {
+    console.log(token);
+    console.log("roles ", token.content.realm_access.roles);
+    if (token.content.realm_access.roles.indexOf('admin') < 0) {
         return false;
     }
 
@@ -91,11 +96,14 @@ app.get('/browser/require-login/:openApp?', function (req, res) {
     });
 });
 
+app.use('/', index);
 
 app.use('/admin', keycloak.protect(isSystemAdministrator), RequestUtil.authenticate, admin);
 
+app.use('/a', keycloak.protect(), RequestUtil.authenticate, a);
+
 // web
-app.use('/me', keycloak.protect(), RequestUtil.authenticate, Me);
+// app.use('/me', keycloak.protect(), RequestUtil.authenticate, Me);
 
 
 // catch 404 and forward to error handler

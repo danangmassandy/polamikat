@@ -1,0 +1,453 @@
+.reading-simple-box{
+    width: 100px;
+    height: 40px;
+}
+
+/* critical & threshold & normal readings - for bigger font */
+.mbcss-rd-big-threshold {
+    height: 44px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.mbcss-rd-big-threshold .value {
+    color: #c60f46;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mbcss-rd-big-threshold .level {
+    color: #c60f46;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mbcss-rd-big-normal {
+    height: 44px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.mbcss-rd-big-normal .value {
+    color: #4f4f4f;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mbcss-rd-big-normal .level {
+    color: #4f4f4f;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mbcss-rd-big-critical {
+    background-color: #c60f46;
+    height: 32px;
+    border-radius: 5px;
+    margin: 4px 0;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.mbcss-rd-big-critical .value {
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mbcss-rd-big-critical .level {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* critical & threshold & normal readings - for small font */
+.mbcss-rd-small-threshold {
+    height: 28px;
+}
+
+.mbcss-rd-small-threshold .value {
+    color: #c60f46;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mbcss-rd-small-threshold .level {
+    color: #c60f46;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mbcss-rd-small-normal {
+    height: 20px;
+}
+
+.mbcss-rd-small-normal .value {
+    color: #4f4f4f;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mbcss-rd-small-normal .level {
+    color: #4f4f4f;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mbcss-rd-small-critical {
+    background-color: #c60f46;
+    height: 22px;
+    border-radius: 5px;
+    margin: 3px 0;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.mbcss-rd-small-critical .value {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    /*
+    display:inline-block;
+    border-bottom:2px solid green;
+    padding-bottom:2px;
+    */
+}
+
+.mbcss-rd-small-critical .level {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 10px;
+    text-align: center;
+    /*
+    display:inline-block;
+    border-bottom:2px solid green;
+    padding-bottom:7px;
+    */
+}
+
+/* critical & threshold & normal readings - for much smaller font */
+.mbcss-rd-smaller-threshold {
+    height: 20px;
+}
+
+.mbcss-rd-smaller-threshold .value {
+    color: #c60f46;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mbcss-rd-smaller-threshold .level {
+    color: #c60f46;
+    font-size: 8px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mbcss-rd-smaller-normal {
+    height: 20px;
+}
+
+.mbcss-rd-smaller-normal .value {
+    color: #4f4f4f;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mbcss-rd-smaller-normal .level {
+    color: #4f4f4f;
+    font-size: 8px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mbcss-rd-smaller-critical {
+    background-color: #c60f46;
+    height: 20px;
+    border-radius: 5px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.mbcss-rd-smaller-critical .value {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 13px;
+    text-align: center;
+    /*
+    display:inline-block;
+    border-bottom:2px solid green;
+    padding-bottom:2px;
+    */
+}
+
+.mbcss-rd-smaller-critical .level {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 8px;
+    text-align: center;
+    /*
+    display:inline-block;
+    border-bottom:2px solid green;
+    padding-bottom:7px;
+    */
+}
+
+/* critical & limit input value - for normal font */
+/*.mbcss-rd-normal-limit {
+    background-color: #f3f3f5;
+    height: 34px;
+    border-radius: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.mbcss-rd-normal-limit .value {
+    color: #c60f46;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mbcss-rd-normal-critical {
+    background-color: #c60f46;
+    height: 30px;
+    border-radius: 5px;
+    margin: 2px 0;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.mbcss-rd-normal-critical .value {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+}*/
+
+/* critical & limit input value - for normal font */
+.mbcss-rd-normal-limit {
+    background-color: #e0e0e0;
+    /*height: 34px;*/
+    border-radius: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.mbcss-rd-normal-limit .value {
+    color: #c60f46;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mbcss-rd-normal-critical {
+    background-color: #c60f46;
+    /*height: 30px;*/
+    border-radius: 5px;
+    margin: 2px 0;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.mbcss-rd-normal-critical .value {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+}
+
+/* reading-input */
+.reading-input .mbcss-input-value-label {
+    display: block;
+    width: 100%;
+}
+
+.reading-input md-input-container .md-errors-spacer{
+    min-height: 0px !important;
+}
+
+.reading-input md-input-container input.value {
+    padding-top : 0px;
+    border:none;
+}
+
+.reading-input input[type=number]::-webkit-inner-spin-button, 
+.reading-input input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.mbcss-input-value-label {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+
+mbd-reading-simple-value {
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-bottom: 5px;
+}
+
+mbd-reading-input-value {
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-bottom: 5px;
+}
+
+
+/* Slider custom css rzslider */
+.pg-slider-container {
+    height: 60px;
+    margin-bottom: 20px;
+}
+
+.pg-slider {
+    position: absolute;
+    width: 530px;
+}
+
+.rzslider .pg-bar {
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 10px;
+    background: #b1b1b1;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+.rzslider .pg-pointer {
+    top: -7px;
+    z-index: 3;
+    width: 10px;
+    height: 21px;
+    border-radius: 1px;
+    cursor: pointer;
+}
+
+.rzslider .pg-pointer.pg-s0 {
+    background-color: #c60f46;
+}
+
+.rzslider .pg-pointer.pg-s1 {
+    top:-3px;
+    background-color: #f3f3f5;
+}
+
+.rzslider .pg-pointer:after {
+    position: absolute;
+    top: -15px;
+    left: -9px;
+    width: 29px;
+    height: 35px;
+    background:transparent;
+    content: '';
+}
+
+.rzslider .pg-pointer.pg-s1:after {
+    top:2px;
+}
+
+.rzslider .pg-pointer.rz-active:focus {
+    outline: none;
+}
+
+.rzslider .pg-pointer:hover:after {
+    background-color:transparent;
+}
+
+.rzslider .pg-bubble {
+    top : -21px;
+    left: 16px;
+    width: 25px;
+    text-align: center;
+    font-size: 10px;
+    padding: 3px 2px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.rzslider .pg-bubble.pg-s0 {
+    background-color: #c60f46;
+    color:white;
+}
+
+.rzslider .pg-bubble.pg-s1 {
+    background-color: #f3f3f5;
+    color:#c60f46;
+    top: 15px;
+}
+
+/* programme parameter */
+programme-parameter-view .pg-parameter-card-view {
+    background-color : #F4F4F4;
+}
+
+.pg-parameter-card-view {
+    padding: 20px;
+    flex-shrink: 0;
+    font-size: 14px;
+}
+
+.pg-parameter-card {
+    padding: 20px;
+    flex-shrink: 0;
+    font-size: 14px;
+    background-color: #FBFBFB;
+    margin-top: 20px;
+}
+.pg-parameter-title {
+    color: rgb(123, 123, 123);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.pg-parameter-sup {
+    vertical-align: super;
+    /*font-size: smaller;*/
+    color: rgb(123, 123, 123);
+    font-size: 8px;
+}
+
+.pg-parameter-subtitle {
+    color: black;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.pg-parameter-label {
+    color:rgb(70, 70, 70);
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.pg-parameter-text {
+    color:rgb(123, 123, 123);
+    font-size: 12px;
+}
+
+.pg-parameter-threshold-container {
+    width: 530px;
+}
+
+
