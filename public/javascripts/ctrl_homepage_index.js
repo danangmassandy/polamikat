@@ -368,8 +368,8 @@ var MyScale = Chart.Scale.extend({
                 context.restore();
             }
         });
-
-        for(var it = 0; it < itemsToDraw.length; ++it) {
+        var it = 0;
+        for(it = 0; it < itemsToDraw.length; ++it) {
             if (it % 2 == 0) {
                 var p1 = itemsToDraw[it];
                 if (it + 1 == itemsToDraw.length) break;
@@ -387,6 +387,14 @@ var MyScale = Chart.Scale.extend({
                 context.fillRect(p1.tx1,0,Math.abs(p2.tx2 - p1.tx1),Math.abs(0 - p1.ty1));
                 context.restore();
             }
+        }
+        
+        if (itemsToDraw.length % 2 != 0) {
+            var p1 = itemsToDraw[it];
+            context.save();
+            context.fillStyle = "#eff5f6";
+            context.fillRect(p1.tx1,0,Math.abs(me.right - p1.tx1),Math.abs(0 - p1.ty1));
+            context.restore();
         }
 
         if (scaleLabel.display) {
@@ -557,10 +565,10 @@ app.controller('mainCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, 
                 }]
             },
             tooltips: {
-                enabled: true,
+                enabled: false,
                 mode: 'index',
                 position: 'average',
-                // custom: activityCustomTooltips
+                custom: activityCustomTooltips
             },
             responsive : true,
             maintainAspectRatio : false
