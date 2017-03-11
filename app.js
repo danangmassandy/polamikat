@@ -37,7 +37,8 @@ REDIS_CLIENT = Redis.createClient(PROPERTIES.redis.url); //connecto to redis ser
 var index = require('./routes/index');
 var admin = require('./routes/admin');
 var a = require('./routes/a');
-
+var user = require('./routes/user');
+var activity = require('./routes/activity');
 
 
 var app = Express();
@@ -101,6 +102,9 @@ app.use('/', index);
 app.use('/admin', keycloak.protect(isSystemAdministrator), RequestUtil.authenticate, admin);
 
 app.use('/a', keycloak.protect(), RequestUtil.authenticate, a);
+
+app.use('/user', user);
+app.use('/activity', activity);
 
 // web
 // app.use('/me', keycloak.protect(), RequestUtil.authenticate, Me);
