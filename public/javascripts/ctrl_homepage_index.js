@@ -511,7 +511,8 @@ var activityCustomTooltips = function(tooltip) {
         tooltipEl.style.left = position.left + tooltip.caretX + 'px';
     }
     
-    tooltipEl.style.top = position.top + tooltip.caretY + 200 + 'px';
+    // fix position.top because getBoundingClientRect gets values with respect to the window
+    tooltipEl.style.top = position.top + window.scrollY + tooltip.caretY + 'px';
     tooltipEl.style.width = "200px";
     tooltipEl.style.fontFamily = tooltip._fontFamily;
     tooltipEl.style.fontSize = tooltip.fontSize;
