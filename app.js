@@ -24,6 +24,8 @@ process.env.TZ = 'Asia/Jakarta';
 
 console.log(JSON.stringify(process.env));
 
+console.log("test env ",JSON.stringify(process.env.env));
+
 //read properties.json
 PROPERTIES = JSON.parse(FS.readFileSync('./resources/properties.json', 'utf8'))[mode];
 log.info("PROPERTIES", PROPERTIES);

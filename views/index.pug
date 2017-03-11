@@ -56,4 +56,4 @@ block script
     script(src="/javascripts/ctrl_daftar_kegiatan_personil.js")
     script(src="/javascripts/ctrl_edit_kegiatan.js")
     script.
-        var me = JSON.parse("!{me}");
+        var me = !{JSON.stringify(me)};
