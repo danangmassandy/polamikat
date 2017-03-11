@@ -33,7 +33,7 @@ router.post("/personil_list", function(req, res) {
         if (err)
             return res.fail(err);
         log.info("personil_list ", results);
-        res.success(results);
+        res.success({data:results});
     });
 });
 

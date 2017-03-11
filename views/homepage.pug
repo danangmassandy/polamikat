@@ -11,28 +11,84 @@ html(ng-app="polamikatHomePageApp")
         link(rel="stylesheet", href="/stylesheets/padding_margin.css")
         link(rel="stylesheet", href="/stylesheets/font.css")
         link(rel="stylesheet", href="/stylesheets/control.css")
-        link(rel="stylesheet" type="text/css" href="/bower_components/angularjs-slider/dist/rzslider.css")
+        link(rel="stylesheet", href="/stylesheets/style.css")
+        link(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css')
         block stylesheets
         title {{title}}
 
     body(layout="column", ng-controller="mainCtrl", flex)
         section(layout="row", flex)
-            div(layout="column" flex)
-                div Polamikat Home Page
-                md-button(ng-click="doLogin()") Login here
+            .marginTop30
+            .padding40(layout="column" flex)
+                md-whiteframe(class="md-whiteframe-2dp", layout="column", style="flex: none;")
+                    div(class="titleBar" layout="row" layout-align="space-between center")
+                        div Polamikat Home Page
+                    .marginTop30
+                    .padding20
+                        .subtitle Polantas Mitra Masyarakat
+                        .marginTop30
+                        md-button(class="md-primary md-raised" ng-click="doLogin()" ng-hide="true") Login here
+                md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
+                    div(class="titleBar" layout="row" layout-align="space-between center")
+                        div Grafik Kegiatan Per Personil
+                        div(layout="row" layout-align="center center")
+                            div(layout-align="center center" layout)
+                                md-input-container(class="md-block" md-no-float)
+                                    md-select(ng-model="activitiesChart.personil" placeholder="Personil" ng-change="changePersonil()")
+                                        md-option(ng-repeat="personil in personilList" value="{{personil._id}}") {{personil.name}}
+                    div(ng-show="!activitiesChart.loaded" flex style="height:440px;padding:20px;" layout="row" layout-align="center center")
+                        md-progress-circular(class="md-accent" md-mode="indeterminate")
+                    .chartContainer(ng-show="activitiesChart.loaded" flex)
+                        div(ng-style="{'width' : activitiesChart.canvasWidth + 'px'}" style="height:400px;max-height:400px;" )
+                            canvas(id="activitiesChart" class="chart chart-bar" chart-data="activitiesChart.data" chart-labels="activitiesChart.labels" 
+                                chart-series="activitiesChart.series" chart-options="activitiesChart.options" chart-dataset-override="activitiesChart.datasetsOverrides")
+                md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
+                    div(class="titleBar" layout="row" layout-align="space-between center")
+                        div Tabel Total Nilai Kegiatan Per Personil
+                    .padding20
+                        table(class="table table-bordered table-striped")
+                            thead
+                                tr
+                                    th 
+                                        a(href="#")
+                                            span No
+                                    th 
+                                        a(href="#" ng-click="sortType = 'user.name'; sortReverse = !sortReverse")
+                                            span Personil 
+                                            span(class="fa fa-caret-up" ng-show="sortType == 'user.name' && sortReverse")
+                                            span(class="fa fa-caret-down" ng-show="sortType == 'user.name' && !sortReverse")
+                                    th 
+                                        a(href="#" ng-click="sortType = 'total'; sortReverse = !sortReverse")
+                                            span Nilai 
+                                            span(class="fa fa-caret-up" ng-show="sortType == 'total' && sortReverse")
+                                            span(class="fa fa-caret-down" ng-show="sortType == 'total' && !sortReverse")
+                            tbody(ng-if="personilNilaiData && personilNilaiData.length > 0")
+                                tr(ng-repeat="x in personilNilaiData | orderBy:sortType:sortReverse")
+                                    td {{ $index + 1 }}
+                                    td.serviceName {{ x.user.name }}
+                                    td.number {{ x.total }}
+                            tbody(ng-if="!personilNilaiData || !personilNilaiData.length")
+                                tr
+                                    td(colspan="3") No Data
+                        div(style="margin-top:20px;height:5px;")
+                div(style="margin-top:20px;height:5px;")
 
-        script(src="/bower_components/later/later.js")
+        script(src='/bower_components/jquery/dist/jquery.min.js')
         script(src="/bower_components/angular/angular.min.js")
+        script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-sanitize.js')
         script(src="/bower_components/angular-animate/angular-animate.min.js")
         script(src="/bower_components/angular-aria/angular-aria.min.js")
-        script(src="/bower_components/angular-messages/angular-messages.min.js")
+        //- script(src="/bower_components/angular-messages/angular-messages.min.js")
         script(src="/bower_components/angular-translate/angular-translate.min.js")
         script(src="/bower_components/angular-route/angular-route.min.js")
         script(src="/bower_components/angular-material/angular-material.min.js")
         script(src="/bower_components/moment/moment.js")
         script(src="/bower_components/angular-moment/angular-moment.js")
+        script(src="/bower_components/later/later.js")
+        script(src="/bower_components/chart.js/dist/Chart.min.js")
+        script(src="/bower_components/angular-chart.js/dist/angular-chart.min.js")
         //- Lodash
         script(src="/bower_components/ng-lodash/build/ng-lodash.min.js")
-
         script(src="/javascripts/ctrl_homepage_index.js")
+        script(src="/javascripts/api.js")
         block script

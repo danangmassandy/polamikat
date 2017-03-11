@@ -18,16 +18,17 @@ function ActivityController() {
 
 // get activity group by category based on user
 ActivityController.prototype.groupActivities = function groupActivities(user, callback) {
+    log.info("user ", user);
     Model.Activity.aggregate([
         {
             $match : {
-                user    : user,
+                user    : user._id,
                 status  : Constants.STATUS_ACTIVE
             }
         },
         {
             $lookup : {
-                from : "activities",
+                from : "activitycategories",
                 localField : "category",
                 foreignField : "_id",
                 as: "category"
@@ -77,7 +78,7 @@ ActivityController.prototype.rankActivities = function rankActivities(callback) 
         },  
         {
             $lookup : {
-                from : "activities",
+                from : "activitycategories",
                 localField : "category",
                 foreignField : "_id",
                 as: "category"

@@ -34,3 +34,160 @@ a {
   text-align: center;
   vertical-align: middle;
 }
+
+md-whiteframe div.titleBar {
+    background-color: #445667;
+    color: #ffffff;
+    font-family: Lato Bold;
+    font-size: 18px;
+    padding: 26px 20px;
+}
+
+md-whiteframe div.titleBar div.subtitle {
+    color: #a3b1be;
+    font-size: 13px;
+    font-weight: normal;
+}
+
+td.serviceName {
+    min-width : 300px;
+}
+
+td.number {
+    text-align : right;
+    min-width : 150px;
+}
+
+/* Chart Report Page */
+#chartjs-tooltip {
+    opacity: 1;
+    position: absolute;
+    background: rgba(0, 0, 0, .8);
+    color: white;
+    -webkit-transition: all .1s ease;
+    transition: all .1s ease;
+    pointer-events: none;
+    -webkit-transform: translate(5%, -45%);
+    transform: translate(5%, -45%);
+}
+.chartjs-tooltip-key {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 10px;
+}
+.tooltipBody {
+    padding:8px;
+    font-size: 14px;
+}
+.tooltipTitle {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.tooltipTotalLabel {
+    color:#babcbe;
+    margin-bottom: 10px;
+}
+.tooltipIncomingLabel {
+    color : #11fa7e;
+}
+.tooltipOutgoingLabel {
+    color : #14f4f0;
+}
+.tooltipLabel {
+    color:#babcbe;
+}
+.tooltipNumber {
+    font-size: 18px;
+    font-weight: bold;
+}
+.tooltipDivLeft:before{
+    content:'';
+    display:block;
+    width:0;
+    height:0;
+    position:absolute;
+    /*background: rgba(0, 0, 0, .8);*/
+    
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent; 
+    border-right:12px solid rgba(0, 0, 0, .8);
+    left:-12px;
+    
+    top:40%;
+}
+.tooltipDivRight:after{
+    content:'';
+    display:block;
+    width:0;
+    height:0;
+    position:absolute;
+    /*background: rgba(0, 0, 0, .8);*/
+    
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent; 
+    border-left:12px solid rgba(0, 0, 0, .8);
+    right:-12px;
+    
+    top:40%;
+}
+@-moz-document url-prefix() { 
+    .tooltipDivLeft:before{
+        content:'';
+        display:block;
+        width:0;
+        height:0;
+        position:absolute;
+        /*background: rgba(0, 0, 0, .8);*/
+        
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent; 
+        border-right:12px solid rgba(0, 0, 0, .8);
+        left:-11px;
+        
+        top:30%;
+    }
+    .tooltipDivRight:after{
+        content:'';
+        display:block;
+        width:0;
+        height:0;
+        position:absolute;
+        /*background: rgba(0, 0, 0, .8);*/
+        
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent; 
+        border-left:12px solid rgba(0, 0, 0, .8);
+        right:-11px;
+        
+        top:30%;
+    }
+}
+.chartContainer {
+    overflow-x:auto;
+    max-height:460px;
+    padding : 20px;
+}
+.chartContainer::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+.chartContainer::-webkit-scrollbar-track {
+     background: rgba(0,0,0,0.25);
+    -webkit-border-radius: 100px;
+    background-clip: padding-box;
+    min-height: 10px; /*Prevent it from getting too small */
+}
+ 
+.chartContainer::-webkit-scrollbar-thumb {
+     background: rgba(0,0,0,0.25);
+    -webkit-border-radius: 100px;
+    background-clip: padding-box;
+    min-height: 10px; /*Prevent it from getting too small */
+}
+
+.chartContainer::-webkit-scrollbar-thumb:active {
+  background: rgba(0,0,0,0.61); /* Some darker color when you click it */
+  -webkit-border-radius: 100px;
+}
