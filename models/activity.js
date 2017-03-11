@@ -8,6 +8,7 @@ var Activity = new Schema({
     startDate       : Date,
     endDate         : { type : Date, default : Date.now },
     photos          : [{ type: mongoose.Schema.Types.ObjectId, ref: 'UploadedFile' }],
+    notes           : String,
 
     createdAt       : { type : Date, default : Date.now },
     updatedAt       : { type : Date, default : Date.now },

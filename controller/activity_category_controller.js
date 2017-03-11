@@ -10,12 +10,40 @@ function ActivityCategoryController() {
     
 }
 
-// add
+// add - update - delete
+ActivityCategoryController.prototype.update = function update(category, isAdd, userName, callback) {
+    Model.ActivityCategory.findOne({
+        name : category.name,
+        status : Constants.STATUS_ACTIVE
+    }).exec(function(err, activityCategory) {
+        if (err) {
+            log.error("query update err ", err);
+            return callback(err);
+        }
 
-// update
+        if (!activityCategory) {
+            var newActivityCategory = new Model.ActivityCategory({
+                name    : category.name,
+                value   : category.value,
+                creator : userName
+            });
 
-// delete
-
+            newActivityCategory.save(function(err, newActivityCategory) {
+                callback(err, newActivityCategory);
+            });
+        } else if (!isAdd) {
+            activityCategory.value = category.value;
+            activityCategory.updatedAt = new Date();
+            activityCategory.creator = userName;
+            activityCategory.status = category.status;
+            activityCategory.save(function(err, activityCategory) {
+                callback(err, activityCategory);
+            });
+        } else {
+            callback("Category Activity already exists.");
+        }
+    });
+}
 
 // get list category
 ActivityCategoryController.prototype.list = function list(callback) {
