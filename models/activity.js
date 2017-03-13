@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 var Activity = new Schema({
     category        : { type: mongoose.Schema.Types.ObjectId, ref: 'ActivityCategory' },
-    user            : { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    personil        : { type: mongoose.Schema.Types.ObjectId, ref: 'Personil' },
     startDate       : Date,
     endDate         : { type : Date, default : Date.now },
     photos          : [{ type: mongoose.Schema.Types.ObjectId, ref: 'UploadedFile' }],

@@ -5,7 +5,7 @@ const Model = require('../models/model');
 const Randomstring = require('randomstring');
 const Vasync = require('vasync');
 const constant = require("../util/constants");
-const log = Bunyan.createLogger({ name : "polamikat:checkAccessToken" });
+const log = Bunyan.createLogger({ name : "polamikat:request_util" });
 
 module.exports = {
     authenticate : function(req, res, next) {
@@ -22,7 +22,7 @@ module.exports = {
                     status : {
                         $nin : 'inactive'
                     }
-                }).populate('photo').exec(callback);
+                }).populate('photo').populate('personil').exec(callback);
             },
             function(user, callback) {//create user if null
                 var isNewUser = false;
@@ -39,7 +39,7 @@ module.exports = {
                         sub : token.content.sub,
                         status : 'active',
                         username: token.content.preferred_username,
-                        name : token.content.name,    // token.content.name
+                        displayName : token.content.name,    // token.content.name
                         email : token.content.email,
                         role : token.hasRole('admin') ? Constants.ROLE_ADMIN : Constants.ROLE_USER
                     });
@@ -63,8 +63,42 @@ module.exports = {
                     }
 
                     req.polamikatUser = user;
-                    callback(null, [isNewUser, user]);
+                    req.isAdmin = user.role == Constants.ROLE_ADMIN;
+                    callback(null, {
+                        isNewUser   : isNewUser, 
+                        user        : user
+                    });
                 });
+            }, function (data, callback) {
+                if (data.user.personil) {
+                    req.polamikatPersonilProfile = data.user.personil;
+                    callback(null, data);
+                } else {
+                    if (data.isNewUser) {
+                        // if isNewUser, check if there is personil record by email
+                        Model.Personil.findOne({
+                            email : data.user.email,
+                            status : Constants.STATUS_ACTIVE
+                        }).exec(function(err, personil) {
+                            if (err)
+                                return callback(err, null);
+
+                            if (personil) {
+                                req.polamikatPersonilProfile = personil;
+                                data.user.personil = personil._id;
+                                data.user.save(function(err, user) {
+                                    if (err)
+                                        return callback(err, null);
+                                    callback(null, data);
+                                });
+                            } else {
+                                callback(null, data);
+                            }
+                        });
+                    } else {
+                        callback(null, data);
+                    }
+                }
             }
         ], function(err) {
             if(err) {

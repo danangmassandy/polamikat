@@ -7,8 +7,13 @@ const log = Bunyan.createLogger({ name : "polamikat:index" });
 
 /* GET home page. */
 router.get('/', function (req, res) {
-    res.render('homepage', {
-        title: 'Index'
+    res.render('index', {
+        title: 'Polamikat',
+        me: JSON.stringify({
+            username: req.polamikatUser.username,
+            displayName: req.polamikatUser.name,
+            isAdmin : false
+        })
     });
 });
 

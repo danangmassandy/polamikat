@@ -7,6 +7,7 @@ var Schema = mongoose.Schema;
 var UploadedFile = new Schema({
     name            : String,
     originalname    : String,
+    filename        : String,
     description     : String,
     encoding        : String,
     mimetype        : String,

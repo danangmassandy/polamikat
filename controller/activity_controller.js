@@ -5,26 +5,46 @@ const Vasync = require('vasync');
 const log = Bunyan.createLogger({ name: "polamikat:activity_controller" });
 const mongoose = require('mongoose');
 const ObjectId = require('mongoose').Types.ObjectId;
+const FS = require('fs');
+const Path = require('path');
 
 function ActivityController() {
     
+}
+
+// details
+ActivityController.prototype.details = function details(activityId, callback) {
+    Model.Activity.findOne({
+        _id     : activityId
+    }).populate({
+        path    : 'category',
+        select  : 'name value'
+    }).populate({
+        path    : 'personil',
+        select  : 'name pangkat nrp wilayahPenugasan polsekPenugasan'
+    }).populate({
+        path    : 'photos',
+        select  : 'description publicURL contentType type mimetype'
+    }).exec(function(err, activity) {
+        callback(err, activity);
+    });
 }
 
 // add
 ActivityController.prototype.addActivity = function addActivity(activity, userName, callback) {
     Vasync.waterfall([
         function(callback1) {
-            Model.User.findOne({
-                key     : activity.user.key,
+            Model.Personil.findOne({
+                _id     : activity.personil._id,
                 status  : Constants.STATUS_ACTIVE
-            }).exec(function(err, user) {
-                if (err || !user) {
-                   log.error("Invalid user ", err); 
-                   return callback1("Invalid user.")
+            }).exec(function(err, personil) {
+                if (err || !personil) {
+                   log.error("Invalid personil ", err); 
+                   return callback1("Invalid personil.")
                 }
-                callback1(null, user);
+                callback1(null, personil);
             });
-        }, function(user, callback1) {
+        }, function(personil, callback1) {
             Model.ActivityCategory.findOne({
                 _id     : activity.category,
                 status  : Constants.STATUS_ACTIVE
@@ -34,7 +54,7 @@ ActivityController.prototype.addActivity = function addActivity(activity, userNa
                     return callback1("Invalid category.");
                 }
                 callback1(null, {
-                    user            : user,
+                    personil        : personil,
                     newCategory     : newCategory
                 });
             });
@@ -51,8 +71,12 @@ ActivityController.prototype.addActivity = function addActivity(activity, userNa
                             return callback2(null, null);
                         }
 
-                        newActivityPhotos.push(uploadedFile._id);
-                        callback2(null, null);
+                        uploadedFile.type = Constants.UPLOADED_FILE_TYPE_ACTIVITY_IMAGE;
+                        uploadedFile.description = inputPhoto.description;
+                        uploadedFile.save(function(err, uploadedFile){
+                            newActivityPhotos.push(uploadedFile._id);
+                            callback2(null, null);
+                        });
                     });
                 },
                 'inputs' : activity.photos
@@ -65,7 +89,7 @@ ActivityController.prototype.addActivity = function addActivity(activity, userNa
         }, function (data, callback1) {
             var newActivity = new Model.Activity({
                 category        : data.newCategory,
-                user            : data.user,
+                personil        : data.personil,
                 startDate       : activity.startDate,
                 endDate         : activity.endDate,
                 photos          : data.newActivityPhotos,
@@ -145,10 +169,14 @@ ActivityController.prototype.updateActivity = function updateActivity(activity, 
                         photo.updater = userName;
                         photo.save(function(err, photo) {
                             // remove from disk
-                            filesController.removePhoto(photo, function(err, res) {
-                                log.info("is photo removed ", res, " ", err);
+                            FS.unlink(Path.join(BASE_DIR, photo.path), function (err) {
+                                log.info("is photo removed ", err);
                                 callback2(null, null);
                             });
+                            // filesController.removePhoto(photo, function(err, res) {
+                            //     log.info("is photo removed ", res, " ", err);
+                            //     callback2(null, null);
+                            // });
                         });
                     }
                 },
@@ -177,9 +205,12 @@ ActivityController.prototype.updateActivity = function updateActivity(activity, 
                             log.error("Error in finding UploadedFile ", inputPhoto.key," ", err);
                             return callback2(null, null);
                         }
-
-                        data.newActivityPhotos.push(uploadedFile._id);
-                        callback2(null, null);
+                        uploadedFile.type = Constants.UPLOADED_FILE_TYPE_ACTIVITY_IMAGE;
+                        uploadedFile.description = inputPhoto.description;
+                        uploadedFile.save(function(err, uploadedFile) {
+                            data.newActivityPhotos.push(uploadedFile._id);
+                            callback2(null, null);
+                        });
                     });
                 },
                 'inputs' : activity.photos
@@ -234,13 +265,13 @@ ActivityController.prototype.deleteActivities = function deleteActivities(activi
 }
 
 // get activity group by category based on user
-ActivityController.prototype.groupActivities = function groupActivities(user, callback) {
-    log.info("user ", user);
+ActivityController.prototype.groupActivities = function groupActivities(personil, callback) {
+    log.info("personil ", personil);
     Model.Activity.aggregate([
         {
             $match : {
-                user    : user._id,
-                status  : Constants.STATUS_ACTIVE
+                personil    : personil._id,
+                status      : Constants.STATUS_ACTIVE
             }
         },
         {
@@ -256,12 +287,14 @@ ActivityController.prototype.groupActivities = function groupActivities(user, ca
         },
         {
             $group : {
-                _id : {
+                _id         : {
                     categoryID : "$category._id"
                 },
-                category : { $first : "$category" },
-                createdAt : { $last : "$createdAt" },
-                total : { $sum : 1 }
+                category        : { $first : "$category" },
+                createdAt       : { $last : "$createdAt" },
+                lastActivity    : { $last : "$startDate" },
+                total           : { $sum : 1 },
+                totalValue      : { $sum : "$category.value" }
             }
         },
         {
@@ -284,14 +317,14 @@ ActivityController.prototype.rankActivities = function rankActivities(callback) 
         },
         {
             $lookup : {
-                from : "users",
-                localField : "user",
+                from : "personils",
+                localField : "personil",
                 foreignField : "_id",
-                as: "user"
+                as: "personil"
             }
         },
         {
-            $unwind : "$user"
+            $unwind : "$personil"
         },  
         {
             $lookup : {
@@ -307,9 +340,9 @@ ActivityController.prototype.rankActivities = function rankActivities(callback) 
         {
             $group : {
                 _id : {
-                    userID : "$user._id"
+                    personilID : "$personil._id"
                 },
-                user : { $first : "$user" },
+                personil : { $first : "$personil" },
                 createdAt : { $last : "$createdAt" },
                 total : { $sum : "$category.value" }
             }
@@ -317,12 +350,45 @@ ActivityController.prototype.rankActivities = function rankActivities(callback) 
         {
             $sort : {
                 total : -1,
-                "user.name" : 1
+                "personil.name" : 1
             }
         }
     ]).exec(function(err, results) {
         callback(err, results);
     });
+}
+
+ActivityController.prototype.listActivity = function listActivity(page, callback) {
+    Vasync.waterfall([
+        function(callback1) {
+            Model.Activity.count({
+                status : Constants.STATUS_ACTIVE
+            }).exec(function(err, count) {
+                callback1(err, count);
+            });
+        }, function(count, callback1) {
+            var skip = page * Constants.PAGE_SIZE;
+            Model.Activity.find({
+                status : Constants.STATUS_ACTIVE
+            }).populate({
+                path : 'personil',
+                select : 'name pangkat'
+            })
+            .sort({startDate : -1})
+            .skip(skip).limit(Constants.PAGE_SIZE)
+            .exec(function(err, results) {
+                callback1(err, {
+                    count : count,
+                    activities : results
+                });
+            });
+        }
+    ], function(err, result) {
+        if (err)
+            log.error("Error on list Activity ", err);
+        callback(err, result);
+    });
+    
 }
 
 module.exports = ActivityController;

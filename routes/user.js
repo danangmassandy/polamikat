@@ -6,9 +6,9 @@ const Vasync = require('vasync');
 
 const log = Bunyan.createLogger({ name : "polamikat:user" });
 const router = Express.Router();
-const UserController = require('../controller/user_controller');
+const ProfileController = require('../controller/profile_controller');
 
-var userController = new UserController();
+var profileController = new ProfileController();
 
 router.post("/me", function(req, res) {
 
@@ -29,12 +29,16 @@ router.post("/me", function(req, res) {
 
 
 router.post("/personil_list", function(req, res) {
-    userController.list(function (err, results) {
+    profileController.personilListSummary(function (err, results) {
         if (err)
             return res.fail(err);
         log.info("personil_list ", results);
         res.success({data:results});
     });
+});
+
+router.post("/personil_list_all", function(req, res) {
+    
 });
 
 module.exports = router;

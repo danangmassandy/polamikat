@@ -33,13 +33,15 @@ mongoose.Promise = global.Promise;
 
 REDIS_CLIENT = Redis.createClient(PROPERTIES.redis.url); //connecto to redis server
 
+
+BASE_DIR = __dirname;
+
 // include routes here
 var index = require('./routes/index');
 var admin = require('./routes/admin');
-var a = require('./routes/a');
 var user = require('./routes/user');
 var activity = require('./routes/activity');
-
+var files = require('./routes/files');
 
 var app = Express();
 
@@ -97,14 +99,12 @@ app.get('/browser/require-login/:openApp?', function (req, res) {
     });
 });
 
-app.use('/', index);
+app.use('/', keycloak.protect(), RequestUtil.authenticate, index);
 
 app.use('/admin', keycloak.protect(isSystemAdministrator), RequestUtil.authenticate, admin);
-
-app.use('/a', keycloak.protect(), RequestUtil.authenticate, a);
-
-app.use('/user', user);
-app.use('/activity', activity);
+app.use('/user', keycloak.protect(), RequestUtil.authenticate, user);
+app.use('/activity', keycloak.protect(), RequestUtil.authenticate, activity);
+app.use('/files', keycloak.protect(), RequestUtil.authenticate, files);
 
 // web
 // app.use('/me', keycloak.protect(), RequestUtil.authenticate, Me);

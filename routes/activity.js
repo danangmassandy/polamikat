@@ -8,31 +8,31 @@ const log = Bunyan.createLogger({ name : "polamikat:activity" });
 const router = Express.Router();
 const ActivityController = require('../controller/activity_controller');
 const ActivityCategoryController  = require('../controller/activity_category_controller');
-const UserController = require('../controller/user_controller');
+const ProfileController = require('../controller/profile_controller');
 
 var activityController = new ActivityController();
 var actCategoryController = new ActivityCategoryController();
-var userController = new UserController();
+var profileController = new ProfileController();
 
 // get data activities by personil
 router.post('/personil_activities', function(req, res) {
-    var userID = req.body.user;
-    if (!userID) {
-        return res.fail("Invalid user.");
+    var personilID = req.body.user;
+    if (!personilID) {
+        return res.fail("Invalid personil.");
     }
     Vasync.waterfall([
         function(callback) {
-            Model.User.findOne({
-                _id : userID
-            }).exec(function(err, user) {
+            Model.Personil.findOne({
+                _id : personilID
+            }).exec(function(err, personil) {
                 if (err)
                     return callback(err);
-                if (!user)
-                    return callback('Invalid user.');
-                callback(null, user);
+                if (!personil)
+                    return callback('Invalid personil.');
+                callback(null, personil);
             });
-        }, function(user, callback) {
-            activityController.groupActivities(user, callback);
+        }, function(personil, callback) {
+            activityController.groupActivities(personil, callback);
         }
     ], function(err, result) {
         if (err)
@@ -64,29 +64,29 @@ router.post('/random_activities', function(req, res) {
             actCategoryController.list(callback);
         }, function(categories, callback) {
             log.info("categories ", categories);
-            userController.list(function(err, results) {
+            profileController.personilListSummary(function(err, results) {
                 callback(null, {
                     categories : categories,
-                    users : results
+                    personils : results
                 });
             });
         }, function(data, callback) {
-            log.info("users ", data.users);
+            log.info("personils ", data.personils);
             Vasync.forEachParallel({
-                    'func' : function(user, callback1) {
+                    'func' : function(personil, callback1) {
                         var randActivitiesCreate = getRandomInt(5,20);
                         for (var i = 0; i < randActivitiesCreate; ++i) {
                             var category = data.categories[Math.floor(Math.random() * data.categories.length)];
                             var newActivity = new Model.Activity({
                                 category : category,
-                                user : user,
+                                personil : personil._id,
                                 startDate : new Date()
                             });
                             newActivity.save();
                         }
                         callback1(null, null);
                     },
-                    'inputs' : data.users
+                    'inputs' : data.personils
                 }, function(error, result) {
                     if (error)
                         log.error("error random_activities ", error);
@@ -97,5 +97,30 @@ router.post('/random_activities', function(req, res) {
         res.success();
     })
 });
+
+router.post('/add', function(req, res) {
+
+});
+
+router.post('/update', function(req, res) {
+
+});
+
+router.post('/delete', function(req, res) {
+
+});
+
+router.post('/detail', function(req, res) {
+
+});
+
+router.post('/list', function(req, res) {
+
+});
+
+router.post('/list_category', function(req, res) {
+
+});
+
 
 module.exports = router;

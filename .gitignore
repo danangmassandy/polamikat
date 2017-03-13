@@ -58,3 +58,6 @@ public/bower_components
 
 # gitEye project
 .project
+
+# uploads folder
+uploads/
