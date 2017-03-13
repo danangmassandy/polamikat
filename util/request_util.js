@@ -41,7 +41,7 @@ module.exports = {
                         username: token.content.preferred_username,
                         displayName : token.content.name,    // token.content.name
                         email : token.content.email,
-                        role : token.hasRole('admin') ? Constants.ROLE_ADMIN : Constants.ROLE_USER
+                        role : token.hasRole('PolamikatAdmin') ? Constants.ROLE_ADMIN : Constants.ROLE_USER
                     });
                 } else {//user is in db update user
                     // user.displayName = token.content.name;
@@ -85,7 +85,12 @@ module.exports = {
 
                             if (personil) {
                                 req.polamikatPersonilProfile = personil;
+                                if (personil.pangkat)
+                                    data.user.displayName = personil.pangkat + " " + personil.name;
+                                else
+                                    data.user.displayName = personil.name;
                                 data.user.personil = personil._id;
+                                data.user.personilDataSetupAt = new Date();
                                 data.user.save(function(err, user) {
                                     if (err)
                                         return callback(err, null);

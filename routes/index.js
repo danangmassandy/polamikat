@@ -11,8 +11,8 @@ router.get('/', function (req, res) {
         title: 'Polamikat',
         me: JSON.stringify({
             username: req.polamikatUser.username,
-            displayName: req.polamikatUser.name,
-            isAdmin : false
+            displayName: req.polamikatUser.displayName,
+            isAdmin : req.isAdmin
         })
     });
 });

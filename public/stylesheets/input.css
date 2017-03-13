@@ -40,7 +40,7 @@ md-input-container:not(.md-input-invalid).md-input-focused label {
 }
 
 md-input-container:not(.md-input-invalid).md-input-focused .md-input {
-    border-color: #0ACCC8;
+    border-color: #0a64cc;
 }
 
 md-input-container.md-default-theme.md-input-invalid .md-input, md-input-container.md-input-invalid .md-input {

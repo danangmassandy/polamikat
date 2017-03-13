@@ -24,7 +24,7 @@ md-sidenav {
 }
 
 .sideNavMenuItem > .layout-row.selected {
-    background-color: #0ACCC8;
+    background-color: #0a64cc;
     color: white;
 }
 
@@ -35,7 +35,7 @@ md-sidenav {
 }
 
 .sideNavMenuItem > .layout-row.sideNavSubMenu.sideNavSubMenuSelected {
-    color: #0ACCC8;
+    color: #0a64cc;
 }
 
 .sideNavMenuItem > .layout-row:not(.sideNavSubMenu) { /* main menu item */
@@ -103,7 +103,7 @@ md-sidenav {
 	width: 0;
 	height: 0;
 	/*border-top: 5px solid transparent;
-	border-left: 5px solid #0ACCC8;
+	border-left: 5px solid #0a64cc;
 	border-bottom: 5px solid transparent;*/
 }
 
@@ -116,4 +116,10 @@ md-sidenav {
     padding: 10px 0px 10px 20px;
     color: #555555;
     font-size: 14px;
+}
+
+.sidemenu .logo {
+    color: #524C4C;
+    font-size: 1.5em;
+    padding: 20px 20px 0px;
 }

@@ -12,6 +12,7 @@ var User = new Schema({
     userPhoto               : { type: mongoose.Schema.Types.ObjectId, ref: 'UploadedFile' },
     
     personil                : { type : mongoose.Schema.Types.ObjectId, ref: 'Personil' },
+    personilDataSetupAt     : { type : Date, default : null},
     role                    : String,
 
     createdAt               : { type : Date, default : Date.now },

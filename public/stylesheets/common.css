@@ -23,7 +23,7 @@ svg {
 }
 
 .icon.button {
-    fill: #0ACCC8;
+    fill: #0a64cc;
 }
 
 .icon.button.gray {
@@ -39,8 +39,8 @@ md-toolbar:not(.md-menu-toolbar) {
 }
 
 @keyframes colors {
-	0% { stroke: #0ACCC8; }
-  100% { stroke: #0ACCC8; }
+	0% { stroke: #0a64cc; }
+  100% { stroke: #0a64cc; }
 }
 
 md-progress-circular path{
@@ -129,7 +129,7 @@ md-content {
     font-size: 36px;
 
     border-radius: 50%;
-    background-color: #0ACCC8 !important;
+    background-color: #0a64cc !important;
 
     overflow: hidden;
 }
@@ -160,7 +160,7 @@ md-content {
     padding-bottom: 2px;
     padding-left: 5px;
     padding-right: 5px;
-    background-color: #0ACCC8;
+    background-color: #0a64cc;
     color: white;
 
     font-size: 11px;
@@ -179,7 +179,7 @@ md-content {
 }
 
 .section {
-    background-color: #0ACCC8;
+    background-color: #0a64cc;
     color: white;
 }
 
@@ -224,12 +224,12 @@ md-content {
 
 /* Tab */
 md-tabs.md-default-theme md-ink-bar, md-tabs md-ink-bar {
-    color: #0ACCC8 !important;
-    background-color:#0ACCC8 !important;
+    color: #0a64cc !important;
+    background-color:#0a64cc !important;
 }
 
 md-tabs .md-tab.md-active {
-    color: #0ACCC8 !important;
+    color: #0a64cc !important;
 }
 
 /* List */
@@ -288,7 +288,7 @@ md-input-container.phone.md-input-focused label{
 }
 
 :not(.icon).button {
-    background-color: #0ACCC8;
+    background-color: #0a64cc;
     color: white;
     padding: 0px 40px;
     border-radius: 10px;
@@ -316,7 +316,7 @@ md-input-container.phone.md-input-focused label{
 }
 
 .md-button.pageButton:not([disabled]):hover {
-    background-color: #0ACCC8;
+    background-color: #0a64cc;
     color: white;
 }
 
@@ -329,5 +329,5 @@ md-divider.light {
 /* Profile */
 .profile {
     font-size: 16px;
-    color: #0ACCC8;
+    color: #0a64cc;
 }

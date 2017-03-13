@@ -199,3 +199,76 @@ app.filter('capitalize', function() {
       return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
     }
 });
+
+ 
+app.factory('showMessage', ['$mdDialog',  function($mdDialog) {
+    var showMessage = {};
+    showMessage.accessDenied = showAccessDenied;
+    showMessage.warning = showWarningMessage;
+    showMessage.confirm = showConfirmMessage;
+    showMessage.success = showSuccessMessage;
+    showMessage.error = showErrorMessage;
+
+    function showAccessDenied(okButton, okListener) {
+        $mdDialog.show(
+            $mdDialog.alert()
+                .parent(angular.element(document.querySelector('#alertDialog')))
+                .clickOutsideToClose(true)
+                .title("Warning")
+                .textContent("Access denied")
+                .ok(okButton?okButton:"Ok")
+                .targetEvent(null)
+        ).then(okListener);
+    }
+
+    function showWarningMessage(title, content, okButton, okListener) {
+        $mdDialog.show(
+            $mdDialog.alert()
+                .parent(angular.element(document.querySelector('#alertDialog')))
+                .clickOutsideToClose(true)
+                .title(title?title:"Warning")
+                .textContent(content)
+                .ok(okButton?okButton:"Ok")
+                .targetEvent(null)
+        ).then(okListener);
+    }
+
+    function showConfirmMessage(title, content, okButton, cancelButton, okListener, cancelListener) {
+        $mdDialog.show(
+            $mdDialog.confirm()
+                .parent(angular.element(document.querySelector('#alertDialog')))
+                .clickOutsideToClose(true)
+                .title(title?title:"Confirm")
+                .textContent(content)
+                .ok(okButton?okButton:"Ok")
+                .cancel(cancelButton?cancelButton:"Cancel")
+                .targetEvent(null)
+        ).then(okListener, cancelListener);
+    }
+
+    function showSuccessMessage(title, content, okButton, okListener) {
+        $mdDialog.show(
+            $mdDialog.alert()
+                .parent(angular.element(document.querySelector('#alertDialog')))
+                .clickOutsideToClose(true)
+                .title(title?title:"Notification")
+                .textContent(content)
+                .ok(okButton?okButton:"Ok")
+                .targetEvent(null)
+        ).then(okListener);
+    }
+
+    function showErrorMessage(title, content, okButton, okListener) {
+        $mdDialog.show(
+            $mdDialog.alert()
+                .parent(angular.element(document.querySelector('#alertDialog')))
+                .clickOutsideToClose(true)
+                .title(title?title:"Error")
+                .textContent(content)
+                .ok(okButton?okButton:"Ok")
+                .targetEvent(null)
+        ).then(okListener);
+    }
+// Test
+    return showMessage;
+}]);

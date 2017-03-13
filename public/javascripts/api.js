@@ -1,4 +1,4 @@
-var app = angular.module('polamikatHomePageApp');
+var app = angular.module('polamikatApp');
 
 app.factory('rest', function($rootScope, $http) {
     var restService = {

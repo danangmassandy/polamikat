@@ -221,7 +221,8 @@ ProfileController.prototype.addPersonil = function addPersonil(personil, createL
                             email       : createLoginInfo.email,
                             role        : createLoginInfo.role,
                             creator     : userName,
-                            personil    : data.personil._id
+                            personil    : data.personil._id,
+                            personilDataSetupAt : new Date()
                         });
                         if (data.personil.photo)
                             newUser.userPhoto = data.personil.photo;

@@ -41,4 +41,8 @@ router.post("/personil_list_all", function(req, res) {
     
 });
 
+router.post("/update_personil_info", function(req, res) {
+    
+});
+
 module.exports = router;
