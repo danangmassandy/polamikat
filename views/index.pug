@@ -12,6 +12,7 @@ block menu
                 md-icon(class="avatar md-48" style="width: 48px; height: 48px;" ng-if="!me.photo") account_circle
                 div(class="marginLeft5" layout="column" flex)
                     div(layout-align="start center" ng-cloak="me.displayName") {{me.displayName}}
+                    div(layout-align="start center" ng-if="me.isAdmin") Administrator
             div(class="sideNavMenuItem bold" flex)
                 div(ng-class="selectedMenu == 'report' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('report')")
                     div Report

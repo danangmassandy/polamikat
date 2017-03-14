@@ -1,1 +1,42 @@
-span data_personil_list
+.padding20(layout="column" flex)
+    h2 Data Personil Satlantas
+    .marginTop40
+    table(class="table table-bordered table-striped")
+        thead
+            tr
+                th 
+                    a(href="#/")
+                        span No
+                th 
+                    a(href="#/" ng-click="sortType = 'total'; sortReverse = !sortReverse;")
+                        span NRP 
+                        span(class="fa fa-caret-up" ng-show="sortType == 'total' && sortReverse")
+                        span(class="fa fa-caret-down" ng-show="sortType == 'total' && !sortReverse")
+                th 
+                    a(href="#/" ng-click="sortType = 'user.name'; sortReverse = !sortReverse;")
+                        span Pangkat
+                        span(class="fa fa-caret-up" ng-show="sortType == 'user.name' && sortReverse")
+                        span(class="fa fa-caret-down" ng-show="sortType == 'user.name' && !sortReverse")
+                th 
+                    a(href="#/" ng-click="sortType = 'user.name'; sortReverse = !sortReverse;")
+                        span Nama 
+                        span(class="fa fa-caret-up" ng-show="sortType == 'user.name' && sortReverse")
+                        span(class="fa fa-caret-down" ng-show="sortType == 'user.name' && !sortReverse")
+                th 
+                    a(href="#/" ng-click="sortType = 'total'; sortReverse = !sortReverse;")
+                        span Polsek
+                        span(class="fa fa-caret-up" ng-show="sortType == 'total' && sortReverse")
+                        span(class="fa fa-caret-down" ng-show="sortType == 'total' && !sortReverse")
+                th 
+                    a(href="#/" ng-click="sortType = 'total'; sortReverse = !sortReverse;")
+                        span Penugasan
+                        span(class="fa fa-caret-up" ng-show="sortType == 'total' && sortReverse")
+                        span(class="fa fa-caret-down" ng-show="sortType == 'total' && !sortReverse")
+        //- tbody(ng-if="personilNilaiData && personilNilaiData.length > 0")
+        //-     tr(ng-repeat="x in personilNilaiData | orderBy:sortType:sortReverse")
+        //-         td {{ $index + 1 }}
+        //-         td.serviceName {{ x.user.name }}
+        //-         td.number {{ x.total }}
+        tbody(ng-if="!personilNilaiData || !personilNilaiData.length")
+            tr
+                td(colspan="6") No Data
