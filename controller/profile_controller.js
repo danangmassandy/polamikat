@@ -437,7 +437,7 @@ ProfileController.prototype.personilList = function personilList(page, callback)
                 status  : Constants.STATUS_ACTIVE
             })
             .sort({ name : 1, pangkat : 1, nrp : 1})
-            .skip(skip).limit(Constants.PAGE_SIZE)
+            // .skip(skip).limit(Constants.PAGE_SIZE)
             .exec(function(err, results){
                 if (err)
                     return callback1(err);
@@ -484,7 +484,7 @@ ProfileController.prototype.userList = function userList(page, callback) {
                 status  : Constants.STATUS_ACTIVE
             })
             .sort({ username : 1 })
-            .skip(skip).limit(Constants.PAGE_SIZE)
+            // .skip(skip).limit(Constants.PAGE_SIZE)
             .exec(function(err, results){
                 if (err)
                     return callback1(err);

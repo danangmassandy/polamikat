@@ -1,1 +1,135 @@
-span admin_add_personil
+div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
+    div(class="bold" layout="row" style="background-color: #ffffff; font-size: 14px; height: 100%;" flex)
+        ng-form(name="inputForm" layout="column" flex)
+            md-content(class="paddingTop25 paddingRight50 paddingBottom10 paddingLeft50" style="color: #636363;" flex)
+                h2 Tambah Personil
+                .marginTop20
+                div(layout-align="center center" layout="column" flex)
+                    div(class="marginBottom10" ng-hide="!updateUser.photo" ng-style="{'background':'url('+profileSrc+') center center','background-size':'cover'}" style="border-radius:50%; font-size: 150px; height: 150px; width: 150px;")
+                    md-icon(ng-hide="updateUser.photo" class="avatar"   style="font-size: 150px; height: 150px; width: 150px;") account_circle
+                    md-button(class="plainButton" style="margin: 0px;" ng-click="onUploadImageClicked(1)") Upload Photo
+                    input(id="image1" type="file" accept="image/*" file-upload="uploadPhotoFile" style="display: none;")
+                div(class="marginTop30")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" class="paddingRight40" layout flex)
+                            label Email
+                            input(ng-model="updatePersonil.email" name="email" type="email" required)
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Pangkat
+                            input(ng-model="updatePersonil.pangkat" name="pangkat" type="text" required)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Nama
+                            input(ng-model="updatePersonil.name" name="name" type="text" required)
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label NRP
+                            input(ng-model="updatePersonil.nrp" name="nrp" type="text" required)
+                div(class="marginTop20")
+                span Tempat, Tanggal Lahir
+                div(class="marginRight20" layout="row" flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Kota
+                            input(ng-model="updatePersonil.birthTown" name="birthTown" type="text" required)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Tanggal Lahir
+                            input(ng-model="updatePersonil.dob" name="dob" type="text" required)
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    md-input-container(class="md-block" layout flex)
+                        label Jenis Kelamin
+                        input(ng-model="updatePersonil.gender" name="gender" type="text" required)
+                    md-input-container(class="md-block" layout flex)
+                        label Agama
+                        input(ng-model="updatePersonil.religion" name="religion" type="text" required)
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Alamat
+                            input(ng-model="updatePersonil.homeAddress" name="homeAddress" type="text" required)
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Handphone
+                            input(ng-model="updatePersonil.mobile" name="mobile" type="text")
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Polsek
+                            input(ng-model="updatePersonil.polsekPenugasan" name="polsekPenugasan" type="text" required)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Wilayah
+                            input(ng-model="updatePersonil.wilayahPenugasan" name="wilayahPenugasan" type="text" required)
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Skep
+                            input(ng-model="updatePersonil.skep" name="skep" type="text")
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Dikum
+                            input(ng-model="updatePersonil.dikum" name="dikum" type="text")
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Dikjur
+                            input(ng-model="updatePersonil.dikjur" name="dikjur" type="text")
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Dikbang
+                            input(ng-model="updatePersonil.dikbang" name="dikbang" type="text")
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Latfung
+                            input(ng-model="updatePersonil.latfung" name="latfung" type="text")
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Prestasi Dalam Tugas
+                            input(ng-model="updatePersonil.prestasiDalamTugas" name="prestasiDalamTugas" type="text")
+                div(class="marginTop20")
+                div(class="marginRight20")
+                    md-checkbox(ng-model="createUserLogin" class="plain" layout-align="center center"   ng-change="stateChanged(createUserLogin)"  ) Buat Akun Login
+                div(class="marginTop20")
+                div(class="marginRight20" ng-if="createUserLogin" layout="column" flex)
+                    div(layout flex)
+                        div(layout="column" flex)
+                            md-input-container(class="md-block" layout flex)
+                                label Username
+                                input(ng-model="updateUser.username" name="username" type="text" required)
+                        div(layout="column" flex)
+                            md-input-container(class="md-block" layout flex)
+                                label Email
+                                input(ng-model="updateUser.email" name="email" type="text" ng-readonly="true" required)
+                    div(class="marginTop20")
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Role
+                            input(ng-model="updateUser.role" name="role" type="text")
+                    div(class="marginTop20")
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Password
+                            input(ng-model="updateUser.password" name="password" type="text")
+                        md-input-container(class="md-block" layout flex)
+                            label Ulangi Password
+                            input(ng-model="updateUser.repassword" name="repassword" type="text")
+                div(layout="row" class="paddingTop10 paddingRight50 paddingBottom25" layout-align="end center")
+                    md-button(class="plainButton" layout-align="center center" ng-click="back()" layout) Cancel
+                    md-button(class="button" layout-align="center center"  ng-click="addPersonil()" layout) Save 

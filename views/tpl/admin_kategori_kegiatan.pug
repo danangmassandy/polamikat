@@ -1,1 +1,30 @@
-span admin_kategori_kegiatan
+.padding20(layout="column" flex)
+    h2 Kategori Kegiatan
+    .marginTop40
+    div(layout)
+        md-button(class="plainButton" style="margin: 0px;") Tambah Kategori Kegiatan
+    .marginTop30
+    table(class="table table-bordered table-striped")
+        thead
+            tr
+                th 
+                    a(href="#/")
+                        span No
+                th 
+                    a(href="#/" ng-click="sortType = 'total'; sortReverse = !sortReverse;")
+                        span Kategori 
+                        span(class="fa fa-caret-up" ng-show="sortType == 'total' && sortReverse")
+                        span(class="fa fa-caret-down" ng-show="sortType == 'total' && !sortReverse")
+                th 
+                    a(href="#/" ng-click="sortType = 'user.name'; sortReverse = !sortReverse;")
+                        span Nilai
+                        span(class="fa fa-caret-up" ng-show="sortType == 'user.name' && sortReverse")
+                        span(class="fa fa-caret-down" ng-show="sortType == 'user.name' && !sortReverse")
+        //- tbody(ng-if="personilNilaiData && personilNilaiData.length > 0")
+        //-     tr(ng-repeat="x in personilNilaiData | orderBy:sortType:sortReverse")
+        //-         td {{ $index + 1 }}
+        //-         td.serviceName {{ x.user.name }}
+        //-         td.number {{ x.total }}
+        tbody(ng-if="!personilNilaiData || !personilNilaiData.length")
+            tr
+                td(colspan="6") No Data

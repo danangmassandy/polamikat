@@ -17,20 +17,14 @@ block menu
                 div(ng-class="selectedMenu == 'report' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('report')")
                     div Report
                     div(flex)
-                div(ng-class="selectedMenu == 'data_personil_list' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('data_personil_list')" ng-if="!isAdmin")
+                div(ng-class="selectedMenu == 'data_personil_list' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('data_personil_list')")
                     div Data Personil Satlantas
-                    div(flex)
-                div(ng-class="selectedMenu == 'admin_data_personil' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('admin_data_personil')" ng-if="isAdmin")
-                    div Data Personil (Administrator)
                     div(flex)
                 div(ng-class="selectedMenu == 'data_kegiatan_satlantas' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('data_kegiatan_satlantas')")
                     div Data Kegiatan Satlantas
                     div(flex)
-                div(ng-class="selectedMenu == 'data_kegiatan_personil' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('data_kegiatan_personil')")
-                    div Daftar Kegiatan Saya
-                    div(flex)
                 div(ng-class="selectedMenu == 'admin_kategori_kegiatan' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('admin_kategori_kegiatan')" ng-if="isAdmin")
-                    div Edit Kategori Kegiatan Personil  (Administrator)
+                    div Edit Kategori Kegiatan Personil
                     div(flex)
                 div(ng-class="selectedMenu == 'personil_user_data' ? 'selected' : 'notSelected'" layout="row" layout-align="center center" ng-click="goTo('personil_user_data')")
                     div Profil Saya

@@ -375,7 +375,7 @@ ActivityController.prototype.listActivity = function listActivity(page, callback
                 select : 'name pangkat'
             })
             .sort({startDate : -1})
-            .skip(skip).limit(Constants.PAGE_SIZE)
+            // .skip(skip).limit(Constants.PAGE_SIZE)
             .exec(function(err, results) {
                 callback1(err, {
                     count : count,
@@ -389,6 +389,41 @@ ActivityController.prototype.listActivity = function listActivity(page, callback
         callback(err, result);
     });
     
+}
+
+ActivityController.prototype.groupActivityCategories = function groupActivityCategories(callback) {
+    Model.Activity.aggregate([
+        {
+            $match : { status : Constants.STATUS_ACTIVE }
+        },
+        {
+            $sort : { startDate : -1 }
+        }, 
+        {
+            $lookup : {
+                from : "activitycategories",
+                localField : "category",
+                foreignField : "_id",
+                as: "category"
+            }
+        },
+        {
+            $unwind : "$category"
+        },
+        {
+            $group : {
+                _id : "$category._id",
+                kegiatanTotal : { $sum : 1 },
+                category : { $last : "$category" },
+                lastActivity : { $first :"$startDate"  }
+            }
+        },
+        {
+            $sort : { "category.value" : -1 }
+        }
+    ]).exec(function(err, results) {
+        callback(err, results);
+    });
 }
 
 module.exports = ActivityController;
