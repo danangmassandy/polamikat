@@ -16,7 +16,7 @@ var profileController = new ProfileController();
 
 // get data activities by personil
 router.post('/personil_activities', function(req, res) {
-    var personilID = req.body.user;
+    var personilID = req.body.personil;
     if (!personilID) {
         return res.fail("Invalid personil.");
     }

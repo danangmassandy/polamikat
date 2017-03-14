@@ -5,7 +5,7 @@ app.controller('sideNavController',
 function ($scope, $rootScope, $mdSidenav, $location, $filter, $route, showMessage) {
     
     //$rootScope.selectedMenu = '';
-    $rootScope.selectedMenu = 'alertCentre';
+    $rootScope.selectedMenu = '';
     $rootScope.selectedSubMenu = '';
 
     $rootScope.goToSubMenu = function goToSubMenu(parentPage, page){

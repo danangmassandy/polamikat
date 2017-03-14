@@ -1,0 +1,48 @@
+div(class="padding20" layout="column" style="background: #F1F1F1;" flex)
+    md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
+        div(class="titleBar" layout="row" layout-align="space-between center")
+            div Grafik Kegiatan Per Personil
+            div(layout="row" layout-align="center center")
+                div(layout-align="center center" layout)
+                    md-input-container(class="md-block" md-no-float)
+                        md-select(ng-model="activitiesChart.personil" placeholder="Personil" ng-change="changePersonil()")
+                            md-option(ng-repeat="personil in personilList" value="{{personil._id}}") {{personil.name}}
+        div(ng-show="!activitiesChart.loaded" flex style="height:440px;padding:20px;" layout="row" layout-align="center center")
+            md-progress-circular(class="md-accent" md-mode="indeterminate")
+        .chartContainer(ng-show="activitiesChart.loaded" flex)
+            div(ng-style="{'width' : activitiesChart.canvasWidth + 'px'}" style="height:400px;max-height:400px;" )
+                canvas(id="activitiesChart" class="chart chart-bar" chart-data="activitiesChart.data" chart-labels="activitiesChart.labels" 
+                    chart-series="activitiesChart.series" chart-options="activitiesChart.options" chart-dataset-override="activitiesChart.datasetsOverrides")
+    md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
+        div(class="titleBar" layout="row" layout-align="space-between center")
+            div Tabel Ringkasan Kegiatan Satlantas
+        .padding20
+    md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
+        div(class="titleBar" layout="row" layout-align="space-between center")
+            div Tabel Total Nilai Kegiatan Per Personil
+        .padding20
+            table(class="table table-bordered table-striped")
+                thead
+                    tr
+                        th 
+                            a(href="#/")
+                                span No
+                        th 
+                            a(href="#/" ng-click="sortType = 'user.name'; sortReverse = !sortReverse;")
+                                span Personil 
+                                span(class="fa fa-caret-up" ng-show="sortType == 'user.name' && sortReverse")
+                                span(class="fa fa-caret-down" ng-show="sortType == 'user.name' && !sortReverse")
+                        th 
+                            a(href="#/" ng-click="sortType = 'total'; sortReverse = !sortReverse;")
+                                span Nilai 
+                                span(class="fa fa-caret-up" ng-show="sortType == 'total' && sortReverse")
+                                span(class="fa fa-caret-down" ng-show="sortType == 'total' && !sortReverse")
+                tbody(ng-if="personilNilaiData && personilNilaiData.length > 0")
+                    tr(ng-repeat="x in personilNilaiData | orderBy:sortType:sortReverse")
+                        td {{ $index + 1 }}
+                        td.serviceName {{ x.user.name }}
+                        td.number {{ x.total }}
+                tbody(ng-if="!personilNilaiData || !personilNilaiData.length")
+                    tr
+                        td(colspan="3") No Data
+            div(style="margin-top:20px;height:5px;")

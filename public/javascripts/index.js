@@ -1,12 +1,49 @@
-var app = angular.module('polamikatApp', [ 'ngMaterial', 'ngRoute', 'ngLodash' ]);
+var app = angular.module('polamikatApp', [ 'ngMaterial', 'ngRoute', 'chart.js' ]);
 
 app.config(function($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: '/tpl/home_index',
-        // }).when('/update_user_profile', {
-        //     templateUrl: '/tpl/clinic_user_profile',
-        //     controller: 'userProfileCtrl',
+            templateUrl: '/tpl/report',
+            controller: 'reportCtrl',
+        }).when('/report', {
+            templateUrl: '/tpl/report',
+            controller: 'reportCtrl',
+        }).when('/admin_add_personil', {
+            templateUrl: '/tpl/admin_add_personil',
+            controller: 'adminAddPersonilCtrl',
+        }).when('/admin_data_personil', {
+            templateUrl: '/tpl/admin_data_personil',
+            controller: 'adminDataPersonilCtrl',
+        }).when('/admin_data_user', {
+            templateUrl: '/tpl/admin_data_user',
+            controller: 'adminDataUserCtrl',
+        }).when('/admin_kategori_kegiatan', {
+            templateUrl: '/tpl/admin_kategori_kegiatan',
+            controller: 'adminKategoriKegiatanCtrl',
+        }).when('/admin_update_personil', {
+            templateUrl: '/tpl/admin_update_personil',
+            controller: 'adminUpdatePersonilCtrl',
+        }).when('/data_kegiatan_personil', {
+            templateUrl: '/tpl/data_kegiatan_personil',
+            controller: 'dataKegiatanPersonilCtrl',
+        }).when('/data_kegiatan_satlantas', {
+            templateUrl: '/tpl/data_kegiatan_satlantas',
+            controller: 'dataKegiatanSatlantasCtrl',
+        }).when('/data_personil_list', {
+            templateUrl: '/tpl/data_personil_list',
+            controller: 'dataPersonilListCtrl',
+        }).when('/kegiatan_add', {
+            templateUrl: '/tpl/kegiatan_add',
+            controller: 'kegiatanAddCtrl',
+        }).when('/kegiatan_detail', {
+            templateUrl: '/tpl/kegiatan_detail',
+            controller: 'kegiatanDetailCtrl',
+        }).when('/kegiatan_update', {
+            templateUrl: '/tpl/kegiatan_update',
+            controller: 'kegiatanUpdateCtrl',
+        }).when('/personil_user_data', {
+            templateUrl: '/tpl/personil_user_data',
+            controller: 'personilUserDataCtrl',
         }).otherwise({
             redirectTo: '/'
         });
@@ -192,6 +229,9 @@ app.controller('mainCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, 
         // but leave flexibility for future
         return true;
     };
+
+    // $scope.goTo('report');
+
 });
 
 app.filter('capitalize', function() {

@@ -13,28 +13,25 @@ block menu
                 div(class="marginLeft5" layout="column" flex)
                     div(layout-align="start center" ng-cloak="me.displayName") {{me.displayName}}
             div(class="sideNavMenuItem bold" flex)
-                div(ng-class="selectedMenu == 'list_personil' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('list_personil')" ng-if="!isAdmin")
+                div(ng-class="selectedMenu == 'report' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('report')")
+                    div Report
+                    div(flex)
+                div(ng-class="selectedMenu == 'data_personil_list' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('data_personil_list')" ng-if="!isAdmin")
                     div Data Personil Satlantas
                     div(flex)
-                div(ng-class="selectedMenu == 'admin_list_personil' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('admin_list_personil')" ng-if="isAdmin")
+                div(ng-class="selectedMenu == 'admin_data_personil' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('admin_data_personil')" ng-if="isAdmin")
                     div Data Personil (Administrator)
                     div(flex)
-                div(ng-class="selectedMenu == 'data_kegiatan' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('data_kegiatan')")
+                div(ng-class="selectedMenu == 'data_kegiatan_satlantas' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('data_kegiatan_satlantas')")
                     div Data Kegiatan Satlantas
                     div(flex)
-                div(ng-class="selectedMenu == 'grafik_personil' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('grafik_personil')")
-                    div Grafik Kegiatan Per Personil
+                div(ng-class="selectedMenu == 'data_kegiatan_personil' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('data_kegiatan_personil')")
+                    div Daftar Kegiatan Saya
                     div(flex)
-                div(ng-class="selectedMenu == 'peringkat_personil' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('peringkat_personil')")
-                    div Peringkat Nilai Personil
-                    div(flex)
-                div(ng-class="selectedMenu == 'daftar_kegiatan_personil' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('daftar_kegiatan_personil')")
-                    div Daftar Kegiatan Personil
-                    div(flex)
-                div(ng-class="selectedMenu == 'edit_kategori_kegiatan' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('edit_kategori_kegiatan')" ng-if="isAdmin")
+                div(ng-class="selectedMenu == 'admin_kategori_kegiatan' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('admin_kategori_kegiatan')" ng-if="isAdmin")
                     div Edit Kategori Kegiatan Personil  (Administrator)
                     div(flex)
-                div(ng-class="selectedMenu == 'update_user_profile' ? 'selected' : 'notSelected'" layout="row" layout-align="center center" ng-click="goTo('update_user_profile')")
+                div(ng-class="selectedMenu == 'personil_user_data' ? 'selected' : 'notSelected'" layout="row" layout-align="center center" ng-click="goTo('personil_user_data')")
                     div Profil Saya
                     div(flex)
                 div(class="notSelected" style="padding: 10px 0px 10px 20px" layout="row" ng-click="logout()")
@@ -45,19 +42,26 @@ block content
         div(class="md-toolbar-tools")
             md-button(class="md-icon-button", aria-label="Settings", ng-click="toggleLeft()")
                 md-icon menu
-    div(layout="column", flex, ng-view)
-    include tpl/footer
+    div(layout="column" flex ng-view)
+    //- include tpl/footer
 
 block script
     script(src="/javascripts/index.js")
     script(src="/javascripts/api.js")
+    script(src="/javascripts/constants.js")
     script(src="/javascripts/ctrl_side_nav.js")
-    script(src="/javascripts/ctrl_user_profile.js")
-    script(src="/javascripts/ctrl_list_personil.js")
-    script(src="/javascripts/ctrl_grafik_personil.js")
-    script(src="/javascripts/ctrl_nilai_personil.js")
-    script(src="/javascripts/ctrl_tambah_kegiatan_personil.js")
-    script(src="/javascripts/ctrl_daftar_kegiatan_personil.js")
-    script(src="/javascripts/ctrl_edit_kegiatan.js")
+    script(src="/javascripts/ctrl_admin_add_personil.js")
+    script(src="/javascripts/ctrl_admin_data_personil.js")
+    script(src="/javascripts/ctrl_admin_data_user.js")
+    script(src="/javascripts/ctrl_admin_kategori_kegiatan.js")
+    script(src="/javascripts/ctrl_admin_update_personil.js")
+    script(src="/javascripts/ctrl_data_kegiatan_personil.js")
+    script(src="/javascripts/ctrl_data_kegiatan_satlantas.js")
+    script(src="/javascripts/ctrl_data_personil_list.js")
+    script(src="/javascripts/ctrl_kegiatan_add.js")
+    script(src="/javascripts/ctrl_kegiatan_detail.js")
+    script(src="/javascripts/ctrl_kegiatan_update.js")
+    script(src="/javascripts/ctrl_personil_user_data.js")
+    script(src="/javascripts/ctrl_report.js")
     script.
         var me = JSON.parse(!{JSON.stringify(me)});

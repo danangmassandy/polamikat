@@ -3,9 +3,9 @@ var app = angular.module('polamikatApp');
 app.factory('rest', function($rootScope, $http) {
     var restService = {
         activities : {
-            personilActivity : function(personilUserID, onSuccess) {
+            personilActivity : function(personilID, onSuccess) {
                 $http.post("/activity/personil_activities", {
-                    user : personilUserID
+                    personil : personilID
                 }).then(function(response) {
                     onSuccess(response);
                 });
