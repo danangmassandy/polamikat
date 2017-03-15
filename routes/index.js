@@ -7,12 +7,17 @@ const log = Bunyan.createLogger({ name : "polamikat:index" });
 
 /* GET home page. */
 router.get('/', function (req, res) {
+    var displayName = req.polamikatUser.displayName;
+    if (!displayName || !displayName.length) {
+        if (req.polamikatPersonilProfile)
+            displayName = req.polamikatPersonilProfile.name;
+    }
     res.render('index', {
         title: 'Polamikat',
         me: JSON.stringify({
             polamikatUser : req.polamikatUser,
             username: req.polamikatUser.username,
-            displayName: req.polamikatUser.displayName,
+            displayName: displayName,
             isAdmin : req.isAdmin
         })
     });

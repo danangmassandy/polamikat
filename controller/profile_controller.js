@@ -218,6 +218,7 @@ ProfileController.prototype.addPersonil = function addPersonil(personil, createL
                         var newUser = new Model.User({
                             key         : hash,
                             username    : createLoginInfo.username,
+                            displayName : data.personil.name,
                             sub         : keycloakUser.sub,
                             email       : createLoginInfo.email,
                             role        : createLoginInfo.role,
