@@ -9,14 +9,14 @@ div(class="padding20" layout="column" style="background: #F1F1F1;" flex)
                             md-option(ng-repeat="personil in personilList" value="{{personil._id}}") {{personil.name}}
         div(ng-show="!activitiesChart.loaded" flex style="height:440px;padding:20px;" layout="row" layout-align="center center")
             md-progress-circular(class="md-accent" md-mode="indeterminate")
-        .chartContainer(ng-show="activitiesChart.loaded" flex)
+        .chartContainer(ng-show="activitiesChart.loaded" style="background-color:white;" flex)
             div(ng-style="{'width' : activitiesChart.canvasWidth + 'px'}" style="height:400px;max-height:400px;" )
                 canvas(id="activitiesChart" class="chart chart-bar" chart-data="activitiesChart.data" chart-labels="activitiesChart.labels" 
                     chart-series="activitiesChart.series" chart-options="activitiesChart.options" chart-dataset-override="activitiesChart.datasetsOverrides")
     md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
         div(class="titleBar" layout="row" layout-align="space-between center")
             div Tabel Ringkasan Kegiatan Satlantas
-        .padding20
+        .padding20( style="background-color:white;" )
             table(class="table table-bordered table-striped")
                 thead
                     tr
@@ -41,8 +41,8 @@ div(class="padding20" layout="column" style="background: #F1F1F1;" flex)
                 tbody(ng-if="satlantasKegiatanData && satlantasKegiatanData.length > 0")
                     tr(ng-repeat="x in satlantasKegiatanData | orderBy:giatSortType:giatSortReverse")
                         td {{ $index + 1 }}
-                        td.serviceName {{ x.category.name }}
-                        td.serviceName {{ x.lastActivity | date:'dd-MM-yyyy':'UTC+8' }}
+                        td {{ x.category.name }}
+                        td {{ x.lastActivity | date:'dd-MM-yyyy':'UTC+8' }}
                         td.number {{ x.kegiatanTotal }}
                 tbody(ng-if="!satlantasKegiatanData || !satlantasKegiatanData.length")
                     tr
@@ -50,7 +50,7 @@ div(class="padding20" layout="column" style="background: #F1F1F1;" flex)
     md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
         div(class="titleBar" layout="row" layout-align="space-between center")
             div Tabel Total Nilai Kegiatan Per Personil
-        .padding20
+        .padding20( style="background-color:white;" )
             table(class="table table-bordered table-striped")
                 thead
                     tr
@@ -58,10 +58,10 @@ div(class="padding20" layout="column" style="background: #F1F1F1;" flex)
                             a(href="#/")
                                 span No 
                         th 
-                            a(href="#/" ng-click="rankSortType = 'user.name'; rankSortReverse = !rankSortReverse;")
+                            a(href="#/" ng-click="rankSortType = 'personil.name'; rankSortReverse = !rankSortReverse;")
                                 span Personil 
-                                span(class="fa fa-caret-up" ng-show="rankSortType == 'user.name' && rankSortReverse")
-                                span(class="fa fa-caret-down" ng-show="rankSortType == 'user.name' && !rankSortReverse")
+                                span(class="fa fa-caret-up" ng-show="rankSortType == 'personil.name' && rankSortReverse")
+                                span(class="fa fa-caret-down" ng-show="rankSortType == 'personil.name' && !rankSortReverse")
                         th 
                             a(href="#/" ng-click="rankSortType = 'total'; rankSortReverse = !rankSortReverse;")
                                 span Nilai 
@@ -70,7 +70,7 @@ div(class="padding20" layout="column" style="background: #F1F1F1;" flex)
                 tbody(ng-if="personilNilaiData && personilNilaiData.length > 0")
                     tr(ng-repeat="x in personilNilaiData | orderBy:rankSortType:rankSortReverse"  ng-click="showPersonilRankDetail(x)")
                         td {{ $index + 1 }}
-                        td.serviceName {{ x.user.name }}
+                        td.serviceName {{ x.personil.name }}
                         td.number {{ x.total }}
                 tbody(ng-if="!personilNilaiData || !personilNilaiData.length")
                     tr

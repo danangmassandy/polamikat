@@ -20,6 +20,7 @@ app.controller('adminAddPersonilCtrl', function ($scope, $rootScope, $mdDialog, 
             showMessage.error("Error", "Password tidak sama", "Ok", function(){});
             return;
         }
+        $scope.updatePersonil.dob = moment($scope.updatePersonil.dob, "DD-MM-YYYY").startOf('day').format();
         console.log($scope.updatePersonil);
         console.log($scope.updateUser);
         var updateUserInfo = null;
@@ -30,7 +31,7 @@ app.controller('adminAddPersonilCtrl', function ($scope, $rootScope, $mdDialog, 
             showMessage.error("Success", "Sukses tambah personil!", "Ok", function(){
                 $rootScope.back();
             });
-        }, function(response) {
+        }, function(response) {            
             // error
             showMessage.error("Error", "Error pada tambah personil. Silahkan kontak system administrator.", "Ok", function(){});
             $rootScope.back();
@@ -65,18 +66,12 @@ app.controller('adminAddPersonilCtrl', function ($scope, $rootScope, $mdDialog, 
        console.log(JSON.stringify(file));
         rest.files.uploadImage(fd, function(response) {
             console.log(JSON.stringify(response));
-            if (response.status == "Ok") {
-                $scope.updatePersonil.photo = {};
-                $scope.updatePersonil.photo.key = response.data.uploadedFileKey;
+            $scope.updatePersonil.photo = {};
+            $scope.updatePersonil.photo.key = response.data.uploadedFileKey;
 
-                rest.files.getImage(response.data.uploadedFileUrl, function(response) {
-                    $scope.profileSrc = response.blobURL;
-                });
-            } else {
-                showMessage.error("Upload failed", response.message, 
-                              null, 
-                              function(ok) {});
-            }
+            rest.files.getImage(response.data.uploadedFileUrl, function(response) {
+                $scope.profileSrc = response.blobURL;
+            });
         }, function(err) {
             showMessage.error("Upload failed", "We failed to upload the file due to some server error! Please try again.", 
                               null, 

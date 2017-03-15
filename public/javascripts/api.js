@@ -15,9 +15,14 @@ app.factory('rest', function($rootScope, $http) {
                     onSuccess(response);
                 });
             },
-            list : function(onSuccess) {
-                $http.post("/activity/list", {}).then(function(response) {
-                    onSuccess(response);
+            list : function(onSuccess, onError) {
+                $http.post("/activity/list").then(function(response) {
+                    if (response.data.status == "Ok")
+                        onSuccess(response.data);
+                    else if (onError) onError(response.data.message);
+                }, function(response) {
+                    console.log('Error activity list');
+                    if(onError) onError(response.data.message);
                 });
             },
             listByCategory : function(onSuccess) {
@@ -25,23 +30,38 @@ app.factory('rest', function($rootScope, $http) {
                     onSuccess(response);
                 });
             },
-            categoryList : function(onSuccess) {
+            categoryList : function(onSuccess, onError) {
                 $http.post("/activity/list_category", {}).then(function(response) {
-                    onSuccess(response);
+                    if (response.data.status == "Ok")
+                        onSuccess(response.data);
+                    else if (onError) onError(response.data.message);
+                }, function(response) {
+                    console.log('Error categoryList');
+                    if(onError) onError(response.data.message);
                 });
             },
-            add : function(onSuccess) {
+            add : function(activity, onSuccess, onError) {
                 $http.post("/activity/add", {
                     activity : activity
                 }).then(function(response) {
-                    onSuccess(response);
+                    if (response.data.status == "Ok")
+                        onSuccess(response.data);
+                    else if (onError) onError(response.message);
+                }, function(response) {
+                    console.log("add activity error ", response);
+                    if (onError) onError(response.message);
                 });
             }
         },
         users : {
-            personilList : function(onSuccess) {
+            personilList : function(onSuccess, onError) {
                 $http.post("/user/personil_list", {}).then(function(response) {
-                    onSuccess(response);
+                    if (response.data.status == "Ok")
+                        onSuccess(response.data);
+                    else if (onError) onError(response.data.message);
+                }, function(response) {
+                    console.log('Error personilList');
+                    if(onError) onError(response.data.message);
                 });
             },
             personilListAll : function(onSuccess) {
@@ -58,10 +78,10 @@ app.factory('rest', function($rootScope, $http) {
                 }).then(function(response) {
                     if (response.data.status == "Ok")
                         onSuccess(response);
-                    else if (onError) onError(response);
+                    else if (onError) onError(response.message);
                 }, function(response) {
                     console.log("add personil error ", response);
-                    if (onError) onError(response);
+                    if (onError) onError(response.message);
                 });
             },
             addKategoriKegiatan : function(category, onSuccess, onError) {
@@ -96,11 +116,11 @@ app.factory('rest', function($rootScope, $http) {
                     headers: { 'Content-Type': undefined }
                 }).then(function(response) {
                     if (response.data.status == "Ok")
-                        onSuccess(response);
-                    else if (onError) onError(response);
+                        onSuccess(response.data);
+                    else if (onError) onError(response.data.message);
                 }, function(response) {
                     console.log("ERROR in upload protected image", response);
-                    if (onError) onError(response);
+                    if (onError) onError(response.data.message);
                 });
             },
             getImage : function(p_url, onSuccess, onError) {

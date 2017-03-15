@@ -35,7 +35,7 @@ ActivityController.prototype.addActivity = function addActivity(activity, userNa
     Vasync.waterfall([
         function(callback1) {
             Model.Personil.findOne({
-                _id     : activity.personil._id,
+                _id     : activity.personil,
                 status  : Constants.STATUS_ACTIVE
             }).exec(function(err, personil) {
                 if (err || !personil) {
@@ -49,7 +49,7 @@ ActivityController.prototype.addActivity = function addActivity(activity, userNa
                 _id     : activity.category,
                 status  : Constants.STATUS_ACTIVE
             }).exec(function(err, newCategory) {
-                if (err || newCategory) {
+                if (err || !newCategory) {
                     log.error("Invalid category to add activity : ", err);
                     return callback1("Invalid category.");
                 }
@@ -370,10 +370,7 @@ ActivityController.prototype.listActivity = function listActivity(page, callback
             var skip = page * Constants.PAGE_SIZE;
             Model.Activity.find({
                 status : Constants.STATUS_ACTIVE
-            }).populate({
-                path : 'personil',
-                select : 'name pangkat'
-            })
+            }).populate('personil category')
             .sort({startDate : -1})
             // .skip(skip).limit(Constants.PAGE_SIZE)
             .exec(function(err, results) {

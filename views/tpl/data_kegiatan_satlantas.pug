@@ -8,43 +8,47 @@
         thead
             tr
                 th 
-                    a(href="#/")
+                    a(href="")
                         span No
                 th 
-                    a(href="#/" ng-click="sortType = 'total'; sortReverse = !sortReverse;")
+                    a(href="" ng-click="sortType = 'personil.nrp'; sortReverse = !sortReverse;")
                         span NRP 
-                        span(class="fa fa-caret-up" ng-show="sortType == 'total' && sortReverse")
-                        span(class="fa fa-caret-down" ng-show="sortType == 'total' && !sortReverse")
+                        span(class="fa fa-caret-up" ng-show="sortType == 'personil.nrp' && sortReverse")
+                        span(class="fa fa-caret-down" ng-show="sortType == 'personil.nrp' && !sortReverse")
                 th 
-                    a(href="#/" ng-click="sortType = 'user.name'; sortReverse = !sortReverse;")
+                    a(href="" ng-click="sortType = 'personil.pangkat'; sortReverse = !sortReverse;")
                         span Pangkat
-                        span(class="fa fa-caret-up" ng-show="sortType == 'user.name' && sortReverse")
-                        span(class="fa fa-caret-down" ng-show="sortType == 'user.name' && !sortReverse")
+                        span(class="fa fa-caret-up" ng-show="sortType == 'personil.pangkat' && sortReverse")
+                        span(class="fa fa-caret-down" ng-show="sortType == 'personil.pangkat' && !sortReverse")
                 th 
-                    a(href="#/" ng-click="sortType = 'user.name'; sortReverse = !sortReverse;")
+                    a(href="" ng-click="sortType = 'personil.name'; sortReverse = !sortReverse;")
                         span Nama 
-                        span(class="fa fa-caret-up" ng-show="sortType == 'user.name' && sortReverse")
-                        span(class="fa fa-caret-down" ng-show="sortType == 'user.name' && !sortReverse")
+                        span(class="fa fa-caret-up" ng-show="sortType == 'personil.name' && sortReverse")
+                        span(class="fa fa-caret-down" ng-show="sortType == 'personil.name' && !sortReverse")
                 th 
-                    a(href="#/" ng-click="sortType = 'total'; sortReverse = !sortReverse;")
+                    a(href="" ng-click="sortType = 'personil.polsekPenugasan'; sortReverse = !sortReverse;")
                         span Polsek
-                        span(class="fa fa-caret-up" ng-show="sortType == 'total' && sortReverse")
-                        span(class="fa fa-caret-down" ng-show="sortType == 'total' && !sortReverse")
+                        span(class="fa fa-caret-up" ng-show="sortType == 'personil.polsekPenugasan' && sortReverse")
+                        span(class="fa fa-caret-down" ng-show="sortType == 'personil.polsekPenugasan' && !sortReverse")
                 th 
-                    a(href="#/" ng-click="sortType = 'total'; sortReverse = !sortReverse;")
+                    a(href="" ng-click="sortType = 'category.name'; sortReverse = !sortReverse;")
                         span Kegiatan
-                        span(class="fa fa-caret-up" ng-show="sortType == 'total' && sortReverse")
-                        span(class="fa fa-caret-down" ng-show="sortType == 'total' && !sortReverse")
+                        span(class="fa fa-caret-up" ng-show="sortType == 'category.name' && sortReverse")
+                        span(class="fa fa-caret-down" ng-show="sortType == 'category.name' && !sortReverse")
                 th 
-                    a(href="#/" ng-click="sortType = 'total'; sortReverse = !sortReverse;")
+                    a(href="" ng-click="sortType = 'startDate'; sortReverse = !sortReverse;")
                         span Tgl Kegiatan
-                        span(class="fa fa-caret-up" ng-show="sortType == 'total' && sortReverse")
-                        span(class="fa fa-caret-down" ng-show="sortType == 'total' && !sortReverse")
-        //- tbody(ng-if="personilNilaiData && personilNilaiData.length > 0")
-        //-     tr(ng-repeat="x in personilNilaiData | orderBy:sortType:sortReverse")
-        //-         td {{ $index + 1 }}
-        //-         td.serviceName {{ x.user.name }}
-        //-         td.number {{ x.total }}
-        tbody(ng-if="!personilNilaiData || !personilNilaiData.length")
+                        span(class="fa fa-caret-up" ng-show="sortType == 'startDate' && sortReverse")
+                        span(class="fa fa-caret-down" ng-show="sortType == 'startDate' && !sortReverse")
+        tbody(ng-if="kegiatanData && kegiatanData.length > 0")
+            tr(ng-repeat="x in kegiatanData | orderBy:sortType:sortReverse")
+                td {{ $index + 1 }}
+                td {{ x.personil.nrp }}
+                td {{ x.personil.pangkat }}
+                td {{ x.personil.name }}
+                td {{ x.personil.polsekPenugasan }}
+                td {{ x.category.name }}
+                td {{ x.startDate | date:'dd-MM-yyyy':'UTC+8' }}
+        tbody(ng-if="!kegiatanData || !kegiatanData.length")
             tr
                 td(colspan="7") No Data

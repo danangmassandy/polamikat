@@ -1,4 +1,8 @@
-var app = angular.module('polamikatApp', [ 'ngMaterial', 'ngRoute', 'chart.js' ]);
+var app = angular.module('polamikatApp', [ 'ngMaterial', 'ngRoute', 'chart.js', 'angular-thumbnails', 'xeditable', 'moment-picker' ]);
+
+app.run(function(editableOptions) {
+  editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+});
 
 app.config(function($routeProvider, $locationProvider) {
     $routeProvider

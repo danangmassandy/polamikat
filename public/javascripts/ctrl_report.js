@@ -600,8 +600,8 @@ app.controller('reportCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav
     $scope.personilList = [];
     rest.users.personilList(function(response) {
         console.log("personilList ", response);
-        if (response.data.data)
-            $scope.personilList = angular.copy(response.data.data);
+        if (response.data)
+            $scope.personilList = angular.copy(response.data);
         else
             $scope.personilList = [];
         

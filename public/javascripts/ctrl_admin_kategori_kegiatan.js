@@ -13,8 +13,8 @@ app.controller('adminKategoriKegiatanCtrl', function ($scope, $rootScope, $mdDia
     $scope.loadCategoryList = function() {
         rest.activities.categoryList(function(response){
             console.log("category ", response);
-            if (response.data.data)
-                $scope.kategoriKegiatanData = angular.copy(response.data.data);
+            if (response.data)
+                $scope.kategoriKegiatanData = angular.copy(response.data);
             else
                 $scope.kategoriKegiatanData = [];
         });

@@ -99,7 +99,12 @@ router.post('/random_activities', function(req, res) {
 });
 
 router.post('/add', function(req, res) {
-
+    log.info('activity add request ', req.body);
+    activityController.addActivity(req.body.activity, req.polamikatUser.username, function(err, result) {
+        if (err)
+            return res.fail(err);
+        res.success({data : result});
+    });
 });
 
 router.post('/update', function(req, res) {
@@ -128,6 +133,15 @@ router.post('/list_category', function(req, res) {
         if (err)
             return res.fail(err);
         log.info("list_category ", results);
+        res.success({data:results});
+    });
+});
+
+router.post('/list', function(req, res) {
+    activityController.listActivity(1, function(err, results) {
+        if (err)
+            return res.fail(err);
+        log.info("list ", results);
         res.success({data:results});
     });
 });

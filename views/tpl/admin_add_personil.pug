@@ -33,15 +33,23 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
                             input(ng-model="updatePersonil.nrp" name="nrp" type="text" required)
                 div(class="marginTop20")
                 span Tempat, Tanggal Lahir
-                div(class="marginRight20" layout="row" flex)
-                    div(layout="column" flex)
+                div(class="marginRight20" layout="row" layout-align="start start" flex)
+                    div(layout="column" flex="40" style="margin-right:20px;")
                         md-input-container(class="md-block" layout flex)
                             label Kota
                             input(ng-model="updatePersonil.birthTown" name="birthTown" type="text" required)
-                    div(layout="column" flex)
-                        md-input-container(class="md-block" layout flex)
-                            label Tanggal Lahir
-                            input(ng-model="updatePersonil.dob" name="dob" type="text" required)
+                    div(class="marginRight20" layout="column" style="margin-top:10px;" flex)
+                        div(class="input-group" moment-picker="updatePersonil.dob" format="DD-MM-YYYY" start-view="year" autoclose="true")
+                            span(class="input-group-addon")
+                                i(class="material-icons") date_range
+                            input(class="form-control"
+                                placeholder="Pilih tanggal lahir "
+                                ng-model="updatePersonil.dob"
+                                ng-model-options="{ updateOn: 'blur' }" style="height:40px;" required)
+                    //- div(layout="column" flex)
+                    //-     md-input-container(class="md-block" layout flex)
+                    //-         label Tanggal Lahir
+                    //-         input(ng-model="updatePersonil.dob" name="dob" type="text" required)
                 div(class="marginTop20")
                 div(class="marginRight20" layout flex)
                     md-input-container(class="md-block" layout flex)
