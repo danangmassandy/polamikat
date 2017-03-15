@@ -135,10 +135,10 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
                     div(layout="column" flex)
                         md-input-container(class="md-block" layout flex)
                             label Password
-                            input(ng-model="updateUser.password" name="password" type="text")
+                            input(ng-model="updateUser.password" name="password" type="password")
                         md-input-container(class="md-block" layout flex)
                             label Ulangi Password
-                            input(ng-model="updateUser.repassword" name="repassword" type="text")
+                            input(ng-model="updateUser.repassword" name="repassword" type="password")
                 div(layout="row" class="paddingTop10 paddingRight50 paddingBottom25" layout-align="end center")
                     md-button(class="plainButton" layout-align="center center" ng-click="back()" layout) Cancel
                     md-button(class="button" layout-align="center center"  ng-click="addPersonil()" layout) Save 

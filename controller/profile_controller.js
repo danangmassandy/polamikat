@@ -208,7 +208,7 @@ ProfileController.prototype.addPersonil = function addPersonil(personil, createL
             if (createLoginInfo) {
                 createKeycloakUser(createLoginInfo.username, 
                     createLoginInfo.email, data.personil.name, 
-                    data.personil.username+"123", 
+                    createLoginInfo.password, 
                     function (err, keycloakUser) {
                         if (err)
                             return callback1(err, data);
