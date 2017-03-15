@@ -32,7 +32,7 @@ var Personil = new Schema({
     updatedAt               : { type : Date, default : Date.now },
     creator                 : { type : String, default : 'System' },
     updater                 : { type : String, default : 'System' },
-    status                  : { type : String, default : 'new' }
+    status                  : { type : String, default : 'active' }
 });
 
 Personil.index({ name       : 1 });

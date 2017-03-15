@@ -38,7 +38,12 @@ router.post("/personil_list", function(req, res) {
 });
 
 router.post("/personil_list_all", function(req, res) {
-    
+    profileController.personilList(1, function (err, results) {
+        if (err)
+            return res.fail(err);
+        log.info("personil_list ", results);
+        res.success({data:results});
+    });
 });
 
 router.post("/update_personil_info", function(req, res) {

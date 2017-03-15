@@ -2,7 +2,7 @@
     h2 Kategori Kegiatan
     .marginTop40
     div(layout)
-        md-button(class="plainButton" style="margin: 0px;") Tambah Kategori Kegiatan
+        md-button(class="plainButton" style="margin: 0px;" ng-click="tambahKategori($event);") Tambah Kategori Kegiatan
     .marginTop30
     table(class="table table-bordered table-striped")
         thead
@@ -20,11 +20,11 @@
                         span Nilai
                         span(class="fa fa-caret-up" ng-show="sortType == 'user.name' && sortReverse")
                         span(class="fa fa-caret-down" ng-show="sortType == 'user.name' && !sortReverse")
-        //- tbody(ng-if="personilNilaiData && personilNilaiData.length > 0")
-        //-     tr(ng-repeat="x in personilNilaiData | orderBy:sortType:sortReverse")
-        //-         td {{ $index + 1 }}
-        //-         td.serviceName {{ x.user.name }}
-        //-         td.number {{ x.total }}
-        tbody(ng-if="!personilNilaiData || !personilNilaiData.length")
+        tbody(ng-if="kategoriKegiatanData && kategoriKegiatanData.length > 0")
+            tr(ng-repeat="x in kategoriKegiatanData | orderBy:sortType:sortReverse" ng-click="updateKategori($event, x);")
+                td {{ $index + 1 }}
+                td.serviceName {{ x.name }}
+                td.number {{ x.value }}
+        tbody(ng-if="!kategoriKegiatanData || !kategoriKegiatanData.length")
             tr
                 td(colspan="6") No Data

@@ -114,12 +114,22 @@ router.post('/detail', function(req, res) {
 
 });
 
-router.post('/list', function(req, res) {
-
+router.post('/list_by_categories', function(req, res) {
+    activityController.groupActivityCategories(function(err, results) {
+        if (err)
+            return res.fail(err);
+        log.info("list_by_categories ", results);
+        res.success({data:results});
+    });
 });
 
 router.post('/list_category', function(req, res) {
-
+    actCategoryController.list(function(err, results) {
+        if (err)
+            return res.fail(err);
+        log.info("list_category ", results);
+        res.success({data:results});
+    });
 });
 
 

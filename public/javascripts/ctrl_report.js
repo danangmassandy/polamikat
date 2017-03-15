@@ -613,8 +613,8 @@ app.controller('reportCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav
         }
     });
 
-    $scope.sortType     = 'total';
-    $scope.sortReverse  = true;
+    $scope.rankSortType     = 'total';
+    $scope.rankSortReverse  = true;
 
     $scope.personilNilaiData = [];
     rest.activities.rankPersonil(function(response) {
@@ -624,4 +624,18 @@ app.controller('reportCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav
         else
             $scope.personilNilaiData = [];
     });
+
+    $scope.giatSortType = 'lastActivity';
+    $scope.giatSortReverse = true;
+    $scope.satlantasKegiatanData = [];
+    rest.activities.listByCategory(function(response) {
+        console.log("activities list by category ", response);
+        if (response.data.data)
+            $scope.satlantasKegiatanData = angular.copy(response.data.data);
+        else
+            $scope.satlantasKegiatanData = [];
+    });
+
+
+
 });

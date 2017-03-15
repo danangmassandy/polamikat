@@ -24,22 +24,22 @@ div(class="padding20" layout="column" style="background: #F1F1F1;" flex)
                             a(href="#/")
                                 span No 
                         th 
-                            a(href="#/" ng-click="sortType = 'category.name'; sortReverse = !sortReverse;")
+                            a(href="#/" ng-click="giatSortType = 'category.name'; giatSortReverse = !giatSortReverse;")
                                 span Kategori Giat 
-                                span(class="fa fa-caret-up" ng-show="sortType == 'category.name' && sortReverse")
-                                span(class="fa fa-caret-down" ng-show="sortType == 'category.name' && !sortReverse")
+                                span(class="fa fa-caret-up" ng-show="giatSortType == 'category.name' && giatSortReverse")
+                                span(class="fa fa-caret-down" ng-show="giatSortType == 'category.name' && !giatSortReverse")
                         th 
-                            a(href="#/" ng-click="sortType = 'lastActivity'; sortReverse = !sortReverse;")
+                            a(href="#/" ng-click="giatSortType = 'lastActivity'; giatSortReverse = !giatSortReverse;")
                                 span Tanggal Terakhir Giat 
-                                span(class="fa fa-caret-up" ng-show="sortType == 'lastActivity' && sortReverse")
-                                span(class="fa fa-caret-down" ng-show="sortType == 'lastActivity' && !sortReverse")
+                                span(class="fa fa-caret-up" ng-show="giatSortType == 'lastActivity' && giatSortReverse")
+                                span(class="fa fa-caret-down" ng-show="giatSortType == 'lastActivity' && !giatSortReverse")
                         th 
-                            a(href="#/" ng-click="sortType = 'kegiatanTotal'; sortReverse = !sortReverse;")
+                            a(href="#/" ng-click="giatSortType = 'kegiatanTotal'; giatSortReverse = !giatSortReverse;")
                                 span Jumlah Giat 
-                                span(class="fa fa-caret-up" ng-show="sortType == 'kegiatanTotal' && sortReverse")
-                                span(class="fa fa-caret-down" ng-show="sortType == 'kegiatanTotal' && !sortReverse")
+                                span(class="fa fa-caret-up" ng-show="giatSortType == 'kegiatanTotal' && giatSortReverse")
+                                span(class="fa fa-caret-down" ng-show="giatSortType == 'kegiatanTotal' && !giatSortReverse")
                 tbody(ng-if="satlantasKegiatanData && satlantasKegiatanData.length > 0")
-                    tr(ng-repeat="x in satlantasKegiatanData | orderBy:sortType:sortReverse")
+                    tr(ng-repeat="x in satlantasKegiatanData | orderBy:giatSortType:giatSortReverse")
                         td {{ $index + 1 }}
                         td.serviceName {{ x.category.name }}
                         td.serviceName {{ x.lastActivity | date:'dd-MM-yyyy':'UTC+8' }}
@@ -58,17 +58,17 @@ div(class="padding20" layout="column" style="background: #F1F1F1;" flex)
                             a(href="#/")
                                 span No 
                         th 
-                            a(href="#/" ng-click="sortType = 'user.name'; sortReverse = !sortReverse;")
+                            a(href="#/" ng-click="rankSortType = 'user.name'; rankSortReverse = !rankSortReverse;")
                                 span Personil 
-                                span(class="fa fa-caret-up" ng-show="sortType == 'user.name' && sortReverse")
-                                span(class="fa fa-caret-down" ng-show="sortType == 'user.name' && !sortReverse")
+                                span(class="fa fa-caret-up" ng-show="rankSortType == 'user.name' && rankSortReverse")
+                                span(class="fa fa-caret-down" ng-show="rankSortType == 'user.name' && !rankSortReverse")
                         th 
-                            a(href="#/" ng-click="sortType = 'total'; sortReverse = !sortReverse;")
+                            a(href="#/" ng-click="rankSortType = 'total'; rankSortReverse = !rankSortReverse;")
                                 span Nilai 
-                                span(class="fa fa-caret-up" ng-show="sortType == 'total' && sortReverse")
-                                span(class="fa fa-caret-down" ng-show="sortType == 'total' && !sortReverse")
+                                span(class="fa fa-caret-up" ng-show="rankSortType == 'total' && rankSortReverse")
+                                span(class="fa fa-caret-down" ng-show="rankSortType == 'total' && !rankSortReverse")
                 tbody(ng-if="personilNilaiData && personilNilaiData.length > 0")
-                    tr(ng-repeat="x in personilNilaiData | orderBy:sortType:sortReverse"  ng-click="showPersonilRankDetail(x)")
+                    tr(ng-repeat="x in personilNilaiData | orderBy:rankSortType:rankSortReverse"  ng-click="showPersonilRankDetail(x)")
                         td {{ $index + 1 }}
                         td.serviceName {{ x.user.name }}
                         td.number {{ x.total }}

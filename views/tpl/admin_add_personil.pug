@@ -5,10 +5,10 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
                 h2 Tambah Personil
                 .marginTop20
                 div(layout-align="center center" layout="column" flex)
-                    div(class="marginBottom10" ng-hide="!updateUser.photo" ng-style="{'background':'url('+profileSrc+') center center','background-size':'cover'}" style="border-radius:50%; font-size: 150px; height: 150px; width: 150px;")
-                    md-icon(ng-hide="updateUser.photo" class="avatar"   style="font-size: 150px; height: 150px; width: 150px;") account_circle
+                    div(class="marginBottom10" ng-hide="!updatePersonil.photo" ng-style="{'background':'url('+profileSrc+') center center','background-size':'cover'}" style="border-radius:50%; font-size: 150px; height: 150px; width: 150px;")
+                    md-icon(ng-hide="updatePersonil.photo" class="avatar"   style="font-size: 150px; height: 150px; width: 150px;") account_circle
                     md-button(class="plainButton" style="margin: 0px;" ng-click="onUploadImageClicked(1)") Upload Photo
-                    input(id="image1" type="file" accept="image/*" file-upload="uploadPhotoFile" style="display: none;")
+                    input(id="image1" type="file" accept="image/*" file-upload="uploadPhotoFile" style="display:none;" )
                 div(class="marginTop30")
                 div(class="marginRight20" layout flex)
                     div(layout="column" flex)
@@ -105,7 +105,7 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
                             input(ng-model="updatePersonil.prestasiDalamTugas" name="prestasiDalamTugas" type="text")
                 div(class="marginTop20")
                 div(class="marginRight20")
-                    md-checkbox(ng-model="createUserLogin" class="plain" layout-align="center center"   ng-change="stateChanged(createUserLogin)"  ) Buat Akun Login
+                    md-checkbox(ng-model="createUserLogin" class="plain" layout-align="center center"   ng-change="stateChanged()"  ) Buat Akun Login
                 div(class="marginTop20")
                 div(class="marginRight20" ng-if="createUserLogin" layout="column" flex)
                     div(layout flex)
@@ -121,7 +121,8 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
                     div(layout="column" flex)
                         md-input-container(class="md-block" layout flex)
                             label Role
-                            input(ng-model="updateUser.role" name="role" type="text")
+                            md-select(ng-model="updateUser.role" style="margin-top: 3px;" name="role" required layout flex)
+                                md-option(ng-repeat="role in roles" value="{{role}}") {{getRoleName(role)}}
                     div(class="marginTop20")
                     div(layout="column" flex)
                         md-input-container(class="md-block" layout flex)

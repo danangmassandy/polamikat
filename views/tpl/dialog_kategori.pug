@@ -1,1 +1,19 @@
-span dialog_add_kategori
+div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
+    div(class="bold" layout="row" style="background-color: #ffffff; font-size: 14px; height: 100%;" flex)
+        ng-form(name="inputForm" layout="column" flex)
+            md-content(class="paddingTop25 paddingRight50 paddingBottom10 paddingLeft50" style="color: #636363;" flex)
+                h2(ng-if="!updateKategori._id") Tambah Kategori Kegiatan
+                h2(ng-if="updateKategori._id") Update Kategori Kegiatan
+                .marginTop20
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Kategori
+                            input(ng-model="updateKategori.name" name="name" type="text" required)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Nilai
+                            input(ng-model="updateKategori.value" name="value" type="number" required)
+                div(layout="row" class="paddingTop10 paddingRight50 paddingBottom25" layout-align="end center")
+                    md-button(class="plainButton" layout-align="center center" ng-click="back()" layout) Cancel
+                    md-button(class="button" layout-align="center center"  ng-click="saveKategori()" layout) Save 

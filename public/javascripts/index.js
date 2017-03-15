@@ -168,6 +168,19 @@ angular.module("material.components.virtualRepeat")._invokeQueue[1][2][1]().cont
     this.isVirtualRepeatUpdating_ = false;
 };
 
+app.directive('fileUpload', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var onChangeFunc = scope.$eval(attrs.fileUpload);
+
+            element.bind('change', function(){
+                onChangeFunc(element[0].files[0]);
+            });
+        }
+    };
+}]);
+
 app.controller('mainCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, $location, $timeout, $filter, $route) {
     $rootScope.me = me;
 

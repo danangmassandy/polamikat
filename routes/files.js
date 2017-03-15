@@ -56,16 +56,15 @@ router.post('/protected/:uploadedFile', function(req, res) {
 });
 
 router.post('/upload', upload.single('file'), function (req, res) {
-    var file = req.files.file[0];
+    var file = req.file;
     Vasync.waterfall([
         function(callback) {
             var uploadedFile = new Model.UploadedFile(file);
-            uploadedFile.uploader = req.polamikatUser.username;
-            uploadedFile.save(function(err, uploadedFile) {
-                if (process.env.MODE == "prod")
-                    uploadedFile.publicURL = req.protocol + "://" + req.get('host') + "/files/protected/" + uploadedFile._id;
-                else
-                    uploadedFile.publicURL = "http://localhost:3000/files/protected/" + uploadedFile._id;
+            uploadedFile.uploader = req.polamikatUser;
+            uploadedFile.save(function(err, uploadedFile, test) {
+                if (err)
+                    return callback(err);
+                uploadedFile.publicURL = "/files/protected/" + uploadedFile._id;
                 uploadedFile.key = KeyUtil.generateUploadedFileKey(uploadedFile);
                 uploadedFile.save(function(err, uploadedFile) {
                     callback(null, uploadedFile);
@@ -88,7 +87,7 @@ router.post('/upload', upload.single('file'), function (req, res) {
 });
 
 router.post('/upload_public', upload_public.single('file'), function (req, res) {
-    var file = req.files.file[0];
+    var file = req.file;
     Vasync.waterfall([
         function(callback) {
             var uploadedFile = new Model.UploadedFile(file);

@@ -1,1 +1,48 @@
-span kegiatan add
+div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
+    div(class="bold" layout="row" style="background-color: #ffffff; font-size: 14px; height: 100%;" flex)
+        ng-form(name="inputForm" layout="column" flex)
+            md-content(class="paddingTop25 paddingRight50 paddingBottom10 paddingLeft50" style="color: #636363;" flex)
+                h2 Tambah Data Kegiatan
+                .marginTop20
+                div(class="marginRight20" ng-if="me.isAdmin" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" class="paddingRight40" layout flex)
+                            label Select Personil
+                            md-select(ng-model="activity.personil" placeholder="Personil")
+                                md-option(ng-repeat="personil in personilList" value="{{personil._id}}") {{personil.name}}
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" class="paddingRight40" layout flex)
+                            label Select Kategori Kegiatan
+                            md-select(ng-model="activity.category" placeholder="Kategori" required)
+                                md-option(ng-repeat="category in categoryList" value="{{category._id}}") {{category.name}}
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Tanggal Kegiatan
+                            input(ng-model="activity.startDate" name="startDate" type="text" required)
+                div(class="marginTop15")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Catatan Kegiatan
+                            textarea(ng-model="activity.notes" name="notes")
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        label Foto Kegiatan
+                md-divider
+                div(class="marginTop10" layout="row" layout-align="end center" flex)
+                    md-button(class="plainButton" style="margin: 0px;" ng-click="onUploadImageClicked(1)") Upload Photo
+                div(class="marginTop20" layout="row" flex ng-if="!activity.photos || !activity.photos.length")
+                    span Belum ada foto yang diupload.
+                div(class="marginTop20" layout="row" layout-wrap flex ng-if="activity.photos && activity.photos.length > 0")
+                    div test
+                div(class="marginTop40")
+                div(layout="row" class="paddingTop10 paddingRight50 paddingBottom25" layout-align="end center")
+                    md-button(class="plainButton" layout-align="center center" ng-click="back()" layout) Cancel
+                    md-button(class="button" layout-align="center center"  ng-click="addPersonil()" layout) Save 
+                div(class="marginTop20")
+                        

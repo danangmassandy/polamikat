@@ -104,32 +104,6 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
                             label Prestasi Dalam Tugas
                             input(ng-model="updatePersonil.prestasiDalamTugas" name="prestasiDalamTugas" type="text")
                 div(class="marginTop20")
-                div(class="marginRight20" ng-if="addPersonil")
-                    md-checkbox(ng-model="createUserLogin" class="plain" layout-align="center center"   ng-change="stateChanged(createUserLogin)"  ) Buat Akun Login
-                div(class="marginTop20")
-                div(class="marginRight20" ng-if="createUserLogin && addPersonil" layout="column" flex)
-                    div(layout flex)
-                        div(layout="column" flex)
-                            md-input-container(class="md-block" layout flex)
-                                label Username
-                                input(ng-model="updateUser.username" name="username" type="text" required)
-                        div(layout="column" flex)
-                            md-input-container(class="md-block" layout flex)
-                                label Email
-                                input(ng-model="updateUser.email" name="email" type="text" ng-readonly="true" required)
-                    div(class="marginTop20")
-                    div(layout="column" flex)
-                        md-input-container(class="md-block" layout flex)
-                            label Role
-                            input(ng-model="updateUser.role" name="role" type="text")
-                    div(class="marginTop20")
-                    div(layout="column" flex)
-                        md-input-container(class="md-block" layout flex)
-                            label Password
-                            input(ng-model="updateUser.password" name="password" type="text")
-                        md-input-container(class="md-block" layout flex)
-                            label Ulangi Password
-                            input(ng-model="updateUser.repassword" name="repassword" type="text")
                 div(layout="row" class="paddingTop10 paddingRight50 paddingBottom25" layout-align="end center")
                     md-button(class="plainButton" layout-align="center center" ng-click="back()" layout) Cancel
                     md-button(class="button" layout-align="center center"  ng-click="addPersonil ? addPersonil() : updatePersonil()" layout) Save 

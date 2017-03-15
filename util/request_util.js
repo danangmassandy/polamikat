@@ -10,7 +10,7 @@ const log = Bunyan.createLogger({ name : "polamikat:request_util" });
 module.exports = {
     authenticate : function(req, res, next) {
         var token = req.kauth.grant.access_token;
-        log.info("token ", token);
+        // log.info("token ", token);
         Vasync.waterfall([
             function(callback) {//query for user
                 if(!token) {//token not found

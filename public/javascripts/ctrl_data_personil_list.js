@@ -1,5 +1,22 @@
 var app = angular.module('polamikatApp');
 
-app.controller('dataPersonilListCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, $timeout, $location, showMessage, globalConstant) {
+app.controller('dataPersonilListCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, $timeout, $location, showMessage, globalConstant, rest) {
+
+
+    $scope.sortType     = 'total';
+    $scope.sortReverse  = true;
+
+    $scope.personilListData = [];
+    
+    $scope.loadPersonilList = function() {
+        rest.users.personilListAll(function(response){
+            console.log("personilListAll ", response);
+            if (response.data.data)
+                $scope.personilListData = angular.copy(response.data.data.personilList);
+            else
+                $scope.personilListData = [];
+        });
+    }
+    $scope.loadPersonilList();
 
 });

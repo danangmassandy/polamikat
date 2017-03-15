@@ -1,6 +1,7 @@
 const Bunyan = require('bunyan');
 const Constants = require("../util/constants");
 const Model = require('../models/model');
+const Crypto = require('crypto');
 const Vasync = require('vasync');
 const log = Bunyan.createLogger({ name: "polamikat:profile_controller" });
 const mongoose = require('mongoose');
@@ -33,9 +34,9 @@ var requestKeycloakAccessToken = function(callback) {
         }
         
         var accessToken = jsonBody.access_token;
-        REDIS.SET(keycloakAccessTokenKey, accessToken, function(err, reply) {
+        REDIS_CLIENT.SET(keycloakAccessTokenKey, accessToken, function(err, reply) {
             // set ttl
-            REDIS.EXPIRE(keycloakAccessTokenKey, jsonBody.expires_in - 25, function(err, reply) {
+            REDIS_CLIENT.EXPIRE(keycloakAccessTokenKey, jsonBody.expires_in - 25, function(err, reply) {
                 callback(null, {accessToken});
             });
         });
@@ -45,7 +46,7 @@ var requestKeycloakAccessToken = function(callback) {
 var createKeycloakUser = function(username, email, name, pwd, callback) {
     Vasync.waterfall([
         (callback) => {
-            REDIS.GET(keycloakAccessTokenKey, function(err, accessToken) {
+            REDIS_CLIENT.GET(keycloakAccessTokenKey, function(err, accessToken) {
                 callback(null, {accessToken});
             });
         }, ({accessToken}, callback) => {
@@ -140,7 +141,7 @@ var createKeycloakUser = function(username, email, name, pwd, callback) {
 var deleteKeycloakUser = function(sub, callback) {
     Vasync.waterfall([
         (callback) => {
-            REDIS.GET(keycloakAccessTokenKey, function(err, accessToken) {
+            REDIS_CLIENT.GET(keycloakAccessTokenKey, function(err, accessToken) {
                 callback(null, {accessToken});
             });
         }, ({accessToken}, callback) => {
@@ -250,7 +251,7 @@ ProfileController.prototype.getPersonilInfo = function getPersonilInfo(personilI
         function(callback1) {
             Model.Personil.findOne({
                 _id : personilID,
-                status : Constants.STATUS_ACTIVE
+                status : { $in : [Constants.STATUS_ACTIVE] }
             }).exec(function(err, personil) {
                 if (err) {
                     log.error("error get Personil ", err);
