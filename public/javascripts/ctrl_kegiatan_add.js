@@ -37,6 +37,15 @@ app.controller('kegiatanAddCtrl', function ($scope, $rootScope, $mdDialog, $mdSi
     };
 
     $scope.addKegiatan = function() {
+        if (!me.isAdmin) {
+            if (!me.polamikatUser.personil) {
+                showMessage.error("Error", "Error anda belum mengisi data personil. Silahkan kontak system administrator.", "Ok", function(){    
+                });
+                $rootScope.back();
+                return;
+            }
+            $scope.activity.personil = me.polamikatUser.personil._id;    
+        }
         $scope.activity.startDate = moment($scope.activity.startDate, "DD-MM-YYYY HH:mm").format();
         console.log("activity ", $scope.activity);
         rest.activities.add($scope.activity, function(response) {

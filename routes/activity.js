@@ -116,7 +116,12 @@ router.post('/delete', function(req, res) {
 });
 
 router.post('/detail', function(req, res) {
-
+    activityController.details(req.body.activityID, function(err, result) {
+        if (err)
+            return res.fail(err);
+        log.info("detail ", result);
+        res.success({data:result});
+    });
 });
 
 router.post('/list_by_categories', function(req, res) {

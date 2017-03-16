@@ -51,7 +51,19 @@ app.factory('rest', function($rootScope, $http) {
                     console.log("add activity error ", response);
                     if (onError) onError(response.message);
                 });
-            }
+            },
+            detail : function(activityID, onSuccess, onError) {
+                $http.post("/activity/detail", {
+                    activityID : activityID
+                }).then(function(response) {
+                    if (response.data.status == "Ok")
+                        onSuccess(response.data);
+                    else if (onError) onError(response.message);
+                }, function(response) {
+                    console.log("add activity error ", response);
+                    if (onError) onError(response.message);
+                });
+            },
         },
         users : {
             personilList : function(onSuccess, onError) {

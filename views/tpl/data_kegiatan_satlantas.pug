@@ -1,6 +1,6 @@
 .padding20(layout="column" flex="noshrink")
     h2 Data Kegiatan Satlantas
-    .marginTop40
+    .marginTop30
     div(layout)
         md-button(class="plainButton" style="margin: 0px;" ng-click="goTo('kegiatan_add')") Tambah Kegiatan
     .marginTop30
@@ -41,7 +41,7 @@
                         span(class="fa fa-caret-up" ng-show="sortType == 'startDate' && sortReverse")
                         span(class="fa fa-caret-down" ng-show="sortType == 'startDate' && !sortReverse")
         tbody(ng-if="kegiatanData && kegiatanData.length > 0")
-            tr(ng-repeat="x in kegiatanData | orderBy:sortType:sortReverse")
+            tr(ng-repeat="x in kegiatanData | orderBy:sortType:sortReverse" ng-click="kegiatanDetail(x)")
                 td {{ $index + 1 }}
                 td {{ x.personil.nrp }}
                 td {{ x.personil.pangkat }}

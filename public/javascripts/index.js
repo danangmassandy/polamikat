@@ -39,7 +39,7 @@ app.config(function($routeProvider, $locationProvider) {
         }).when('/kegiatan_add', {
             templateUrl: '/tpl/kegiatan_add',
             controller: 'kegiatanAddCtrl',
-        }).when('/kegiatan_detail', {
+        }).when('/kegiatan_detail/:activityID', {
             templateUrl: '/tpl/kegiatan_detail',
             controller: 'kegiatanDetailCtrl',
         }).when('/kegiatan_update', {

@@ -1,1 +1,53 @@
-span kegiatan detail
+div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
+    div(class="bold" layout="row" style="background-color: #ffffff; font-size: 14px; height: 100%;" flex)
+        md-content(class="paddingTop25 paddingRight50 paddingBottom10 paddingLeft50" style="color: #636363;" flex)
+            h2 Detail Kegiatan
+            .marginTop20
+            div(class="marginRight20" ng-if="me.isAdmin" layout flex)
+                div(layout="column" flex)
+                    md-input-container(class="md-block" class="paddingRight40" layout flex)
+                        label Pilih Personil
+                        md-select(ng-model="activity.personil._id" placeholder="Personil" ng-disabled="true")
+                            md-option(ng-repeat="personil in personilList" value="{{personil._id}}") {{personil.name}}
+            div(class="marginTop20")
+            div(class="marginRight20" layout flex="60")
+                div(layout="column" flex)
+                    md-input-container(class="md-block" class="paddingRight40" layout flex)
+                        label Pilih Kategori Kegiatan
+                        md-select(ng-model="activity.category._id" placeholder="Kategori" required ng-disabled="true")
+                            md-option(ng-repeat="category in categoryList" value="{{category._id}}") {{category.name}}
+            div(class="marginTop20")
+            div(class="marginRight20" layout="column" flex="40")
+                span(style="margin-bottom:10px;") Tanggal Kegiatan
+                div(class="input-group" moment-picker="activity.startDate" format="DD-MM-YYYY HH:mm" start-view="day" autoclose="true" today="true" disable="true")
+                    span(class="input-group-addon")
+                        i(class="material-icons") date_range
+                    input(class="form-control"
+                        placeholder="Pilih tanggal kegiatan "
+                        ng-model="activity.startDate"
+                        ng-model-options="{ updateOn: 'blur' }" style="height:40px;" required ng-disabled="true")
+            div(class="marginTop20")
+            div(class="marginRight20" layout flex)
+                div(layout="column" flex)
+                    md-input-container(class="md-block" layout flex)
+                        label Catatan Kegiatan
+                        textarea(ng-model="activity.notes" name="notes" ng-disabled="true")
+            div(class="marginTop20")
+            div(class="marginRight20" layout flex)
+                div(layout="column" flex)
+                    label Foto Kegiatan
+            md-divider
+            div(class="marginTop20" layout="row" flex ng-if="!activity.photos || !activity.photos.length")
+                span Belum ada foto yang diupload.
+            div(class="marginTop20" layout="row" layout-wrap flex ng-if="activity.photos && activity.photos.length > 0")
+                div(ng-repeat="photo in activity.photos" style="margin-right:10px; margin-bottom:10px;" layout="column" layout-align="center")
+                    thumbnail(file-type="image" source="{{photo.blobURL}}" max-height="150" max-width="300")
+                    a(href="" editable-textarea="photo.description" e-rows="1" e-cols="20" edit-disabled="true") 
+                        pre {{ photo.description || 'Tambah Deskripsi' }}
+                        //- edit-disabled="true"
+            div(class="marginTop40")
+            div(layout="row" class="paddingTop10 paddingRight50 paddingBottom25" layout-align="end center")
+                md-button(class="plainButton" layout-align="center center" ng-click="back()" layout) Back
+                //- md-button(class="button" layout-align="center center"  ng-click="addKegiatan()" layout) Save 
+            div(class="marginTop20")
+                        

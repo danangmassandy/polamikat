@@ -15,4 +15,7 @@ app.controller('dataKegiatanSatlantasCtrl', function ($scope, $rootScope, $mdDia
                 function(ok) {});
     });
 
+    $scope.kegiatanDetail = function(activity) {
+        $scope.goTo('kegiatan_detail/'+activity._id);
+    }
 });
