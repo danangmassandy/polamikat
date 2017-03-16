@@ -44,7 +44,7 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
                 span Belum ada foto yang diupload.
             div(class="marginTop20" layout="row" layout-wrap flex ng-if="activity.photos && activity.photos.length > 0")
                 div(ng-repeat="photo in activity.photos" style="margin-right:10px; margin-bottom:10px;" layout="column" layout-align="center")
-                    thumbnail(file-type="image" source="{{photo.blobURL}}" max-height="150" max-width="300")
+                    thumbnail(file-type="image" source="{{photo.blobURL}}" max-height="150" max-width="300"  ng-click="showImage($event, photo)")
                     a(href="" editable-textarea="photo.description" e-rows="1" e-cols="20") 
                         pre {{ photo.description || 'Tambah Deskripsi' }}
                         //- edit-disabled="true"

@@ -5,6 +5,27 @@ app.controller('kegiatanAddCtrl', function ($scope, $rootScope, $mdDialog, $mdSi
     $scope.personilList = [];
     $scope.categoryList = [];
 
+    $scope.showImage = function($event, photo) {
+        var parentEl = angular.element(document.body);
+        $mdDialog.show({
+                parent: parentEl,
+                targetEvent: $event,
+                templateUrl: '/tpl/dialog_photo',
+                locals: {
+                    photo : photo,
+                },
+                controller: DialogController
+            });
+        function DialogController($scope, $mdDialog, photo) {
+            $scope.photo = photo;
+
+            $scope.close = function() {
+                $mdDialog.cancel();
+            }
+        }
+    }
+
+
     $scope.onUploadImageClicked = function(position) {
         $timeout(function() {
             document.getElementById('image' + (position)).click();

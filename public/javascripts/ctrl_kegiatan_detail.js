@@ -29,6 +29,26 @@ app.controller('kegiatanDetailCtrl', function ($scope, $rootScope, $mdDialog, $m
         });
     }
 
+    $scope.showImage = function($event, photo) {
+        var parentEl = angular.element(document.body);
+        $mdDialog.show({
+                parent: parentEl,
+                targetEvent: $event,
+                templateUrl: '/tpl/dialog_photo',
+                locals: {
+                    photo : photo,
+                },
+                controller: DialogController
+            });
+        function DialogController($scope, $mdDialog, photo) {
+            $scope.photo = photo;
+
+            $scope.close = function() {
+                $mdDialog.cancel();
+            }
+        }
+    }
+
     function fetchImage(photo) {
         rest.files.getImage(photo.publicURL, function(res) {
             photo.blobURL = res.blobURL;
