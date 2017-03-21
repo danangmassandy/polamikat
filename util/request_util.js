@@ -72,6 +72,7 @@ module.exports = {
             }, function (data, callback) {
                 if (data.user.personil) {
                     req.polamikatPersonilProfile = data.user.personil;
+                    req.polamikatUser.personil = data.user.personil._id;
                     callback(null, data);
                 } else {
                     if (data.isNewUser) {
@@ -90,6 +91,7 @@ module.exports = {
                                 else
                                     data.user.displayName = personil.name;
                                 data.user.personil = personil._id;
+                                req.polamikatUser.personil = personil._id;
                                 data.user.personilDataSetupAt = new Date();
                                 data.user.save(function(err, user) {
                                     if (err)

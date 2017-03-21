@@ -61,6 +61,7 @@ app.controller('kegiatanDetailCtrl', function ($scope, $rootScope, $mdDialog, $m
             }
             $scope.activity = angular.copy(response.data);
             $scope.activity.startDate = moment($scope.activity.startDate).toDate();
+            $scope.isOwner = $rootScope.me.isAdmin || ($rootScope.me.polamikatUser.personil == $scope.activity.personil._id);
             if ($scope.activity.photos) {
                 for (var i = 0; i < $scope.activity.photos.length;++i) {
                     $rootScope.fetchImage($scope.activity.photos[i]);

@@ -3,17 +3,17 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
         md-content(class="paddingTop25 paddingRight50 paddingBottom10 paddingLeft50" style="color: #636363;" flex)
             h2 Detail Kegiatan
             .marginTop20
-            div(class="marginRight20" ng-if="me.isAdmin" layout flex)
+            div(class="marginRight20" ng-if="!$scope.isOwner" layout flex)
                 div(layout="column" flex)
                     md-input-container(class="md-block" class="paddingRight40" layout flex)
-                        label Pilih Personil
+                        label Personil
                         md-select(ng-model="activity.personil._id" placeholder="Personil" ng-disabled="true")
                             md-option(ng-repeat="personil in personilList" value="{{personil._id}}") {{personil.name}}
             div(class="marginTop20")
             div(class="marginRight20" layout flex="60")
                 div(layout="column" flex)
                     md-input-container(class="md-block" class="paddingRight40" layout flex)
-                        label Pilih Kategori Kegiatan
+                        label Kategori Kegiatan
                         md-select(ng-model="activity.category._id" placeholder="Kategori" required ng-disabled="true")
                             md-option(ng-repeat="category in categoryList" value="{{category._id}}") {{category.name}}
             div(class="marginTop20")
@@ -23,7 +23,7 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
                     span(class="input-group-addon")
                         i(class="material-icons") date_range
                     input(class="form-control"
-                        placeholder="Pilih tanggal kegiatan "
+                        placeholder="Tanggal kegiatan "
                         ng-model="activity.startDate"
                         ng-model-options="{ updateOn: 'blur' }" style="height:40px;" required ng-disabled="true")
             div(class="marginTop20")

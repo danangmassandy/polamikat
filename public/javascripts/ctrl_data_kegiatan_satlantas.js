@@ -16,6 +16,14 @@ app.controller('dataKegiatanSatlantasCtrl', function ($scope, $rootScope, $mdDia
     });
 
     $scope.kegiatanDetail = function(activity) {
-        $scope.goTo('kegiatan_detail/'+activity._id);
+        if($rootScope.me.isAdmin){
+            $scope.goTo('kegiatan_update/'+activity._id);
+        } else {
+            if ($rootScope.me.polamikatUser.personil == activity.personil._id) {
+                $scope.goTo('kegiatan_update/'+activity._id);
+            } else {
+                $scope.goTo('kegiatan_detail/'+activity._id);
+            }
+        }
     }
 });

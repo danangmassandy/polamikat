@@ -42,7 +42,7 @@ app.config(function($routeProvider, $locationProvider) {
         }).when('/kegiatan_detail/:activityID', {
             templateUrl: '/tpl/kegiatan_detail',
             controller: 'kegiatanDetailCtrl',
-        }).when('/kegiatan_update', {
+        }).when('/kegiatan_update/:activityID', {
             templateUrl: '/tpl/kegiatan_update',
             controller: 'kegiatanUpdateCtrl',
         }).when('/personil_user_data', {

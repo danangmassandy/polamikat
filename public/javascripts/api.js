@@ -64,6 +64,30 @@ app.factory('rest', function($rootScope, $http) {
                     if (onError) onError(response.message);
                 });
             },
+            update : function(activity, onSuccess, onError) {
+                $http.post("/activity/update", {
+                    activity : activity
+                }).then(function(response) {
+                    if (response.data.status == "Ok")
+                        onSuccess(response.data);
+                    else if (onError) onError(response.message);
+                }, function(response) {
+                    console.log("update activity error ", response);
+                    if (onError) onError(response.message);
+                });
+            },
+            delete : function(activityID, onSuccess, onError) {
+                $http.post("/activity/delete", {
+                    activityID : activityID
+                }).then(function(response) {
+                    if (response.data.status == "Ok")
+                        onSuccess(response.data);
+                    else if (onError) onError(response.message);
+                }, function(response) {
+                    console.log("update activity error ", response);
+                    if (onError) onError(response.message);
+                });
+            },
         },
         users : {
             personilList : function(onSuccess, onError) {

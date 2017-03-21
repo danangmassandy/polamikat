@@ -24,7 +24,7 @@ ActivityController.prototype.details = function details(activityId, callback) {
         select  : 'name pangkat nrp wilayahPenugasan unit'
     }).populate({
         path    : 'photos',
-        select  : 'description publicURL contentType type mimetype'
+        select  : 'key description publicURL contentType type mimetype'
     }).exec(function(err, activity) {
         callback(err, activity);
     });
@@ -134,7 +134,7 @@ ActivityController.prototype.updateActivity = function updateActivity(activity, 
                 _id     : activity.category,
                 status  : Constants.STATUS_ACTIVE
             }).exec(function(err, newCategory) {
-                if (err || newCategory) {
+                if (err || !newCategory) {
                     log.error("Invalid category to update activity : ", err);
                     return callback1("Invalid category.");
                 }
@@ -192,7 +192,7 @@ ActivityController.prototype.updateActivity = function updateActivity(activity, 
                 if (err)
                     log.error("updating activity photos error ", err);
                 callback1(null, {
-                    category            : data.newCategory,
+                    newCategory            : data.newCategory,
                     activityDoc         : data.activityDoc,
                     newActivityPhotos   : newActivityPhotos
                 });

@@ -108,11 +108,21 @@ router.post('/add', function(req, res) {
 });
 
 router.post('/update', function(req, res) {
-
+    log.info('activity update request ', req.body);
+    activityController.updateActivity(req.body.activity, req.polamikatUser.username, function(err, result) {
+        if (err)
+            return res.fail(err);
+        res.success({data : result});
+    });
 });
 
 router.post('/delete', function(req, res) {
-
+    log.info('activity delete request ', req.body);
+    activityController.deleteActivities([req.body.activityID], req.polamikatUser.username, function(err, result) {
+        if (err)
+            return res.fail(err);
+        res.success({data : result});
+    });
 });
 
 router.post('/detail', function(req, res) {
