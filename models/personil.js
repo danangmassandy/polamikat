@@ -20,7 +20,7 @@ var Personil = new Schema({
     nrp                     : String,
     pangkat                 : String,
     wilayahPenugasan        : String,
-    polsekPenugasan         : String,
+    unit                    : String,
     skep                    : String,
     dikum                   : String,
     dikjur                  : String,
@@ -39,7 +39,7 @@ Personil.index({ name       : 1 });
 Personil.index({ dob       : 1 });
 Personil.index({ status    : 1 });
 Personil.index({ wilayahPenugasan       : 1 });
-Personil.index({ polsekPenugasan       : 1 });
+Personil.index({ unit       : 1 });
 Personil.index({ pangkat       : 1 });
 
 /* EXPORTS */

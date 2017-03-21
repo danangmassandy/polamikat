@@ -376,7 +376,7 @@ ProfileController.prototype.updatePersonilInfo = function updatePersonilInfo(per
                         nrp                 : personil.nrp,
                         pangkat             : personil.pangkat,
                         wilayahPenugasan    : personil.wilayahPenugasan,
-                        polsekPenugasan     : personil.polsekPenugasan,
+                        unit                : personil.unit,
                         skep                : personil.skep,
                         dikum               : personil.dikum,
                         dikjur              : personil.dikjur,

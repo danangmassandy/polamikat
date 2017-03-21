@@ -11,38 +11,38 @@
                     a(href="")
                         span No
                 th 
-                    a(href="" ng-click="sortType = 'nrp'; sortReverse = !sortReverse;")
-                        span NRP 
-                        span(class="fa fa-caret-up" ng-show="sortType == 'nrp' && sortReverse")
-                        span(class="fa fa-caret-down" ng-show="sortType == 'nrp' && !sortReverse")
+                    a(href="" ng-click="sortType = 'name'; sortReverse = !sortReverse;")
+                        span Nama 
+                        span(class="fa fa-caret-up" ng-show="sortType == 'name' && sortReverse")
+                        span(class="fa fa-caret-down" ng-show="sortType == 'name' && !sortReverse")
                 th 
                     a(href="" ng-click="sortType = 'pangkat'; sortReverse = !sortReverse;")
                         span Pangkat
                         span(class="fa fa-caret-up" ng-show="sortType == 'pangkat' && sortReverse")
                         span(class="fa fa-caret-down" ng-show="sortType == 'pangkat' && !sortReverse")
                 th 
-                    a(href="" ng-click="sortType = 'name'; sortReverse = !sortReverse;")
-                        span Nama 
-                        span(class="fa fa-caret-up" ng-show="sortType == 'name' && sortReverse")
-                        span(class="fa fa-caret-down" ng-show="sortType == 'name' && !sortReverse")
+                    a(href="" ng-click="sortType = 'nrp'; sortReverse = !sortReverse;")
+                        span NRP 
+                        span(class="fa fa-caret-up" ng-show="sortType == 'nrp' && sortReverse")
+                        span(class="fa fa-caret-down" ng-show="sortType == 'nrp' && !sortReverse")
                 th 
-                    a(href="" ng-click="sortType = 'polsekPenugasan'; sortReverse = !sortReverse;")
-                        span Polsek
-                        span(class="fa fa-caret-up" ng-show="sortType == 'polsekPenugasan' && sortReverse")
-                        span(class="fa fa-caret-down" ng-show="sortType == 'polsekPenugasan' && !sortReverse")
+                    a(href="" ng-click="sortType = 'unit'; sortReverse = !sortReverse;")
+                        span Unit
+                        span(class="fa fa-caret-up" ng-show="sortType == 'unit' && sortReverse")
+                        span(class="fa fa-caret-down" ng-show="sortType == 'unit' && !sortReverse")
                 th 
-                    a(href="" ng-click="sortType = 'wilayahPenugasan'; sortReverse = !sortReverse;")
-                        span Penugasan
-                        span(class="fa fa-caret-up" ng-show="sortType == 'wilayahPenugasan' && sortReverse")
-                        span(class="fa fa-caret-down" ng-show="sortType == 'wilayahPenugasan' && !sortReverse")
+                    a(href="" ng-click="sortType = 'mobile'; sortReverse = !sortReverse;")
+                        span No HP
+                        span(class="fa fa-caret-up" ng-show="sortType == 'mobile' && sortReverse")
+                        span(class="fa fa-caret-down" ng-show="sortType == 'mobile' && !sortReverse")
         tbody(ng-if="personilListData && personilListData.length > 0")
             tr(ng-repeat="x in personilListData | orderBy:sortType:sortReverse")
                 td {{ $index + 1 }}
-                td {{ x.nrp }}
-                td {{ x.pangkat }}
                 td.serviceName {{ x.name }}
-                td {{ x.polsekPenugasan }}
-                td {{ x.wilayahPenugasan }}
+                td {{ x.pangkat }}
+                td {{ x.nrp }}
+                td {{ x.unit }}
+                td {{ x.mobile }}
         tbody(ng-if="!personilListData || !personilListData.length")
             tr
                 td(colspan="6") No Data

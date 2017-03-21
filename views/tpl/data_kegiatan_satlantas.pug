@@ -26,10 +26,10 @@
                         span(class="fa fa-caret-up" ng-show="sortType == 'personil.name' && sortReverse")
                         span(class="fa fa-caret-down" ng-show="sortType == 'personil.name' && !sortReverse")
                 th 
-                    a(href="" ng-click="sortType = 'personil.polsekPenugasan'; sortReverse = !sortReverse;")
+                    a(href="" ng-click="sortType = 'personil.unit'; sortReverse = !sortReverse;")
                         span Polsek
-                        span(class="fa fa-caret-up" ng-show="sortType == 'personil.polsekPenugasan' && sortReverse")
-                        span(class="fa fa-caret-down" ng-show="sortType == 'personil.polsekPenugasan' && !sortReverse")
+                        span(class="fa fa-caret-up" ng-show="sortType == 'personil.unit' && sortReverse")
+                        span(class="fa fa-caret-down" ng-show="sortType == 'personil.unit' && !sortReverse")
                 th 
                     a(href="" ng-click="sortType = 'category.name'; sortReverse = !sortReverse;")
                         span Kegiatan
@@ -46,7 +46,7 @@
                 td {{ x.personil.nrp }}
                 td {{ x.personil.pangkat }}
                 td {{ x.personil.name }}
-                td {{ x.personil.polsekPenugasan }}
+                td {{ x.personil.unit }}
                 td {{ x.category.name }}
                 td {{ x.startDate | date:'dd-MM-yyyy':'UTC+8' }}
         tbody(ng-if="!kegiatanData || !kegiatanData.length")

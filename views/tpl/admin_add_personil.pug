@@ -54,7 +54,8 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
                 div(class="marginRight20" layout flex)
                     md-input-container(class="md-block" layout flex)
                         label Jenis Kelamin
-                        input(ng-model="updatePersonil.gender" name="gender" type="text" required)
+                        md-select(ng-model="updatePersonil.gender" style="margin-top: 0px;" name="gender" required layout flex)
+                            md-option(ng-repeat="gender in genders" value="{{gender}}") {{gender}}
                     md-input-container(class="md-block" layout flex)
                         label Agama
                         input(ng-model="updatePersonil.religion" name="religion" type="text" required)
@@ -69,22 +70,22 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
                     div(layout="column" flex)
                         md-input-container(class="md-block" layout flex)
                             label Handphone
-                            input(ng-model="updatePersonil.mobile" name="mobile" type="text")
+                            input(ng-model="updatePersonil.mobile" name="mobile" type="text" required)
                 div(class="marginTop20")
                 div(class="marginRight20" layout flex)
                     div(layout="column" flex)
                         md-input-container(class="md-block" layout flex)
-                            label Polsek
-                            input(ng-model="updatePersonil.polsekPenugasan" name="polsekPenugasan" type="text" required)
+                            label Unit
+                            input(ng-model="updatePersonil.unit" name="unit" type="text" required)
                     div(layout="column" flex)
                         md-input-container(class="md-block" layout flex)
                             label Wilayah
-                            input(ng-model="updatePersonil.wilayahPenugasan" name="wilayahPenugasan" type="text" required)
+                            input(ng-model="updatePersonil.wilayahPenugasan" name="wilayahPenugasan" type="text" ng-disabled="true")
                 div(class="marginRight20" layout flex)
                     div(layout="column" flex)
                         md-input-container(class="md-block" layout flex)
                             label Skep
-                            input(ng-model="updatePersonil.skep" name="skep" type="text")
+                            input(ng-model="updatePersonil.skep" name="skep" type="text" ng-disabled="true")
                 div(class="marginTop20")
                 div(class="marginRight20" layout flex)
                     div(layout="column" flex)

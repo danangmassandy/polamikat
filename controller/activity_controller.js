@@ -21,7 +21,7 @@ ActivityController.prototype.details = function details(activityId, callback) {
         select  : 'name value'
     }).populate({
         path    : 'personil',
-        select  : 'name pangkat nrp wilayahPenugasan polsekPenugasan'
+        select  : 'name pangkat nrp wilayahPenugasan unit'
     }).populate({
         path    : 'photos',
         select  : 'description publicURL contentType type mimetype'

@@ -37,7 +37,7 @@ app.controller('adminAddPersonilCtrl', function ($scope, $rootScope, $mdDialog, 
             $rootScope.back();
         });
     }
-
+    $scope.genders = ["Laki-laki", "Perempuan"];
     $scope.roles = [ "user", "administrator" ];
 
     $scope.getRoleName = function(v) {
