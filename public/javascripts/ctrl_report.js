@@ -642,6 +642,16 @@ var getLabelActivityRankChart = function(data) {
 
 app.controller('reportCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, $timeout, $location, showMessage, rest, globalConstant) {
     $rootScope.selectedMenu = 'report';
+
+
+    $scope.rankSortType     = 'total';
+    $scope.rankSortReverse  = true;
+    $scope.personilNilaiData = [];
+    $scope.giatSortType = 'lastActivity';
+    $scope.giatSortReverse = true;
+    $scope.satlantasKegiatanData = [];
+
+
     /* Chart*/
     $scope.activitiesChart = {
         labels : [],
@@ -838,6 +848,10 @@ app.controller('reportCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav
         rest.activities.listByCategory(function(response) {
             console.log("recallActivitySummaryChart ", response);
             $scope.initActivitySummaryChart(response.data.data);
+            if (response.data.data)
+                $scope.satlantasKegiatanData = angular.copy(response.data.data);
+            else
+                $scope.satlantasKegiatanData = [];
         });
     }
 
@@ -929,6 +943,10 @@ app.controller('reportCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav
         rest.activities.rankPersonil(function(response) {
             console.log("recallActivityRankChart ", response);
             $scope.initActivityRankChart(response.data.data);
+            if (response.data.data)
+                $scope.personilNilaiData = angular.copy(response.data.data);
+            else
+                $scope.personilNilaiData = [];
         });
     }
     // init

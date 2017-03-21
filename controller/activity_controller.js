@@ -416,7 +416,7 @@ ActivityController.prototype.groupActivityCategories = function groupActivityCat
             }
         },
         {
-            $sort : { "category.value" : -1 }
+            $sort : { "kegiatanTotal" : -1 }
         }
     ]).exec(function(err, results) {
         callback(err, results);
