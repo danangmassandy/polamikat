@@ -161,5 +161,14 @@ router.post('/list', function(req, res) {
     });
 });
 
+router.post('/photos', function(req, res) {
+    activityController.getPhotos(function(err, results) {
+        if (err)
+            return res.fail(err);
+        log.info("list photos ", results);
+        res.success({data:results});
+    });
+});
+
 
 module.exports = router;

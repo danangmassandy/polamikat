@@ -23,8 +23,11 @@ block menu
                 div(ng-class="selectedMenu == 'data_kegiatan_satlantas' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('data_kegiatan_satlantas')")
                     div Data Kegiatan Satlantas
                     div(flex)
+                div(ng-class="selectedMenu == 'admin_photos_kegiatan' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('admin_photos_kegiatan')")
+                    div Foto Kegiatan Satlantas
+                    div(flex)
                 div(ng-class="selectedMenu == 'admin_kategori_kegiatan' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('admin_kategori_kegiatan')" ng-if="isAdmin")
-                    div Edit Kategori Kegiatan Personil
+                    div Kategori Kegiatan Personil
                     div(flex)
                 div(ng-class="selectedMenu == 'personil_user_data' ? 'selected' : 'notSelected'" layout="row" layout-align="center center" ng-click="goTo('personil_user_data')")
                     div Profil Saya
@@ -50,6 +53,7 @@ block script
     script(src="/javascripts/ctrl_admin_data_user.js")
     script(src="/javascripts/ctrl_admin_kategori_kegiatan.js")
     script(src="/javascripts/ctrl_admin_update_personil.js")
+    script(src="/javascripts/ctrl_admin_photos_kegiatan.js")
     script(src="/javascripts/ctrl_data_kegiatan_personil.js")
     script(src="/javascripts/ctrl_data_kegiatan_satlantas.js")
     script(src="/javascripts/ctrl_data_personil_list.js")

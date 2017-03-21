@@ -27,6 +27,9 @@ app.config(function($routeProvider, $locationProvider) {
         }).when('/admin_update_personil/:personilID', {
             templateUrl: '/tpl/admin_update_personil',
             controller: 'adminUpdatePersonilCtrl',
+        }).when('/admin_photos_kegiatan', {
+            templateUrl: '/tpl/admin_photos_kegiatan',
+            controller: 'adminPhotosKegiatanCtrl',
         }).when('/data_kegiatan_personil', {
             templateUrl: '/tpl/data_kegiatan_personil',
             controller: 'dataKegiatanPersonilCtrl',

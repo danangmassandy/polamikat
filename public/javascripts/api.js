@@ -88,6 +88,16 @@ app.factory('rest', function($rootScope, $http) {
                     if (onError) onError(response.message);
                 });
             },
+            photos : function(onSuccess, onError) {
+                $http.post("/activity/photos", {}).then(function(response) {
+                    if (response.data.status == "Ok")
+                        onSuccess(response.data);
+                    else if (onError) onError(response.message);
+                }, function(response) {
+                    console.log("photos activity error ", response);
+                    if (onError) onError(response.message);
+                });
+            },
         },
         users : {
             personilList : function(onSuccess, onError) {

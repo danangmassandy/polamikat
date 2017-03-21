@@ -433,4 +433,43 @@ ActivityController.prototype.groupActivityCategories = function groupActivityCat
     });
 }
 
+ActivityController.prototype.getPhotos = function getPhotos(callback) {
+    Model.Activity.aggregate([
+        {
+            $match : { 
+                status : Constants.STATUS_ACTIVE,
+                photos : { $ne : null }
+            }
+        },
+        {
+            $unwind : "$photos"
+        },
+        {
+            $lookup : {
+                from : "uploadedfiles",
+                localField : "photos",
+                foreignField : "_id",
+                as : "photos"
+            }
+        },
+        {
+            $unwind : "$photos"
+        },
+        {
+            $project : {
+                _id : 0,
+                key : "$photos.key",
+                description : "$photos.description",
+                publicURL : "$photos.publicURL",
+                createdAt : "$photos.createdAt"
+            }
+        },
+        {
+            $sort : { createdAt : -1 }
+        }
+    ]).exec(function(err, results) {
+        callback(err, results);
+    });
+}
+
 module.exports = ActivityController;
