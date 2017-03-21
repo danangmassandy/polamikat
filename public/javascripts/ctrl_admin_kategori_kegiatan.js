@@ -26,6 +26,22 @@ app.controller('adminKategoriKegiatanCtrl', function ($scope, $rootScope, $mdDia
         if (!isAdd) {
             $scope.updateKategori = angular.copy(existingCategory);
         }
+        $scope.doDeleteKategori = function() {
+            showMessage.confirm("Konfirm Delete Kategori", "Anda yakin untuk delete kategori kegiatan?", "Ok", "Cancel", function(){
+                $scope.updateKategori.status = "inactive";
+                rest.admin.updateKategoriKegiatan($scope.updateKategori, function(response) {
+                    parentScope.loadCategoryList();
+                    $mdDialog.cancel(); 
+                }, function(response) {
+                    parentScope.loadCategoryList();
+                    showMessage.success("Error", "Error Update Kategori. Coba Lagi!", "Ok", function() {
+                        $mdDialog.cancel();
+                    });
+                });
+            }, function(){
+                $mdDialog.cancel();
+            });
+        }
         $scope.saveKategori = function() {
             if (isAdd) {
                 rest.admin.addKategoriKegiatan($scope.updateKategori, function(response) {

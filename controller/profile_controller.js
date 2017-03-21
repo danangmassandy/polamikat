@@ -312,6 +312,23 @@ ProfileController.prototype.deactivatePersonil = function deactivatePersonil(per
                 callback1(null, data);
             });
         }, function(data, callback1) {
+            Model.Activity.update({
+                personil : data.personil._id,
+                status : Constants.STATUS_ACTIVE
+            },
+            {
+                $set : {
+                    status : Constants.STATUS_INACTIVE,
+                    updatedAt : new Date(),
+                    updater : userName
+                }
+            },
+            {
+                multi : true
+            }).exec(function(err, results) {
+                callback1(err, data);
+            });
+        }, function(data, callback1) {
             // disable login keycloak
             Model.User.findOne({
                 personil : data.personil._id,

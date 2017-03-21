@@ -14,6 +14,10 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
                         md-input-container(class="md-block" layout flex)
                             label Nilai
                             input(ng-model="updateKategori.value" name="value" type="number" required)
-                div(layout="row" class="paddingTop10 paddingRight50 paddingBottom25" layout-align="end center")
-                    md-button(class="plainButton" layout-align="center center" ng-click="back()" layout) Cancel
-                    md-button(class="button" layout-align="center center"  ng-click="saveKategori()" layout) Save 
+                div(layout="row" class="paddingTop10 paddingBottom25" layout-align="end center")
+                    div(layout="row" layout-align="start center" ng-if="updateKategori._id")
+                        md-button(class="plainButton" layout-align="center center" ng-click="doDeleteKategori()" layout) Delete
+                        .marginLeft50
+                    div(layout="row" layout-align="end center")
+                        md-button(class="plainButton" layout-align="center center" ng-click="back()" layout) Cancel
+                        md-button(class="button" layout-align="center center"  ng-click="saveKategori()" layout) Save 

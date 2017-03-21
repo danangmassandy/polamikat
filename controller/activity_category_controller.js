@@ -32,11 +32,36 @@ ActivityCategoryController.prototype.update = function update(category, isAdd, u
                 callback(err, newActivityCategory);
             });
         } else if (!isAdd) {
-            activityCategory.value = category.value;
-            activityCategory.updatedAt = new Date();
-            activityCategory.creator = userName;
-            activityCategory.status = category.status;
-            activityCategory.save(function(err, activityCategory) {
+            Vasync.waterfall([
+                function(cb) {
+                    activityCategory.value = category.value;
+                    activityCategory.updatedAt = new Date();
+                    activityCategory.updater = userName;
+                    activityCategory.status = category.status;
+                    activityCategory.save(function(err, activityCategory) {
+                        cb(null, activityCategory);
+                    });
+                }, function(activityCategory, cb) {
+                    if (category.status != Constants.STATUS_INACTIVE)
+                        return cb(null, activityCategory);
+                    Model.Activity.update({
+                        category : activityCategory._id,
+                        status : Constants.STATUS_ACTIVE
+                    },
+                    {
+                        $set : {
+                            status : category.status,
+                            updatedAt : new Date(),
+                            updater : userName
+                        }
+                    },
+                    {
+                        multi : true
+                    }).exec(function(err, results1) {
+                        cb(err, activityCategory);
+                    });
+                }
+            ], function(err, activityCategory) {
                 callback(err, activityCategory);
             });
         } else {

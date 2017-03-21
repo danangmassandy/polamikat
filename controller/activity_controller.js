@@ -59,6 +59,8 @@ ActivityController.prototype.addActivity = function addActivity(activity, userNa
                 });
             });
         }, function(data, callback1) {
+            if (!activity.photos || activity.photos.length == 0)
+                return callback1(null, data);
             var newActivityPhotos = [];
             Vasync.forEachPipeline({
                 'func' : function (inputPhoto, callback2) {
@@ -143,6 +145,11 @@ ActivityController.prototype.updateActivity = function updateActivity(activity, 
             });
         }, function(data, callback1) {
             var newActivityPhotos = [];
+            if (!data.activityDoc.photos || data.activityDoc.photos.length == 0) {
+                data.newActivityPhotos = [];
+                return callback1(null, data);
+            }
+                
             Vasync.forEachPipeline({
                 'func' : function (photo, callback2) {
                     var updatedPhoto = null;
@@ -191,6 +198,9 @@ ActivityController.prototype.updateActivity = function updateActivity(activity, 
                 });
             });
         }, function(data, callback1) {
+            if (!activity.photos || activity.photos.length == 0) {
+                return callback1(null, data);
+            }
             // iterate through input photos
             Vasync.forEachPipeline({
                 'func' : function (inputPhoto, callback2) {
@@ -325,7 +335,7 @@ ActivityController.prototype.rankActivities = function rankActivities(callback) 
         },
         {
             $unwind : "$personil"
-        },  
+        },
         {
             $lookup : {
                 from : "activitycategories",

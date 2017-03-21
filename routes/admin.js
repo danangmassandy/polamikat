@@ -81,9 +81,4 @@ router.post('/update_category', function(req, res) {
     });
 });
 
-// delete category
-router.post('/delete_category', function(req, res) {
-    
-});
-
 module.exports = router;
