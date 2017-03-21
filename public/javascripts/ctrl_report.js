@@ -717,7 +717,7 @@ app.controller('reportCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav
             var label = getLabelActivitiesChart(data[i]);
             labels.push(label);
             data1.push(data[i].total);
-            backgroundColor.push('rgb(59, 191, 189)');
+            backgroundColor.push('rgb(30, 66, 199)');
         }
         $scope.activitiesChart.labels = labels;
         $scope.activitiesChart.data = data1;
@@ -827,7 +827,7 @@ app.controller('reportCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav
             var label = getLabelActivitySummaryChart(data[i]);
             labels.push(label);
             data1.push(data[i].kegiatanTotal);
-            backgroundColor.push('rgb(59, 191, 189)');
+            backgroundColor.push('rgb(225, 149, 18)');
         }
         $scope.activitySummaryChart.labels = labels;
         $scope.activitySummaryChart.data = data1;
