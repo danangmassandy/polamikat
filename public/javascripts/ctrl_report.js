@@ -606,10 +606,10 @@ var activityRankCustomTooltips = function(tooltip) {
     tooltipEl.style.opacity = 1;
     tooltipEl.classList.remove('tooltipDivRight');
     tooltipEl.classList.remove('tooltipDivLeft');
-    if (position.left + tooltip.caretX + 200 + 12 >= position.right) {
-        if (position.left + tooltip.caretX - 230 > 0) {
+    if (position.left + tooltip.caretX + 300 + 12 >= position.right) {
+        if (position.left + tooltip.caretX - 330 > 0) {
             tooltipEl.classList.add('tooltipDivRight');
-            tooltipEl.style.left = position.left + tooltip.caretX - 230 + 'px';
+            tooltipEl.style.left = position.left + tooltip.caretX - 330 + 'px';
         } else {
             tooltipEl.classList.add('tooltipDivLeft');
             tooltipEl.style.left = position.left + tooltip.caretX + 'px';
@@ -621,7 +621,7 @@ var activityRankCustomTooltips = function(tooltip) {
     
     // fix position.top because getBoundingClientRect gets values with respect to the window
     tooltipEl.style.top = position.top + window.scrollY + tooltip.caretY + 'px';
-    tooltipEl.style.width = "200px";
+    tooltipEl.style.width = "300px";
     tooltipEl.style.fontFamily = tooltip._fontFamily;
     tooltipEl.style.fontSize = tooltip.fontSize;
     tooltipEl.style.fontStyle = tooltip._fontStyle;
@@ -816,7 +816,7 @@ app.controller('reportCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav
         for (var i = 0; i < data.length; ++i) {
             var label = getLabelActivitySummaryChart(data[i]);
             labels.push(label);
-            data1.push(data[i].total);
+            data1.push(data[i].kegiatanTotal);
             backgroundColor.push('rgb(59, 191, 189)');
         }
         $scope.activitySummaryChart.labels = labels;
