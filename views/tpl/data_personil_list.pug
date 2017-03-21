@@ -36,7 +36,7 @@
                         span(class="fa fa-caret-up" ng-show="sortType == 'mobile' && sortReverse")
                         span(class="fa fa-caret-down" ng-show="sortType == 'mobile' && !sortReverse")
         tbody(ng-if="personilListData && personilListData.length > 0")
-            tr(ng-repeat="x in personilListData | orderBy:sortType:sortReverse")
+            tr(ng-repeat="x in personilListData | orderBy:sortType:sortReverse"  ng-click="personilClick(x)")
                 td {{ $index + 1 }}
                 td.serviceName {{ x.name }}
                 td {{ x.pangkat }}

@@ -253,7 +253,11 @@ ProfileController.prototype.getPersonilInfo = function getPersonilInfo(personilI
             Model.Personil.findOne({
                 _id : personilID,
                 status : { $in : [Constants.STATUS_ACTIVE] }
-            }).exec(function(err, personil) {
+            }).populate({
+                path : 'photo',
+                select : 'key publicURL'
+            })
+            .exec(function(err, personil) {
                 if (err) {
                     log.error("error get Personil ", err);
                     return callback1(err);

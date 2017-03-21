@@ -19,4 +19,10 @@ app.controller('dataPersonilListCtrl', function ($scope, $rootScope, $mdDialog, 
     }
     $scope.loadPersonilList();
 
+    $scope.personilClick = function(personil) {
+        if($rootScope.me.isAdmin){
+            $scope.goTo('admin_update_personil/'+personil._id);
+        }
+    }
+
 });

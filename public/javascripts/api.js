@@ -80,6 +80,30 @@ app.factory('rest', function($rootScope, $http) {
                 $http.post("/user/personil_list_all", {}).then(function(response) {
                     onSuccess(response);
                 });
+            },
+            personilDetail : function(personilID, onSuccess, onError) {
+                $http.post("/user/personil_detail", {
+                    personilID : personilID
+                }).then(function(response) {
+                    if (response.data.status == "Ok")
+                        onSuccess(response.data);
+                    else if (onError) onError(response.data.message);
+                }, function(response) {
+                    console.log('Error personil_detail');
+                    if(onError) onError(response.data.message);
+                });
+            },
+            updatePersonil : function(personil, onSuccess, onError) {
+                $http.post("/user/update_personil_info", {
+                    personil : personil
+                }).then(function(response) {
+                    if (response.data.status == "Ok")
+                        onSuccess(response);
+                    else if (onError) onError(response.message);
+                }, function(response) {
+                    console.log("add personil error ", response);
+                    if (onError) onError(response.message);
+                });
             }
         },
         admin : {
@@ -117,6 +141,18 @@ app.factory('rest', function($rootScope, $http) {
                     else if (onError) onError(response);
                 }, function(response) {
                     console.log("updateKategoriKegiatan error ", response);
+                    if (onError) onError(response);
+                });
+            },
+            deletePersonil : function(personilID, onSuccess, onError) {
+                $http.post("/admin/delete_personil", {
+                    personilID : personilID
+                }).then(function(response) {
+                    if (response.data.status == "Ok")
+                        onSuccess(response);
+                    else if (onError) onError(response);
+                }, function(response) {
+                    console.log("deletePersonil error ", response);
                     if (onError) onError(response);
                 });
             }

@@ -1,1 +1,117 @@
-span admin_update_personil
+div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
+    div(class="bold" layout="row" style="background-color: #ffffff; font-size: 14px; height: 100%;" flex)
+        ng-form(name="inputForm" layout="column" flex)
+            md-content(class="paddingTop25 paddingRight50 paddingBottom10 paddingLeft50" style="color: #636363;" flex)
+                h2 Update Personil
+                .marginTop20
+                div(layout-align="center center" layout="column" flex)
+                    div(class="marginBottom10" ng-hide="!updatePersonil.photo" ng-style="{'background':'url('+profileSrc+') center center','background-size':'cover'}" style="border-radius:50%; font-size: 150px; height: 150px; width: 150px;")
+                    md-icon(ng-hide="updatePersonil.photo" class="avatar"   style="font-size: 150px; height: 150px; width: 150px;") account_circle
+                    md-button(class="plainButton" style="margin: 0px;" ng-click="onUploadImageClicked(1)") Upload Photo
+                    input(id="image1" type="file" accept="image/*" file-upload="uploadPhotoFile" style="display:none;" )
+                div(class="marginTop30")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" class="paddingRight40" layout flex)
+                            label Email
+                            input(ng-model="updatePersonil.email" name="email" type="email" ng-disabled="true")
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Pangkat
+                            input(ng-model="updatePersonil.pangkat" name="pangkat" type="text" required)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Nama
+                            input(ng-model="updatePersonil.name" name="name" type="text" required)
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label NRP
+                            input(ng-model="updatePersonil.nrp" name="nrp" type="text" required)
+                div(class="marginTop20")
+                span Tempat, Tanggal Lahir
+                div(class="marginRight20" layout="row" layout-align="start start" flex)
+                    div(layout="column" flex="40" style="margin-right:20px;")
+                        md-input-container(class="md-block" layout flex)
+                            label Kota
+                            input(ng-model="updatePersonil.birthTown" name="birthTown" type="text" required)
+                    div(class="marginRight20" layout="column" style="margin-top:10px;" flex)
+                        div(class="input-group" moment-picker="updatePersonil.dob" format="DD-MM-YYYY" start-view="year" autoclose="true")
+                            span(class="input-group-addon")
+                                i(class="material-icons") date_range
+                            input(class="form-control"
+                                placeholder="Pilih tanggal lahir "
+                                ng-model="updatePersonil.dob"
+                                ng-model-options="{ updateOn: 'blur' }" style="height:40px;" required)
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    md-input-container(class="md-block" layout flex)
+                        label Jenis Kelamin
+                        md-select(ng-model="updatePersonil.gender" style="margin-top: 0px;" name="gender" required layout flex)
+                            md-option(ng-repeat="gender in genders" value="{{gender}}") {{gender}}
+                    md-input-container(class="md-block" layout flex)
+                        label Agama
+                        input(ng-model="updatePersonil.religion" name="religion" type="text" required)
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Alamat
+                            input(ng-model="updatePersonil.homeAddress" name="homeAddress" type="text" required)
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Handphone
+                            input(ng-model="updatePersonil.mobile" name="mobile" type="text" required)
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Unit
+                            input(ng-model="updatePersonil.unit" name="unit" type="text" required)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Wilayah
+                            input(ng-model="updatePersonil.wilayahPenugasan" name="wilayahPenugasan" type="text" ng-disabled="true")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Skep
+                            input(ng-model="updatePersonil.skep" name="skep" type="text" ng-disabled="true")
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Dikum
+                            input(ng-model="updatePersonil.dikum" name="dikum" type="text")
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Dikjur
+                            input(ng-model="updatePersonil.dikjur" name="dikjur" type="text")
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Dikbang
+                            input(ng-model="updatePersonil.dikbang" name="dikbang" type="text")
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Latfung
+                            input(ng-model="updatePersonil.latfung" name="latfung" type="text")
+                div(class="marginTop20")
+                div(class="marginRight20" layout flex)
+                    div(layout="column" flex)
+                        md-input-container(class="md-block" layout flex)
+                            label Prestasi Dalam Tugas
+                            input(ng-model="updatePersonil.prestasiDalamTugas" name="prestasiDalamTugas" type="text")
+                div(class="marginTop20")
+                div(layout="row" class="paddingTop10 paddingRight50 paddingBottom25" layout-align="space-between center")
+                    div(layout="row" layout-align="start center")
+                        md-button(class="plainButton" layout-align="center center" ng-click="doDeletePersonil()" layout) Delete Personil
+                    div(layout="row" layout-align="end center")
+                        md-button(class="plainButton" layout-align="center center" ng-click="back()" layout) Cancel
+                        md-button(class="button" layout-align="center center"  ng-click="doUpdatePersonil()" layout) Save 

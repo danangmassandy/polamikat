@@ -24,7 +24,7 @@ app.config(function($routeProvider, $locationProvider) {
         }).when('/admin_kategori_kegiatan', {
             templateUrl: '/tpl/admin_kategori_kegiatan',
             controller: 'adminKategoriKegiatanCtrl',
-        }).when('/admin_update_personil', {
+        }).when('/admin_update_personil/:personilID', {
             templateUrl: '/tpl/admin_update_personil',
             controller: 'adminUpdatePersonilCtrl',
         }).when('/data_kegiatan_personil', {
@@ -185,7 +185,7 @@ app.directive('fileUpload', ['$parse', function ($parse) {
     };
 }]);
 
-app.controller('mainCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, $location, $timeout, $filter, $route) {
+app.controller('mainCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, $location, $timeout, $filter, $route, rest) {
     $rootScope.me = me;
 
     $rootScope.back = function() {
@@ -246,6 +246,13 @@ app.controller('mainCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, 
         // but leave flexibility for future
         return true;
     };
+
+
+    $rootScope.fetchImage = function(photo) {
+        rest.files.getImage(photo.publicURL, function(res) {
+            photo.blobURL = res.blobURL;
+        });
+    }
 
     // $scope.goTo('report');
 

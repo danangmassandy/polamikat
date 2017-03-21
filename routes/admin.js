@@ -39,7 +39,15 @@ router.post('/add_personil', function(req, res) {
 
 // delete personil
 router.post('/delete_personil', function(req, res) {
-
+    profileController.deactivatePersonil(req.body.personilID, req.polamikatUser.username, function(err, result) {
+        if (err) {
+            res.fail(err);
+        } else {
+            res.success({
+                data : result
+            });
+        }
+    });
 });
 
 // user list

@@ -49,18 +49,13 @@ app.controller('kegiatanDetailCtrl', function ($scope, $rootScope, $mdDialog, $m
         }
     }
 
-    function fetchImage(photo) {
-        rest.files.getImage(photo.publicURL, function(res) {
-            photo.blobURL = res.blobURL;
-        });
-    }
 
     $scope.getActivityDetail = function() {
         $scope.getPersonilList();
         $scope.getCategoryList();
         rest.activities.detail(activityID, function(response) {
             if (!response.data) {
-                showMessage.error("Error", "Error detail personil. Silahkan kontak system administrator.", "Ok", function(){});
+                showMessage.error("Error", "Error detail kegiatan personil. Silahkan kontak system administrator.", "Ok", function(){});
                 $rootScope.back();
                 return;    
             }
@@ -68,7 +63,7 @@ app.controller('kegiatanDetailCtrl', function ($scope, $rootScope, $mdDialog, $m
             $scope.activity.startDate = moment($scope.activity.startDate).toDate();
             if ($scope.activity.photos) {
                 for (var i = 0; i < $scope.activity.photos.length;++i) {
-                    fetchImage($scope.activity.photos[i]);
+                    $rootScope.fetchImage($scope.activity.photos[i]);
                 }
             }
             
