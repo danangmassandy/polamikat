@@ -1,6 +1,24 @@
 div(class="padding20" layout="column" style="background: #F1F1F1;" flex)
     md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
         div(class="titleBar" layout="row" layout-align="space-between center")
+            div Grafik Ringkasan Kegiatan Satlantas
+        div(ng-show="!activitySummaryChart.loaded" flex style="height:440px;padding:20px;" layout="row" layout-align="center center")
+            md-progress-circular(class="md-accent" md-mode="indeterminate")
+        .chartContainer(ng-show="activitySummaryChart.loaded" style="background-color:white;" flex)
+            div(ng-style="{'width' : activitySummaryChart.canvasWidth + 'px'}" style="height:400px;max-height:400px;" )
+                canvas(id="activitySummaryChart" class="chart chart-bar" chart-data="activitySummaryChart.data" chart-labels="activitySummaryChart.labels" 
+                    chart-series="activitySummaryChart.series" chart-options="activitySummaryChart.options" chart-dataset-override="activitySummaryChart.datasetsOverrides")
+    md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
+        div(class="titleBar" layout="row" layout-align="space-between center")
+            div Grafik Total Nilai Personil
+        div(ng-show="!activityRankChart.loaded" flex style="height:440px;padding:20px;" layout="row" layout-align="center center")
+            md-progress-circular(class="md-accent" md-mode="indeterminate")
+        .chartContainer(ng-show="activityRankChart.loaded" style="background-color:white;" flex)
+            div(ng-style="{'width' : activityRankChart.canvasWidth + 'px'}" style="height:400px;max-height:400px;" )
+                canvas(id="activityRankChart" class="chart chart-bar" chart-data="activityRankChart.data" chart-labels="activityRankChart.labels" 
+                    chart-series="activityRankChart.series" chart-options="activityRankChart.options" chart-dataset-override="activityRankChart.datasetsOverrides")
+    md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
+        div(class="titleBar" layout="row" layout-align="space-between center")
             div Grafik Kegiatan Per Personil
             div(layout="row" layout-align="center center")
                 div(layout-align="center center" layout)
@@ -13,66 +31,4 @@ div(class="padding20" layout="column" style="background: #F1F1F1;" flex)
             div(ng-style="{'width' : activitiesChart.canvasWidth + 'px'}" style="height:400px;max-height:400px;" )
                 canvas(id="activitiesChart" class="chart chart-bar" chart-data="activitiesChart.data" chart-labels="activitiesChart.labels" 
                     chart-series="activitiesChart.series" chart-options="activitiesChart.options" chart-dataset-override="activitiesChart.datasetsOverrides")
-    md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
-        div(class="titleBar" layout="row" layout-align="space-between center")
-            div Tabel Ringkasan Kegiatan Satlantas
-        .padding20( style="background-color:white;" )
-            table(class="table table-bordered table-striped")
-                thead
-                    tr
-                        th 
-                            a(href="#/")
-                                span No 
-                        th 
-                            a(href="#/" ng-click="giatSortType = 'category.name'; giatSortReverse = !giatSortReverse;")
-                                span Kategori Giat 
-                                span(class="fa fa-caret-up" ng-show="giatSortType == 'category.name' && giatSortReverse")
-                                span(class="fa fa-caret-down" ng-show="giatSortType == 'category.name' && !giatSortReverse")
-                        th 
-                            a(href="#/" ng-click="giatSortType = 'lastActivity'; giatSortReverse = !giatSortReverse;")
-                                span Tanggal Terakhir Giat 
-                                span(class="fa fa-caret-up" ng-show="giatSortType == 'lastActivity' && giatSortReverse")
-                                span(class="fa fa-caret-down" ng-show="giatSortType == 'lastActivity' && !giatSortReverse")
-                        th 
-                            a(href="#/" ng-click="giatSortType = 'kegiatanTotal'; giatSortReverse = !giatSortReverse;")
-                                span Jumlah Giat 
-                                span(class="fa fa-caret-up" ng-show="giatSortType == 'kegiatanTotal' && giatSortReverse")
-                                span(class="fa fa-caret-down" ng-show="giatSortType == 'kegiatanTotal' && !giatSortReverse")
-                tbody(ng-if="satlantasKegiatanData && satlantasKegiatanData.length > 0")
-                    tr(ng-repeat="x in satlantasKegiatanData | orderBy:giatSortType:giatSortReverse")
-                        td {{ $index + 1 }}
-                        td {{ x.category.name }}
-                        td {{ x.lastActivity | date:'dd-MM-yyyy':'UTC+8' }}
-                        td.number {{ x.kegiatanTotal }}
-                tbody(ng-if="!satlantasKegiatanData || !satlantasKegiatanData.length")
-                    tr
-                        td(colspan="4") No Data
-    md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
-        div(class="titleBar" layout="row" layout-align="space-between center")
-            div Tabel Total Nilai Kegiatan Per Personil
-        .padding20( style="background-color:white;" )
-            table(class="table table-bordered table-striped")
-                thead
-                    tr
-                        th 
-                            a(href="#/")
-                                span No 
-                        th 
-                            a(href="#/" ng-click="rankSortType = 'personil.name'; rankSortReverse = !rankSortReverse;")
-                                span Personil 
-                                span(class="fa fa-caret-up" ng-show="rankSortType == 'personil.name' && rankSortReverse")
-                                span(class="fa fa-caret-down" ng-show="rankSortType == 'personil.name' && !rankSortReverse")
-                        th 
-                            a(href="#/" ng-click="rankSortType = 'total'; rankSortReverse = !rankSortReverse;")
-                                span Nilai 
-                                span(class="fa fa-caret-up" ng-show="rankSortType == 'total' && rankSortReverse")
-                                span(class="fa fa-caret-down" ng-show="rankSortType == 'total' && !rankSortReverse")
-                tbody(ng-if="personilNilaiData && personilNilaiData.length > 0")
-                    tr(ng-repeat="x in personilNilaiData | orderBy:rankSortType:rankSortReverse"  ng-click="showPersonilRankDetail(x)")
-                        td {{ $index + 1 }}
-                        td.serviceName {{ x.personil.name }}
-                        td.number {{ x.total }}
-                tbody(ng-if="!personilNilaiData || !personilNilaiData.length")
-                    tr
-                        td(colspan="3") No Data
-            div(style="margin-top:20px;height:5px;")
+    div(style="margin-top:20px;height:5px;")

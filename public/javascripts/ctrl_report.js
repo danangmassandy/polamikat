@@ -496,8 +496,148 @@ var activityCustomTooltips = function(tooltip) {
     tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
 };
 
-var getLabelChart = function(data) {
+var activitySummaryCustomTooltips = function(tooltip) {
+    // Tooltip Element
+    var tooltipEl = document.getElementById('chartjs-tooltip');
+    if (!tooltipEl) {
+        tooltipEl = document.createElement('div');
+        tooltipEl.id = 'chartjs-tooltip';
+        tooltipEl.innerHTML = ""
+        document.body.appendChild(tooltipEl);
+    }
+    // Hide if no tooltip
+    if (tooltip.opacity === 0) {
+        tooltipEl.style.opacity = 0;
+        return;
+    }
+    // Set caret Position
+    tooltipEl.classList.remove('above', 'below', 'no-transform');
+    if (tooltip.yAlign) {
+        tooltipEl.classList.add(tooltip.yAlign);
+    } else {
+        tooltipEl.classList.add('no-transform');
+    }
+    function getBody(bodyItem) {
+        return bodyItem.lines;
+    }
+    // Set Text
+    if (tooltip.body) {
+        var sum = tooltip.dataPoints[0].yLabel;
+        var titleLines = tooltip.title || [];
+        var bodyLines = tooltip.body.map(getBody);
+        var innerHtml = '<div class="arrowRight tooltipBody layout-column flex">';
+        innerHtml += '<div class="tooltipTitle">';
+        titleLines.forEach(function(title) {
+            innerHtml += '<span>' + title + '</span>';
+        });
+        innerHtml += '</div>';
+        innerHtml += '<div class="layout-row"><span class="tooltipTotalLabel">Jumlah Giat </span>&nbsp;&nbsp;&nbsp;<span class="tooltipNumber">'+sum+'</span></div>';
+        innerHtml += '</div>';
+        tooltipEl.innerHTML = innerHtml;
+    }
+    var position = this._chart.canvas.getBoundingClientRect();
+    // Display, position, and set styles for font
+    tooltipEl.style.opacity = 1;
+    tooltipEl.classList.remove('tooltipDivRight');
+    tooltipEl.classList.remove('tooltipDivLeft');
+    if (position.left + tooltip.caretX + 200 + 12 >= position.right) {
+        if (position.left + tooltip.caretX - 230 > 0) {
+            tooltipEl.classList.add('tooltipDivRight');
+            tooltipEl.style.left = position.left + tooltip.caretX - 230 + 'px';
+        } else {
+            tooltipEl.classList.add('tooltipDivLeft');
+            tooltipEl.style.left = position.left + tooltip.caretX + 'px';
+        }
+    } else {
+        tooltipEl.classList.add('tooltipDivLeft');
+        tooltipEl.style.left = position.left + tooltip.caretX + 'px';
+    }
+    
+    // fix position.top because getBoundingClientRect gets values with respect to the window
+    tooltipEl.style.top = position.top + window.scrollY + tooltip.caretY + 'px';
+    tooltipEl.style.width = "200px";
+    tooltipEl.style.fontFamily = tooltip._fontFamily;
+    tooltipEl.style.fontSize = tooltip.fontSize;
+    tooltipEl.style.fontStyle = tooltip._fontStyle;
+    tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
+};
+
+var activityRankCustomTooltips = function(tooltip) {
+    // Tooltip Element
+    var tooltipEl = document.getElementById('chartjs-tooltip');
+    if (!tooltipEl) {
+        tooltipEl = document.createElement('div');
+        tooltipEl.id = 'chartjs-tooltip';
+        tooltipEl.innerHTML = ""
+        document.body.appendChild(tooltipEl);
+    }
+    // Hide if no tooltip
+    if (tooltip.opacity === 0) {
+        tooltipEl.style.opacity = 0;
+        return;
+    }
+    // Set caret Position
+    tooltipEl.classList.remove('above', 'below', 'no-transform');
+    if (tooltip.yAlign) {
+        tooltipEl.classList.add(tooltip.yAlign);
+    } else {
+        tooltipEl.classList.add('no-transform');
+    }
+    function getBody(bodyItem) {
+        return bodyItem.lines;
+    }
+    // Set Text
+    if (tooltip.body) {
+        var sum = tooltip.dataPoints[0].yLabel;
+        var titleLines = tooltip.title || [];
+        var bodyLines = tooltip.body.map(getBody);
+        var innerHtml = '<div class="arrowRight tooltipBody layout-column flex">';
+        innerHtml += '<div class="tooltipTitle">';
+        titleLines.forEach(function(title) {
+            innerHtml += '<span>' + title + '</span>';
+        });
+        innerHtml += '</div>';
+        innerHtml += '<div class="layout-row"><span class="tooltipTotalLabel">Nilai</span>&nbsp;&nbsp;&nbsp;<span class="tooltipNumber">'+sum+'</span></div>';
+        innerHtml += '</div>';
+        tooltipEl.innerHTML = innerHtml;
+    }
+    var position = this._chart.canvas.getBoundingClientRect();
+    // Display, position, and set styles for font
+    tooltipEl.style.opacity = 1;
+    tooltipEl.classList.remove('tooltipDivRight');
+    tooltipEl.classList.remove('tooltipDivLeft');
+    if (position.left + tooltip.caretX + 200 + 12 >= position.right) {
+        if (position.left + tooltip.caretX - 230 > 0) {
+            tooltipEl.classList.add('tooltipDivRight');
+            tooltipEl.style.left = position.left + tooltip.caretX - 230 + 'px';
+        } else {
+            tooltipEl.classList.add('tooltipDivLeft');
+            tooltipEl.style.left = position.left + tooltip.caretX + 'px';
+        }
+    } else {
+        tooltipEl.classList.add('tooltipDivLeft');
+        tooltipEl.style.left = position.left + tooltip.caretX + 'px';
+    }
+    
+    // fix position.top because getBoundingClientRect gets values with respect to the window
+    tooltipEl.style.top = position.top + window.scrollY + tooltip.caretY + 'px';
+    tooltipEl.style.width = "200px";
+    tooltipEl.style.fontFamily = tooltip._fontFamily;
+    tooltipEl.style.fontSize = tooltip.fontSize;
+    tooltipEl.style.fontStyle = tooltip._fontStyle;
+    tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
+};
+
+var getLabelActivitiesChart = function(data) {
     return data.category.name;
+}
+
+var getLabelActivitySummaryChart = function(data) {
+    return data.category.name;
+}
+
+var getLabelActivityRankChart = function(data) {
+    return data.personil.name;
 }
 
 app.controller('reportCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, $timeout, $location, showMessage, rest, globalConstant) {
@@ -564,7 +704,7 @@ app.controller('reportCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav
         var data1 = [];
         var backgroundColor = [];
         for (var i = 0; i < data.length; ++i) {
-            var label = getLabelChart(data[i]);
+            var label = getLabelActivitiesChart(data[i]);
             labels.push(label);
             data1.push(data[i].total);
             backgroundColor.push('rgb(59, 191, 189)');
@@ -596,8 +736,8 @@ app.controller('reportCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav
         $scope.recallActivitiesChart();
     }
 
-
     $scope.personilList = [];
+    // init
     rest.users.personilList(function(response) {
         console.log("personilList ", response);
         if (response.data)
@@ -613,29 +753,184 @@ app.controller('reportCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav
         }
     });
 
-    $scope.rankSortType     = 'total';
-    $scope.rankSortReverse  = true;
+    $scope.activitySummaryChart = {
+        labels : [],
+        data : [],
+        colors : [],
+        series : ["Ringkasan Kegiatan"],
+        options : {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true,
+                        userCallback: function(label, index, labels) {
+                            // when the floored value is the same as the value we have a whole number
+                            if (Math.floor(label) === label) {
+                                return label;
+                            }
+                        },
+                    },
+                    gridLines : {
+                        display : true,
+                        borderDash : [2, 5],
+                        drawBorder : false
+                    }
+                }],
+                xAxes: [{
+                    type : 'myScale',
+                    categoryPercentage : 0.4,
+                    gridLines : {
+                        display : false,
+                        drawBorder : true,
+                        zeroLineWidth : 0,
+                        zeroLineColor : 'rgba(0,0,0,0)',
+                        offsetGridLines : true
+                    }
+                }]
+            },
+            tooltips: {
+                enabled: false,
+                mode: 'index',
+                position: 'average',
+                custom: activitySummaryCustomTooltips
+            },
+            responsive : true,
+            maintainAspectRatio : false
+        },
+        datasetsOverrides : {},
+        canvasWidth : 1000,
+        personil : "",
+        loaded : false
+    }
 
-    $scope.personilNilaiData = [];
-    rest.activities.rankPersonil(function(response) {
-        console.log("rankPersonil ", response);
-        if (response.data.data)
-            $scope.personilNilaiData = angular.copy(response.data.data);
-        else
-            $scope.personilNilaiData = [];
-    });
+    $scope.resetActivitySummaryChart = function() {
+        $scope.activitySummaryChart.labels = [];
+        $scope.activitySummaryChart.data = [];
+        $scope.activitySummaryChart.datasetsOverrides = {};
+    }
 
-    $scope.giatSortType = 'lastActivity';
-    $scope.giatSortReverse = true;
-    $scope.satlantasKegiatanData = [];
-    rest.activities.listByCategory(function(response) {
-        console.log("activities list by category ", response);
-        if (response.data.data)
-            $scope.satlantasKegiatanData = angular.copy(response.data.data);
-        else
-            $scope.satlantasKegiatanData = [];
-    });
+    $scope.initActivitySummaryChart = function(data) {
+        var labels = [];
+        var data1 = [];
+        var backgroundColor = [];
+        for (var i = 0; i < data.length; ++i) {
+            var label = getLabelActivitySummaryChart(data[i]);
+            labels.push(label);
+            data1.push(data[i].total);
+            backgroundColor.push('rgb(59, 191, 189)');
+        }
+        $scope.activitySummaryChart.labels = labels;
+        $scope.activitySummaryChart.data = data1;
+        $scope.activitySummaryChart.datasetsOverrides = {
+            borderWidth: 1,
+            hoverBorderWidth: 1.3,
+            borderColor: backgroundColor,
+            hoverBorderColor: backgroundColor,
+            backgroundColor: backgroundColor,
+            hoverBackgroundColor: backgroundColor
+        };
+        $scope.activitySummaryChart.canvasWidth = 125 * data.length;
+        $scope.activitySummaryChart.loaded = true;
+    }
+    $scope.recallActivitySummaryChart = function() {
+        $scope.activitySummaryChart.loaded = false;
+        $scope.resetActivitySummaryChart();
+        rest.activities.listByCategory(function(response) {
+            console.log("recallActivitySummaryChart ", response);
+            $scope.initActivitySummaryChart(response.data.data);
+        });
+    }
 
+    // init
+    $scope.recallActivitySummaryChart();
 
+    $scope.activityRankChart = {
+        labels : [],
+        data : [],
+        colors : [],
+        series : ["Rank Personil"],
+        options : {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true,
+                        userCallback: function(label, index, labels) {
+                            // when the floored value is the same as the value we have a whole number
+                            if (Math.floor(label) === label) {
+                                return label;
+                            }
+                        },
+                    },
+                    gridLines : {
+                        display : true,
+                        borderDash : [2, 5],
+                        drawBorder : false
+                    }
+                }],
+                xAxes: [{
+                    type : 'myScale',
+                    categoryPercentage : 0.4,
+                    gridLines : {
+                        display : false,
+                        drawBorder : true,
+                        zeroLineWidth : 0,
+                        zeroLineColor : 'rgba(0,0,0,0)',
+                        offsetGridLines : true
+                    }
+                }]
+            },
+            tooltips: {
+                enabled: false,
+                mode: 'index',
+                position: 'average',
+                custom: activityRankCustomTooltips
+            },
+            responsive : true,
+            maintainAspectRatio : false
+        },
+        datasetsOverrides : {},
+        canvasWidth : 1000,
+        personil : "",
+        loaded : false
+    }
 
+    $scope.resetActivityRankChart = function() {
+        $scope.activityRankChart.labels = [];
+        $scope.activityRankChart.data = [];
+        $scope.activityRankChart.datasetsOverrides = {};
+    }
+
+    $scope.initActivityRankChart = function(data) {
+        var labels = [];
+        var data1 = [];
+        var backgroundColor = [];
+        for (var i = 0; i < data.length; ++i) {
+            var label = getLabelActivityRankChart(data[i]);
+            labels.push(label);
+            data1.push(data[i].total);
+            backgroundColor.push('rgb(59, 191, 189)');
+        }
+        $scope.activityRankChart.labels = labels;
+        $scope.activityRankChart.data = data1;
+        $scope.activityRankChart.datasetsOverrides = {
+            borderWidth: 1,
+            hoverBorderWidth: 1.3,
+            borderColor: backgroundColor,
+            hoverBorderColor: backgroundColor,
+            backgroundColor: backgroundColor,
+            hoverBackgroundColor: backgroundColor
+        };
+        $scope.activityRankChart.canvasWidth = 125 * data.length;
+        $scope.activityRankChart.loaded = true;
+    }
+    $scope.recallActivityRankChart = function() {
+        $scope.activityRankChart.loaded = false;
+        $scope.resetActivityRankChart();
+        rest.activities.rankPersonil(function(response) {
+            console.log("recallActivityRankChart ", response);
+            $scope.initActivityRankChart(response.data.data);
+        });
+    }
+    // init
+    $scope.recallActivityRankChart();
 });
