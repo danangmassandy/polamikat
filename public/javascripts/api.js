@@ -206,28 +206,34 @@ app.factory('rest', function($rootScope, $http) {
                 });
             },
             getImage : function(p_url, onSuccess, onError) {
-                $http({
-                    url: p_url,
-                    method: "POST",
-                    responseType : 'arraybuffer',
-                    headers: {
-                        'Content-Type' : 'application/json',
-                        //'Access-Control-Allow-Credentials' : 'true',
-                        //'Access-Control-Allow-Origin' : s_base,
-                        // 'Access-Control-Allow-Origin' : '*',
-                        'Access-Control-Allow-Methods' : 'GET, POST, OPTIONS, PUT, PATCH, DELETE, HEAD',
-                        'Access-Control-Allow-Headers' : 'Access-Control-Allow-Headers, Authorization, Origin, Accept, Key, If-None-Match, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, X-CLIENT-ID, X-CLIENT_SECRET',
-                        //'Access-Control-Max-Age' : '2520',
-                    }
-                }).success(function (data, status, headers, config, statusText) {
-                    var file = new Blob([data], {type: headers('Content-Type')});
-                    var fileURL = URL.createObjectURL(file);
-                    // window.open(fileURL);
-                    if (onSuccess) onSuccess({blobURL : fileURL});
-                }).error(function (data, status, headers, config, statusText) {
-                    console.log('Error getting file : ', status);
-                    if (onError) onError({message : statusText});
-                });
+                var fromCache = $rootScope.activityPhotosCache.get(p_url);
+                if (fromCache) {
+                    if (onSuccess) onSuccess({blobURL : fromCache});
+                } else {
+                    $http({
+                        url: p_url,
+                        method: "POST",
+                        responseType : 'arraybuffer',
+                        headers: {
+                            'Content-Type' : 'application/json',
+                            //'Access-Control-Allow-Credentials' : 'true',
+                            //'Access-Control-Allow-Origin' : s_base,
+                            // 'Access-Control-Allow-Origin' : '*',
+                            'Access-Control-Allow-Methods' : 'GET, POST, OPTIONS, PUT, PATCH, DELETE, HEAD',
+                            'Access-Control-Allow-Headers' : 'Access-Control-Allow-Headers, Authorization, Origin, Accept, Key, If-None-Match, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, X-CLIENT-ID, X-CLIENT_SECRET',
+                            //'Access-Control-Max-Age' : '2520',
+                        }
+                    }).success(function (data, status, headers, config, statusText) {
+                        var file = new Blob([data], {type: headers('Content-Type')});
+                        var fileURL = URL.createObjectURL(file);
+                        $rootScope.activityPhotosCache.put(p_url, fileURL);
+                        // window.open(fileURL);
+                        if (onSuccess) onSuccess({blobURL : fileURL});
+                    }).error(function (data, status, headers, config, statusText) {
+                        console.log('Error getting file : ', status);
+                        if (onError) onError({message : statusText});
+                    });
+                }
             }
         }
     };

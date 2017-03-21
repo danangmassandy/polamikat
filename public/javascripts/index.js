@@ -1,4 +1,4 @@
-var app = angular.module('polamikatApp', [ 'ngMaterial', 'ngRoute', 'chart.js', 'angular-thumbnails', 'xeditable', 'moment-picker' ]);
+var app = angular.module('polamikatApp', [ 'ngMaterial', 'ngRoute', 'chart.js', 'angular-thumbnails', 'xeditable', 'moment-picker', 'angular-cache' ]);
 
 app.run(function(editableOptions) {
   editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
@@ -65,6 +65,10 @@ app.config(function($mdDateLocaleProvider) {
         var m = moment(dateString, 'DD/MM/YYYY', true);
         return m.isValid() ? m.toDate() : new Date(NaN);
     };
+});
+
+app.config(function (CacheFactoryProvider) {
+    angular.extend(CacheFactoryProvider.defaults, { maxAge: 60 * 60 * 1000, capacity : 20 });
 });
 
 angular.module("material.components.virtualRepeat")._invokeQueue[1][2][1]().controller.prototype.virtualRepeatUpdate_ = function (items, oldItems) {
@@ -188,7 +192,7 @@ app.directive('fileUpload', ['$parse', function ($parse) {
     };
 }]);
 
-app.controller('mainCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, $location, $timeout, $filter, $route, rest) {
+app.controller('mainCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, $location, $timeout, $filter, $route, rest, CacheFactory) {
     $rootScope.me = me;
 
     $rootScope.back = function() {
@@ -198,6 +202,10 @@ app.controller('mainCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, 
     console.log($rootScope.me);
 
     $scope.toggleLeft = buildDelayedToggler('left');
+    // Check to make sure the cache doesn't already exist
+    if (!CacheFactory.get('activityPhotosCache')) {
+        $rootScope.activityPhotosCache = CacheFactory('activityPhotosCache');
+    }
 
     /**
      * Supplies a function that will continue to operate until the
