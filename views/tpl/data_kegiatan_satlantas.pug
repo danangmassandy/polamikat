@@ -48,7 +48,7 @@
                 td {{ x.personil.name }}
                 td {{ x.personil.unit }}
                 td {{ x.category.name }}
-                td {{ x.startDate | date:'dd-MM-yyyy':'UTC+8' }}
+                td {{ x.startDate | date:'dd-MM-yyyy':'UTC+7' }}
         tbody(ng-if="!kegiatanData || !kegiatanData.length")
             tr
                 td(colspan="7") No Data

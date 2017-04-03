@@ -30,6 +30,9 @@ app.config(function($routeProvider, $locationProvider) {
         }).when('/admin_photos_kegiatan', {
             templateUrl: '/tpl/admin_photos_kegiatan',
             controller: 'adminPhotosKegiatanCtrl',
+        }).when('/admin_attendance', {
+            templateUrl: '/tpl/admin_attendance',
+            controller: 'adminAttendanceCtrl',
         }).when('/data_kegiatan_personil', {
             templateUrl: '/tpl/data_kegiatan_personil',
             controller: 'dataKegiatanPersonilCtrl',

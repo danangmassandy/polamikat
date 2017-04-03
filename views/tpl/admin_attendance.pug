@@ -1,0 +1,98 @@
+div(class="padding20" layout="column" style="background: #F1F1F1;" flex)
+    md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
+        div(class="titleBar" layout="row" layout-align="space-between center")
+            div Grafik Personil Tidak Hadir Ijin
+        div(ng-show="!attendanceRankByOnLeaveChart.loaded" flex style="height:440px;padding:20px;" layout="row" layout-align="center center")
+            md-progress-circular(class="md-accent" md-mode="indeterminate")
+        .chartContainer(ng-show="attendanceRankByOnLeaveChart.loaded" style="background-color:white;" flex)
+            div(ng-style="{'width' : attendanceRankByOnLeaveChart.canvasWidth + 'px'}" style="height:400px;max-height:400px;" )
+                canvas(id="attendanceRankByOnLeaveChart" class="chart chart-bar" chart-data="attendanceRankByOnLeaveChart.data" chart-labels="attendanceRankByOnLeaveChart.labels" 
+                    chart-series="attendanceRankByOnLeaveChart.series" chart-options="attendanceRankByOnLeaveChart.options" chart-dataset-override="attendanceRankByOnLeaveChart.datasetsOverrides")
+    md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
+        div(class="titleBar" layout="row" layout-align="space-between center")
+            div Grafik Personil Tidak Hadir Sakit
+        div(ng-show="!attendanceRankByMedicalLeaveChart.loaded" flex style="height:440px;padding:20px;" layout="row" layout-align="center center")
+            md-progress-circular(class="md-accent" md-mode="indeterminate")
+        .chartContainer(ng-show="attendanceRankByMedicalLeaveChart.loaded" style="background-color:white;" flex)
+            div(ng-style="{'width' : attendanceRankByMedicalLeaveChart.canvasWidth + 'px'}" style="height:400px;max-height:400px;" )
+                canvas(id="attendanceRankByMedicalLeaveChart" class="chart chart-bar" chart-data="attendanceRankByMedicalLeaveChart.data" chart-labels="attendanceRankByMedicalLeaveChart.labels" 
+                    chart-series="attendanceRankByMedicalLeaveChart.series" chart-options="attendanceRankByMedicalLeaveChart.options" chart-dataset-override="attendanceRankByMedicalLeaveChart.datasetsOverrides")
+    md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
+        div(class="titleBar" layout="row" layout-align="space-between center")
+            div Grafik Personil Tidak Hadir Tanpa Keterangan
+        div(ng-show="!attendanceRankByNoNoticeChart.loaded" flex style="height:440px;padding:20px;" layout="row" layout-align="center center")
+            md-progress-circular(class="md-accent" md-mode="indeterminate")
+        .chartContainer(ng-show="attendanceRankByNoNoticeChart.loaded" style="background-color:white;" flex)
+            div(ng-style="{'width' : attendanceRankByNoNoticeChart.canvasWidth + 'px'}" style="height:400px;max-height:400px;" )
+                canvas(id="attendanceRankByNoNoticeChart" class="chart chart-bar" chart-data="attendanceRankByNoNoticeChart.data" chart-labels="attendanceRankByNoNoticeChart.labels" 
+                    chart-series="attendanceRankByNoNoticeChart.series" chart-options="attendanceRankByNoNoticeChart.options" chart-dataset-override="attendanceRankByNoNoticeChart.datasetsOverrides")
+    md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
+        div(class="titleBar" layout="row" layout-align="space-between center")
+            div Daftar Hadir Personil
+            div(ng-if="lastUpdated") Update Terakhir : {{ lastUpdated  | date:'dd-MM-yyyy HH:mm':'UTC+7' }}
+        .padding20( style="background-color:white;" )
+            table(class="table table-bordered table-striped")
+                thead
+                    tr
+                        th 
+                            a(href="")
+                                span No 
+                        th 
+                            a(href="" ng-click="tblSortType = 'personil.nrp'; tblSortReverse = !tblSortReverse;")
+                                span NRP 
+                                span(class="fa fa-caret-up" ng-show="tblSortType == 'personil.nrp' && tblSortReverse")
+                                span(class="fa fa-caret-down" ng-show="tblSortType == 'personil.nrp' && !tblSortReverse")
+                        th 
+                            a(href="" ng-click="tblSortType = 'personil.pangkat'; tblSortReverse = !tblSortReverse;")
+                                span Pangkat 
+                                span(class="fa fa-caret-up" ng-show="tblSortType == 'personil.pangkat' && tblSortReverse")
+                                span(class="fa fa-caret-down" ng-show="tblSortType == 'personil.pangkat' && !tblSortReverse")
+                        th 
+                            a(href="" ng-click="tblSortType = 'personil.nama'; tblSortReverse = !tblSortReverse;")
+                                span Nama 
+                                span(class="fa fa-caret-up" ng-show="tblSortType == 'personil.name' && tblSortReverse")
+                                span(class="fa fa-caret-down" ng-show="tblSortType == 'personil.name' && !tblSortReverse")
+                        th 
+                            md-checkbox(ng-model="isHadirAllChecked" ng-change="checkAll(0)" aria-label="Check All Hadir") 
+                            a(href="" ng-click="tblSortType = 'isHadirChecked'; tblSortReverse = !tblSortReverse;")
+                                span Hadir 
+                                span(class="fa fa-caret-up" ng-show="tblSortType == 'isHadirChecked' && tblSortReverse")
+                                span(class="fa fa-caret-down" ng-show="tblSortType == 'isHadirChecked' && !tblSortReverse")
+                        th 
+                            md-checkbox(ng-model="isIjinAllChecked" ng-change="checkAll(1)" aria-label="Check All Ijin") 
+                            a(href="" ng-click="tblSortType = 'isIjinChecked'; tblSortReverse = !tblSortReverse;")
+                                span Ijin 
+                                span(class="fa fa-caret-up" ng-show="tblSortType == 'isIjinChecked' && tblSortReverse")
+                                span(class="fa fa-caret-down" ng-show="tblSortType == 'isIjinChecked' && !tblSortReverse")
+                        th 
+                            md-checkbox(ng-model="isSakitAllChecked" ng-change="checkAll(2)" aria-label="Check All Sakit") 
+                            a(href="" ng-click="tblSortType = 'isSakitChecked'; tblSortReverse = !tblSortReverse;")
+                                span Sakit 
+                                span(class="fa fa-caret-up" ng-show="tblSortType == 'isSakitChecked' && tblSortReverse")
+                                span(class="fa fa-caret-down" ng-show="tblSortType == 'isSakitChecked' && !tblSortReverse")
+                        th 
+                            md-checkbox(ng-model="isTanpaKeteranganAllChecked" ng-change="checkAll(3)" aria-label="Check All Tanpa Keterangan") 
+                            a(href="" ng-click="tblSortType = 'isTanpaKeteranganChecked'; tblSortReverse = !tblSortReverse;")
+                                span Tanpa Keterangan 
+                                span(class="fa fa-caret-up" ng-show="tblSortType == 'isTanpaKeteranganChecked' && tblSortReverse")
+                                span(class="fa fa-caret-down" ng-show="tblSortType == 'isTanpaKeteranganChecked' && !tblSortReverse")
+                tbody(ng-if="attendanceListData && attendanceListData.length > 0")
+                    tr(ng-repeat="x in attendanceListData | orderBy:tblSortType:tblSortReverse")
+                        td {{ $index + 1 }}
+                        td {{ x.personil.nrp }}
+                        td {{ x.personil.pangkat }}
+                        td {{ x.personil.name }}
+                        td
+                            md-checkbox(ng-model="x.isHadirChecked" ng-change="checkSingle(x, 0)" aria-label="Hadir")
+                        td
+                            md-checkbox(ng-model="x.isIjinChecked" ng-change="checkSingle(x, 1)" aria-label="Ijin")
+                        td
+                            md-checkbox(ng-model="x.isSakitChecked" ng-change="checkSingle(x, 2)" aria-label="Sakit")
+                        td
+                            md-checkbox(ng-model="x.isTanpaKeteranganChecked" ng-change="checkSingle(x, 3)" aria-label="Tanpa Keterangan")
+                tbody(ng-if="!attendanceListData || !attendanceListData.length")
+                    tr
+                        td(colspan="4") No Data
+            div(class="marginTop20" layout="row" layout-align="end center")
+                md-button(class="button" layout-align="center center"  ng-click="saveAttendanceList()" layout) Save 
+    

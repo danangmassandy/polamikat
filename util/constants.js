@@ -37,3 +37,9 @@ define("dimensionLimit", {
     maxWidth : 1000,
     maxHeight : 1000
 });
+
+// Attendance Values
+define("ATTENDANCE_PRESENT", "0");
+define("ATTENDANCE_ON_LEAVE", "1");
+define("ATTENDANCE_MEDICAL_LEAVE", "2");
+define("ATTENDANCE_WITHOUT_NOTICE", "3");

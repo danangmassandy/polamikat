@@ -60,7 +60,7 @@ div(class="padding20" layout="column" style="background: #F1F1F1;" flex)
                     tr(ng-repeat="x in satlantasKegiatanData | orderBy:giatSortType:giatSortReverse")
                         td {{ $index + 1 }}
                         td {{ x.category.name }}
-                        td {{ x.lastActivity | date:'dd-MM-yyyy':'UTC+8' }}
+                        td {{ x.lastActivity | date:'dd-MM-yyyy':'UTC+7' }}
                         td.number {{ x.kegiatanTotal }}
                 tbody(ng-if="!satlantasKegiatanData || !satlantasKegiatanData.length")
                     tr
