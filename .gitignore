@@ -61,3 +61,5 @@ public/bower_components
 
 # uploads folder
 uploads/
+
+resources/properties.json
