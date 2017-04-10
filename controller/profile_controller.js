@@ -43,7 +43,7 @@ var requestKeycloakAccessToken = function(callback) {
     });
 }
 
-var createKeycloakUser = function(username, email, name, pwd, callback) {
+var createKeycloakUser = function(username, email, name, pwd, isAdmin, callback) {
     Vasync.waterfall([
         (callback) => {
             REDIS_CLIENT.GET(keycloakAccessTokenKey, function(err, accessToken) {
@@ -115,6 +115,35 @@ var createKeycloakUser = function(username, email, name, pwd, callback) {
                     {
                         id: PROPERTIES.keycloak.restConfig.polamikatUserRoleID,
                         name: PROPERTIES.keycloak.restConfig.polamikatUserRoleName,
+                        scopeParamRequired: false,
+                        composite: false,
+                        clientRole: true,
+                        containerId: PROPERTIES.keycloak.restConfig.polamikatClientID
+                    }
+                ]
+            }, function(err,httpResponse,body){
+                if (err)
+                    return callback(err);
+                
+                if (body && body.errorMessage) {
+                    return callback("Set user role in keycloak error because " + body.errorMessage);
+                }
+                callback(null, {accessToken, keycloakUserURL}); 
+            });
+        }, ({accessToken, keycloakUserURL}, callback) => {
+            if (!isAdmin) {
+                return callback(null, { status : "Ok"});
+            }
+            // set user role for admin role
+            request.post({
+                url : keycloakUserURL + "/role-mappings/clients/" + PROPERTIES.keycloak.restConfig.polamikatClientID,
+                headers: {
+                    'Authorization': 'bearer ' + accessToken
+                },
+                json : [
+                    {
+                        id: PROPERTIES.keycloak.restConfig.polamikatAdminRoleID,
+                        name: PROPERTIES.keycloak.restConfig.polamikatAdminRoleName,
                         scopeParamRequired: false,
                         composite: false,
                         clientRole: true,
@@ -208,7 +237,7 @@ ProfileController.prototype.addPersonil = function addPersonil(personil, createL
             if (createLoginInfo) {
                 createKeycloakUser(createLoginInfo.username, 
                     createLoginInfo.email, data.personil.name, 
-                    createLoginInfo.password, 
+                    createLoginInfo.password, (createLoginInfo.role == "administrator"),
                     function (err, keycloakUser) {
                         if (err)
                             return callback1(err, data);
