@@ -162,4 +162,97 @@ AttendanceController.prototype.attendanceByValue = function attendanceByValue(p_
     });
 }
 
+AttendanceController.prototype.attendanceByPeriod = function attendanceByPeriod(p_period, p_date, callback) {
+    var sdate = null;
+    var edate = null;
+    if (p_period == "daily") {
+        sdate = Moment(p_date).startOf('day').toDate();
+        edate = Moment(p_date).endOf('day').toDate();
+    } else if (p_period == "weekly") {
+        sdate = Moment(p_date).startOf('week').toDate();
+        edate = Moment(p_date).endOf('week').toDate();
+    } else if (p_period == "monthly") {
+        sdate = Moment(p_date).startOf('month').toDate();
+        edate = Moment(p_date).endOf('month').toDate();
+    }
+    Model.Attendance.aggregate([
+        {
+            $match : { 
+                date    : {
+                    $gte : sdate,
+                    $lte : edate
+                },
+                status  : Constants.STATUS_ACTIVE 
+            }
+        },
+        {
+            $lookup : {
+                from : "personils",
+                localField : "personil",
+                foreignField : "_id",
+                as: "personil"
+            }
+        },
+        {
+            $unwind : "$personil"
+        },
+        {
+            $project : {
+                personil   : 1,
+                date       : 1,
+                value      : 1,
+                valuePresent   : {
+                    $cond : [ { $eq : [ "$value", parseInt(Constants.ATTENDANCE_PRESENT) ] }, 1, 0 ]
+                },
+                valueOnLeave   : {
+                    $cond : [ { $eq : [ "$value", parseInt(Constants.ATTENDANCE_ON_LEAVE) ] }, 1, 0 ]
+                },
+                valueMedicalLeave   : {
+                    $cond : [ { $eq : [ "$value", parseInt(Constants.ATTENDANCE_MEDICAL_LEAVE) ] }, 1, 0 ]
+                },
+                valueWithoutNotice   : {
+                    $cond : [ { $eq : [ "$value", parseInt(Constants.ATTENDANCE_WITHOUT_NOTICE) ] }, 1, 0 ]
+                }
+            }
+        },
+        {
+            $group : {
+                _id              : "$personil._id",
+                nrp              : { $last : "$personil.nrp" },
+                name             : { $last : "$personil.name" },
+                pangkat          : { $last : "$personil.pangkat" },
+                lastAttendance   : { $last :"$date"  },
+                total            : { $sum : 1 },
+                totalPresent     : { $sum : "$valuePresent" },
+                totalOnLeave     : { $sum : "$valueOnLeave" },
+                totalMedicalLeave: { $sum : "$valueMedicalLeave" },
+                totalWithoutNotice: { $sum : "$valueWithoutNotice" }
+            }
+        },
+        {
+            $sort : { "nrp" : 1 }
+        }
+    ]).exec(function(err, results) {
+        callback(err, results);
+    });
+}
+
+AttendanceController.prototype.reset = function reset(userName, callback) {
+    Model.Attendance.update({
+        status  : Constants.STATUS_ACTIVE
+    },
+    {
+        $set    : {
+            status      : Constants.STATUS_INACTIVE,
+            updater     : userName,
+            updatedAt   : new Date()
+        }
+    },
+    {
+        multi   : true
+    }).exec(function(err, res) {
+        callback(err, res);
+    });
+}
+
 module.exports = AttendanceController;

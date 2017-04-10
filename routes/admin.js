@@ -130,4 +130,36 @@ router.post('/attendance_by_value', function(req, res) {
     });
 });
 
+// reset attendnace
+router.post('/attendance_reset', function(req, res) {
+    attendanceController.reset(req.polamikatUser.username, function(err, results) {
+        if (err) {
+            res.fail(err);
+        } else {
+            res.success({
+                data : results
+            });
+        }
+    });
+});
+
+// get attendance by period
+router.post('/attendance_by_period', function(req, res) {
+    var p_period = req.body.period;
+    var p_date = req.body.date;
+    if (!p_period)
+        return res.fail("Period must be supplied.");
+    if (!p_date)
+        return res.fail("Date must be supplied.");
+    attendanceController.attendanceByPeriod(p_period, p_date, function(err, results) {
+        if (err) {
+            res.fail(err);
+        } else {
+            res.success({
+                data : results
+            });
+        }
+    });
+});
+
 module.exports = router;

@@ -191,3 +191,32 @@ td.number {
   background: rgba(0,0,0,0.61); /* Some darker color when you click it */
   -webkit-border-radius: 100px;
 }
+
+/* Segmented button */
+.segmentedButton {
+    font-size:16px;
+    width: 100px;
+    height: 40px;
+    background-color: #445667;
+    color: #a3a7aa;
+    border-top: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
+    border-bottom: 1px solid #ffffff;
+}
+
+.segmentedButton.first {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.segmentedButton.last {
+    border-right: 1px solid #ffffff;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.segmentedButton.selectedPeriod {
+    color: #ffffff;
+    background-color:#41a7e7;
+}
+/* Segmented button */

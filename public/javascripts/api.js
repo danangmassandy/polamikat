@@ -226,6 +226,30 @@ app.factory('rest', function($rootScope, $http) {
                     console.log("updateAttendance error ", response);
                     if (onError) onError(response);
                 });
+            },
+            attendanceByPeriod : function(p_period, p_date, onSuccess, onError) {
+                $http.post("/admin/attendance_by_period", {
+                    period  : p_period,
+                    date    : p_date
+                }).then(function(response) {
+                    if (response.data.status == "Ok")
+                        onSuccess(response);
+                    else if (onError) onError(response);
+                }, function(response) {
+                    console.log("attendanceByPeriod error ", response);
+                    if (onError) onError(response);
+                });
+            },
+            resetAttendance : function(onSuccess, onError) {
+                $http.post("/admin/attendance_reset", {
+                }).then(function(response) {
+                    if (response.data.status == "Ok")
+                        onSuccess(response);
+                    else if (onError) onError(response);
+                }, function(response) {
+                    console.log("resetAttendance error ", response);
+                    if (onError) onError(response);
+                });
             }
         },
         files : {

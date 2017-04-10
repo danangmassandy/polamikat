@@ -1,0 +1,79 @@
+div(class="padding20" layout="column" style="background: #F1F1F1;" flex)
+    div(class="" layout="row" layout-align="center center")
+        h1 Riwayat Daftar Hadir Personil
+    .marginTop20(layout="row" layout-align="end center")
+        div(layout="row")
+            div(ng-class="{'selectedPeriod' : period=='daily' }" class="segmentedButton first" style="cursor: pointer;" layout-align="center center" layout ng-click="changePeriod('daily')") Harian
+            div(ng-class="{'selectedPeriod' : period=='weekly' }" class="segmentedButton" style="cursor: pointer;" layout-align="center center" layout ng-click="changePeriod('weekly')") Mingguan
+            div(ng-class="{'selectedPeriod' : period=='monthly' }" class="segmentedButton last" style="cursor: pointer;" layout-align="center center" layout ng-click="changePeriod('monthly')") Bulanan
+        .marginLeft20(class="input-group" style="width:120px;" moment-picker="currDateStr" ng-model="currDate" format="DD-MM-YYYY" autoclose="true" change="onCurrDateChanged(newValue, oldValue)")
+            span(class="input-group-addon")
+                i(class="material-icons") date_range
+            input(class="form-control"
+                placeholder="Pilih tanggal "
+                value="{{currDateStr}}"
+                ng-model-options="{ updateOn: 'blur' }" 
+                style="height:40px;width:100px;")
+    .marginTop10(style="background-color:white;"  flex)
+        table(class="table table-bordered table-striped")
+            thead
+                tr
+                    th 
+                        a(href="")
+                            span No 
+                    th 
+                        a(href="" ng-click="tblSortType = 'nrp'; tblSortReverse = !tblSortReverse;")
+                            span NRP 
+                            span(class="fa fa-caret-up" ng-show="tblSortType == 'nrp' && tblSortReverse")
+                            span(class="fa fa-caret-down" ng-show="tblSortType == 'nrp' && !tblSortReverse")
+                    th 
+                        a(href="" ng-click="tblSortType = 'pangkat'; tblSortReverse = !tblSortReverse;")
+                            span Pangkat 
+                            span(class="fa fa-caret-up" ng-show="tblSortType == 'pangkat' && tblSortReverse")
+                            span(class="fa fa-caret-down" ng-show="tblSortType == 'pangkat' && !tblSortReverse")
+                    th 
+                        a(href="" ng-click="tblSortType = 'name'; tblSortReverse = !tblSortReverse;")
+                            span Nama 
+                            span(class="fa fa-caret-up" ng-show="tblSortType == 'name' && tblSortReverse")
+                            span(class="fa fa-caret-down" ng-show="tblSortType == 'name' && !tblSortReverse")
+                    th 
+                        a(href="" ng-click="tblSortType = 'totalPresent'; tblSortReverse = !tblSortReverse;")
+                            span Hadir 
+                            span(class="fa fa-caret-up" ng-show="tblSortType == 'totalPresent' && tblSortReverse")
+                            span(class="fa fa-caret-down" ng-show="tblSortType == 'totalPresent' && !tblSortReverse")
+                    th 
+                        a(href="" ng-click="tblSortType = 'totalOnLeave'; tblSortReverse = !tblSortReverse;")
+                            span Ijin 
+                            span(class="fa fa-caret-up" ng-show="tblSortType == 'totalOnLeave' && tblSortReverse")
+                            span(class="fa fa-caret-down" ng-show="tblSortType == 'totalOnLeave' && !tblSortReverse")
+                    th 
+                        a(href="" ng-click="tblSortType = 'totalMedicalLeave'; tblSortReverse = !tblSortReverse;")
+                            span Sakit 
+                            span(class="fa fa-caret-up" ng-show="tblSortType == 'totalMedicalLeave' && tblSortReverse")
+                            span(class="fa fa-caret-down" ng-show="tblSortType == 'totalMedicalLeave' && !tblSortReverse")
+                    th 
+                        a(href="" ng-click="tblSortType = 'totalWithoutNotice'; tblSortReverse = !tblSortReverse;")
+                            span Tanpa Keterangan 
+                            span(class="fa fa-caret-up" ng-show="tblSortType == 'totalWithoutNotice' && tblSortReverse")
+                            span(class="fa fa-caret-down" ng-show="tblSortType == 'totalWithoutNotice' && !tblSortReverse")
+                    th 
+                        a(href="" ng-click="tblSortType = 'total'; tblSortReverse = !tblSortReverse;")
+                            span Total 
+                            span(class="fa fa-caret-up" ng-show="tblSortType == 'total' && tblSortReverse")
+                            span(class="fa fa-caret-down" ng-show="tblSortType == 'total' && !tblSortReverse")
+            tbody(ng-if="attendanceListData && attendanceListData.length > 0")
+                tr(ng-repeat="x in attendanceListData | orderBy:tblSortType:tblSortReverse")
+                    td {{ $index + 1 }}
+                    td {{ x.nrp }}
+                    td {{ x.pangkat }}
+                    td {{ x.name }}
+                    td {{ x.totalPresent }}
+                    td {{ x.totalOnLeave }}
+                    td {{ x.totalMedicalLeave }}
+                    td {{ x.totalWithoutNotice }}
+                    td {{ x.total }}
+            tbody(ng-if="!attendanceListData || !attendanceListData.length")
+                tr
+                    td(colspan="9") No Data
+        div(class="marginTop20" layout="row" layout-align="end center")
+            md-button(class="button" layout-align="center center"  ng-click="reset()" layout) Reset Daftar Hadir 
