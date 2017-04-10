@@ -22,7 +22,7 @@ define("STATUS_ARCHIVED", "archived");
 define("UPLOADED_FILE_TYPE_PROFILE_IMAGE", 0);
 define("UPLOADED_FILE_TYPE_ACTIVITY_IMAGE", 1);
 
-define("ROLE_ADMIN", "admin");
+define("ROLE_ADMIN", "administrator");
 define("ROLE_USER", "user");
 
 //ERROR
