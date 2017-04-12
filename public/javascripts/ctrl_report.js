@@ -637,6 +637,9 @@ var getLabelActivitySummaryChart = function(data) {
 }
 
 var getLabelActivityRankChart = function(data) {
+    var split = data.personil.name.split(' ');
+    if (split.length)
+        return split[0];
     return data.personil.name;
 }
 

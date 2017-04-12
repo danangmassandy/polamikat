@@ -68,6 +68,9 @@ var attendanceRankCustomTooltips = function(tooltip) {
 };
 
 var getLabelAttendanceRankChart = function(data) {
+    var split = data.personilName.split(' ');
+    if (split.length)
+        return split[0];
     return data.personilName;
 }
 
@@ -137,7 +140,7 @@ app.controller('attendanceReportCtrl', function ($scope, $rootScope, $routeParam
             var label = getLabelAttendanceRankChart(data[i]);
             labels.push(label);
             data1.push(data[i].total);
-            backgroundColor.push('rgb(59, 191, 189)');
+            backgroundColor.push('rgb(30, 66, 199)');
         }
         $scope.attendanceRankByOnLeaveChart.labels = labels;
         $scope.attendanceRankByOnLeaveChart.data = data1;
@@ -227,7 +230,7 @@ app.controller('attendanceReportCtrl', function ($scope, $rootScope, $routeParam
             var label = getLabelAttendanceRankChart(data[i]);
             labels.push(label);
             data1.push(data[i].total);
-            backgroundColor.push('rgb(59, 191, 189)');
+            backgroundColor.push('rgb(225, 149, 18)');
         }
         $scope.attendanceRankByMedicalLeaveChart.labels = labels;
         $scope.attendanceRankByMedicalLeaveChart.data = data1;
