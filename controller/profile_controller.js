@@ -375,7 +375,7 @@ ProfileController.prototype.deactivatePersonil = function deactivatePersonil(per
             }).exec(function(err, user) {
                 if (err || !user)
                     return callback1(null, data);
-                disableKeycloakLogin = user.status == Constants.STATUS_ACTIVE;
+                disableKeycloakLogin = user.status == Constants.STATUS_ACTIVE || user.status == Constants.STATUS_NEW;
                 log.info("disableKeycloakLogin ", disableKeycloakLogin);
                 log.info("user ", user);
                 user.status = Constants.STATUS_INACTIVE;
