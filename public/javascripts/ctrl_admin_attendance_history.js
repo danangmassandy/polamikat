@@ -17,7 +17,7 @@ app.controller('adminAttendanceHistoryCtrl', function ($scope, $rootScope, $mdDi
     $scope.attendanceListData = [];
 
     $scope.loadAttendanceByPeriod = function() {
-        rest.admin.attendanceByPeriod($scope.period, $scope.currDate, function(response) {
+        rest.attendance.attendanceByPeriod($scope.period, $scope.currDate, function(response) {
             console.log("attendanceList response ", response);
             if (response.data.data)
                 $scope.attendanceListData = angular.copy(response.data.data);
@@ -31,7 +31,7 @@ app.controller('adminAttendanceHistoryCtrl', function ($scope, $rootScope, $mdDi
 
     $scope.reset = function() {
         showMessage.confirm("Konfirm Reset Daftar Hadir", "Anda yakin untuk reset daftar hadir personil?", "Ok", "Cancel", function(){
-            rest.admin.resetAttendance(function(response) {
+            rest.attendance.resetAttendance(function(response) {
                 console.log("reset daftar hadir response ", response);
                 showMessage.error("Success", "Sukses reset daftar hadir!", "Ok", function(){
                     $rootScope.back();

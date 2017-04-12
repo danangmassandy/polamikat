@@ -17,11 +17,14 @@ block menu
                 div(ng-class="selectedMenu == 'report' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('report')")
                     div Report
                     div(flex)
+                div(ng-class="selectedMenu == 'attendance_report' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('attendance_report')")
+                    div Laporan Absen Personil
+                    div(flex)
                 div(ng-class="selectedMenu == 'admin_attendance' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('admin_attendance')" ng-if="isAdmin")
-                    div Daftar Hadir Personil
+                    div Input Absen Personil
                     div(flex)
                 div(ng-class="selectedMenu == 'admin_attendance_history' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('admin_attendance_history')" ng-if="isAdmin")
-                    div Riwayat Daftar Hadir
+                    div Riwayat Absen Personil
                     div(flex)
                 div(ng-class="selectedMenu == 'data_personil_list' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('data_personil_list')")
                     div Data Personil Satlantas
@@ -62,6 +65,7 @@ block script
     script(src="/javascripts/ctrl_admin_photos_kegiatan.js")
     script(src="/javascripts/ctrl_admin_attendance.js")
     script(src="/javascripts/ctrl_admin_attendance_history.js")
+    script(src="/javascripts/ctrl_attendance_report.js")
     script(src="/javascripts/ctrl_data_kegiatan_personil.js")
     script(src="/javascripts/ctrl_data_kegiatan_satlantas.js")
     script(src="/javascripts/ctrl_data_personil_list.js")

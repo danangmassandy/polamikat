@@ -10,6 +10,7 @@ const Path = require('path');
 const Redis = require("redis");
 const RequestUtil = require('./util/request_util');
 const ResponseWrapper = require('./util/response_wrapper');
+const KeycloakUtil = require('./util/keycloak_util');
 
 const session = require('express-session');
 const Constant = require('./util/constants.js');
@@ -35,13 +36,6 @@ REDIS_CLIENT = Redis.createClient(PROPERTIES.redis.url); //connecto to redis ser
 
 
 BASE_DIR = __dirname;
-
-// include routes here
-var index = require('./routes/index');
-var admin = require('./routes/admin');
-var user = require('./routes/user');
-var activity = require('./routes/activity');
-var files = require('./routes/files');
 
 var app = Express();
 
@@ -71,21 +65,19 @@ app.use(session({
 app.use(ResponseWrapper);
 
 /* Keycloak */
-var keycloak = new Keycloak({
+var keycloak = KeycloakUtil.init({
     store: RedisStore
 }, PROPERTIES.keycloak.config);
 
 app.use(keycloak.middleware());
 
-var isSystemAdministrator = function (token) {
-    //console.log(token);
-    //console.log("roles ", token.content.realm_access.roles);
-    if (token.content.realm_access.roles.indexOf('admin') < 0 && !token.hasRole('PolamikatAdmin')) {
-        return false;
-    }
-
-    return true;
-};
+// include routes here
+var index = require('./routes/index');
+var admin = require('./routes/admin');
+var user = require('./routes/user');
+var activity = require('./routes/activity');
+var files = require('./routes/files');
+var attendance = require('./routes/attendance');
 
 // routes
 app.get('/browser/close/:openApp?', function (req, res) {
@@ -99,12 +91,13 @@ app.get('/browser/require-login/:openApp?', function (req, res) {
     });
 });
 
-app.use('/', keycloak.protect(), RequestUtil.authenticate, index);
+app.use('/', KeycloakUtil.protect(), RequestUtil.authenticate, index);
 
-app.use('/admin', keycloak.protect(isSystemAdministrator), RequestUtil.authenticate, admin);
-app.use('/user', keycloak.protect(), RequestUtil.authenticate, user);
-app.use('/activity', keycloak.protect(), RequestUtil.authenticate, activity);
-app.use('/files', keycloak.protect(), RequestUtil.authenticate, files);
+app.use('/admin', KeycloakUtil.protectSystemAdmin(), RequestUtil.authenticate, admin);
+app.use('/user', KeycloakUtil.protect(), RequestUtil.authenticate, user);
+app.use('/activity', KeycloakUtil.protect(), RequestUtil.authenticate, activity);
+app.use('/files', KeycloakUtil.protect(), RequestUtil.authenticate, files);
+app.use('/attendance', attendance);
 
 // web
 // app.use('/me', keycloak.protect(), RequestUtil.authenticate, Me);

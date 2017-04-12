@@ -140,6 +140,69 @@ app.factory('rest', function($rootScope, $http) {
                 });
             }
         },
+        attendance : {
+            attendanceList : function(p_date, onSuccess, onError) {
+                $http.post("/attendance/attendance_list", {
+                    date : p_date
+                }).then(function(response) {
+                    if (response.data.status == "Ok")
+                        onSuccess(response);
+                    else if (onError) onError(response);
+                }, function(response) {
+                    console.log("attendanceList error ", response);
+                    if (onError) onError(response);
+                });
+            },
+            attendanceByValue : function(p_value, onSuccess, onError) {
+                $http.post("/attendance/attendance_by_value", {
+                    value : p_value
+                }).then(function(response) {
+                    if (response.data.status == "Ok")
+                        onSuccess(response);
+                    else if (onError) onError(response);
+                }, function(response) {
+                    console.log("attendanceByValue error ", response);
+                    if (onError) onError(response);
+                });
+            },
+            updateAttendance : function(p_date, attendance_list, onSuccess, onError) {
+                $http.post("/attendance/update_attendance", {
+                    attendanceList : attendance_list,
+                    date : p_date
+                }).then(function(response) {
+                    if (response.data.status == "Ok")
+                        onSuccess(response);
+                    else if (onError) onError(response);
+                }, function(response) {
+                    console.log("updateAttendance error ", response);
+                    if (onError) onError(response);
+                });
+            },
+            attendanceByPeriod : function(p_period, p_date, onSuccess, onError) {
+                $http.post("/attendance/attendance_by_period", {
+                    period  : p_period,
+                    date    : p_date
+                }).then(function(response) {
+                    if (response.data.status == "Ok")
+                        onSuccess(response);
+                    else if (onError) onError(response);
+                }, function(response) {
+                    console.log("attendanceByPeriod error ", response);
+                    if (onError) onError(response);
+                });
+            },
+            resetAttendance : function(onSuccess, onError) {
+                $http.post("/attendance/attendance_reset", {
+                }).then(function(response) {
+                    if (response.data.status == "Ok")
+                        onSuccess(response);
+                    else if (onError) onError(response);
+                }, function(response) {
+                    console.log("resetAttendance error ", response);
+                    if (onError) onError(response);
+                });
+            }
+        },
         admin : {
             addPersonil : function(personil, createLoginInfo, onSuccess, onError) {
                 $http.post("/admin/add_personil", {
@@ -187,67 +250,6 @@ app.factory('rest', function($rootScope, $http) {
                     else if (onError) onError(response);
                 }, function(response) {
                     console.log("deletePersonil error ", response);
-                    if (onError) onError(response);
-                });
-            },
-            attendanceList : function(p_date, onSuccess, onError) {
-                $http.post("/admin/attendance_list", {
-                    date : p_date
-                }).then(function(response) {
-                    if (response.data.status == "Ok")
-                        onSuccess(response);
-                    else if (onError) onError(response);
-                }, function(response) {
-                    console.log("attendanceList error ", response);
-                    if (onError) onError(response);
-                });
-            },
-            attendanceByValue : function(p_value, onSuccess, onError) {
-                $http.post("/admin/attendance_by_value", {
-                    value : p_value
-                }).then(function(response) {
-                    if (response.data.status == "Ok")
-                        onSuccess(response);
-                    else if (onError) onError(response);
-                }, function(response) {
-                    console.log("attendanceByValue error ", response);
-                    if (onError) onError(response);
-                });
-            },
-            updateAttendance : function(p_date, attendance_list, onSuccess, onError) {
-                $http.post("/admin/update_attendance", {
-                    attendanceList : attendance_list,
-                    date : p_date
-                }).then(function(response) {
-                    if (response.data.status == "Ok")
-                        onSuccess(response);
-                    else if (onError) onError(response);
-                }, function(response) {
-                    console.log("updateAttendance error ", response);
-                    if (onError) onError(response);
-                });
-            },
-            attendanceByPeriod : function(p_period, p_date, onSuccess, onError) {
-                $http.post("/admin/attendance_by_period", {
-                    period  : p_period,
-                    date    : p_date
-                }).then(function(response) {
-                    if (response.data.status == "Ok")
-                        onSuccess(response);
-                    else if (onError) onError(response);
-                }, function(response) {
-                    console.log("attendanceByPeriod error ", response);
-                    if (onError) onError(response);
-                });
-            },
-            resetAttendance : function(onSuccess, onError) {
-                $http.post("/admin/attendance_reset", {
-                }).then(function(response) {
-                    if (response.data.status == "Ok")
-                        onSuccess(response);
-                    else if (onError) onError(response);
-                }, function(response) {
-                    console.log("resetAttendance error ", response);
                     if (onError) onError(response);
                 });
             }

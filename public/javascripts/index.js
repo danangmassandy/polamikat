@@ -12,6 +12,9 @@ app.config(function($routeProvider, $locationProvider) {
         }).when('/report', {
             templateUrl: '/tpl/report',
             controller: 'reportCtrl',
+        }).when('/attendance_report', {
+            templateUrl: '/tpl/attendance_report',
+            controller: 'attendanceReportCtrl',
         }).when('/admin_add_personil', {
             templateUrl: '/tpl/admin_add_personil',
             controller: 'adminAddPersonilCtrl',

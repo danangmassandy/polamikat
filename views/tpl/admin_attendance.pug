@@ -1,36 +1,9 @@
 div(class="padding20" layout="column" style="background: #F1F1F1;" flex)
     md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
         div(class="titleBar" layout="row" layout-align="space-between center")
-            div Grafik Personil Tidak Hadir Ijin
-        div(ng-show="!attendanceRankByOnLeaveChart.loaded" flex style="height:440px;padding:20px;" layout="row" layout-align="center center")
-            md-progress-circular(class="md-accent" md-mode="indeterminate")
-        .chartContainer(ng-show="attendanceRankByOnLeaveChart.loaded" style="background-color:white;" flex)
-            div(ng-style="{'width' : attendanceRankByOnLeaveChart.canvasWidth + 'px'}" style="height:400px;max-height:400px;" )
-                canvas(id="attendanceRankByOnLeaveChart" class="chart chart-bar" chart-data="attendanceRankByOnLeaveChart.data" chart-labels="attendanceRankByOnLeaveChart.labels" 
-                    chart-series="attendanceRankByOnLeaveChart.series" chart-options="attendanceRankByOnLeaveChart.options" chart-dataset-override="attendanceRankByOnLeaveChart.datasetsOverrides")
-    md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
-        div(class="titleBar" layout="row" layout-align="space-between center")
-            div Grafik Personil Tidak Hadir Sakit
-        div(ng-show="!attendanceRankByMedicalLeaveChart.loaded" flex style="height:440px;padding:20px;" layout="row" layout-align="center center")
-            md-progress-circular(class="md-accent" md-mode="indeterminate")
-        .chartContainer(ng-show="attendanceRankByMedicalLeaveChart.loaded" style="background-color:white;" flex)
-            div(ng-style="{'width' : attendanceRankByMedicalLeaveChart.canvasWidth + 'px'}" style="height:400px;max-height:400px;" )
-                canvas(id="attendanceRankByMedicalLeaveChart" class="chart chart-bar" chart-data="attendanceRankByMedicalLeaveChart.data" chart-labels="attendanceRankByMedicalLeaveChart.labels" 
-                    chart-series="attendanceRankByMedicalLeaveChart.series" chart-options="attendanceRankByMedicalLeaveChart.options" chart-dataset-override="attendanceRankByMedicalLeaveChart.datasetsOverrides")
-    md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
-        div(class="titleBar" layout="row" layout-align="space-between center")
-            div Grafik Personil Tidak Hadir Tanpa Keterangan
-        div(ng-show="!attendanceRankByNoNoticeChart.loaded" flex style="height:440px;padding:20px;" layout="row" layout-align="center center")
-            md-progress-circular(class="md-accent" md-mode="indeterminate")
-        .chartContainer(ng-show="attendanceRankByNoNoticeChart.loaded" style="background-color:white;" flex)
-            div(ng-style="{'width' : attendanceRankByNoNoticeChart.canvasWidth + 'px'}" style="height:400px;max-height:400px;" )
-                canvas(id="attendanceRankByNoNoticeChart" class="chart chart-bar" chart-data="attendanceRankByNoNoticeChart.data" chart-labels="attendanceRankByNoNoticeChart.labels" 
-                    chart-series="attendanceRankByNoNoticeChart.series" chart-options="attendanceRankByNoNoticeChart.options" chart-dataset-override="attendanceRankByNoNoticeChart.datasetsOverrides")
-    md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
-        div(class="titleBar" layout="row" layout-align="space-between center")
-            div Daftar Hadir Personil
-            div(ng-if="lastUpdated") Update Terakhir : {{ lastUpdated  | date:'dd-MM-yyyy HH:mm':'UTC+7' }}
+            div Absen Personil Tanggal {{ currentDate | date:'dd-MM-yyyy'}}
         .padding20( style="background-color:white;" )
+            div(layout="row" layout-align="end center" ng-if="lastUpdated" style="font-size:12px;font-style:italic;margin-bottom:10px;") Update Terakhir : {{ lastUpdated  | date:'dd-MM-yyyy HH:mm':'UTC+7' }}
             table(class="table table-bordered table-striped")
                 thead
                     tr
