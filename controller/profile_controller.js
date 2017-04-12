@@ -80,12 +80,16 @@ var createKeycloakUser = function(username, email, name, pwd, isAdmin, callback)
                 if (body && body.errorMessage) {
                     return callback("Create user in keycloak error because " + body.errorMessage);
                 }
-                log.info("headers ", httpResponse.headers);
-                log.info("location ", httpResponse.headers.location);
+                
                 var keycloakUserURL = httpResponse.headers.location;
-                callback(null, {accessToken, keycloakUserURL}); 
+                var splitURL = keycloakUserURL.split('/');
+                var keycloakUser = {
+                    sub : splitURL[splitURL.length - 1]
+                };
+                log.info("User sub created ", keycloakUser);
+                callback(null, {accessToken, keycloakUserURL, keycloakUser}); 
             });
-        }, ({accessToken, keycloakUserURL}, callback) => {
+        }, ({accessToken, keycloakUserURL, keycloakUser}, callback) => {
             // set temporary password for the user
             request.put({
                 url : keycloakUserURL + "/reset-password",
@@ -104,9 +108,9 @@ var createKeycloakUser = function(username, email, name, pwd, isAdmin, callback)
                 if (body && body.errorMessage) {
                     return callback("Set user temporary password in keycloak error because " + body.errorMessage);
                 }
-                callback(null, {accessToken, keycloakUserURL}); 
+                callback(null, {accessToken, keycloakUserURL, keycloakUser}); 
             });
-        }, ({accessToken, keycloakUserURL}, callback) => {
+        }, ({accessToken, keycloakUserURL, keycloakUser}, callback) => {
             // set user role for client role
             request.post({
                 url : keycloakUserURL + "/role-mappings/clients/" + PROPERTIES.keycloak.restConfig.polamikatClientID,
@@ -130,11 +134,11 @@ var createKeycloakUser = function(username, email, name, pwd, isAdmin, callback)
                 if (body && body.errorMessage) {
                     return callback("Set user role in keycloak error because " + body.errorMessage);
                 }
-                callback(null, {accessToken, keycloakUserURL}); 
+                callback(null, {accessToken, keycloakUserURL, keycloakUser}); 
             });
-        }, ({accessToken, keycloakUserURL}, callback) => {
+        }, ({accessToken, keycloakUserURL, keycloakUser}, callback) => {
             if (!isAdmin) {
-                return callback(null, { status : "Ok"});
+                return callback(null, keycloakUser);
             }
             // set user role for admin role
             request.post({
@@ -159,7 +163,7 @@ var createKeycloakUser = function(username, email, name, pwd, isAdmin, callback)
                 if (body && body.errorMessage) {
                     return callback("Set user role in keycloak error because " + body.errorMessage);
                 }
-                callback(null, { status : "Ok"}); 
+                callback(null, keycloakUser); 
             });
         }
     ], function(err, result) {
