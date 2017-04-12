@@ -743,7 +743,7 @@ app.controller('reportCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav
             backgroundColor: backgroundColor,
             hoverBackgroundColor: backgroundColor
         };
-        $scope.activitiesChart.canvasWidth = 125 * data.length;
+        $scope.activitiesChart.canvasWidth = 150 * data.length;
         $scope.activitiesChart.loaded = true;
     }
     $scope.recallActivitiesChart = function() {
@@ -853,7 +853,7 @@ app.controller('reportCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav
             backgroundColor: backgroundColor,
             hoverBackgroundColor: backgroundColor
         };
-        $scope.activitySummaryChart.canvasWidth = 125 * data.length;
+        $scope.activitySummaryChart.canvasWidth = 150 * data.length;
         $scope.activitySummaryChart.loaded = true;
     }
     $scope.recallActivitySummaryChart = function() {
@@ -962,7 +962,7 @@ app.controller('reportCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav
             backgroundColor: backgroundColor,
             hoverBackgroundColor: backgroundColor
         };
-        $scope.activityRankChart.canvasWidth = 125 * data.length;
+        $scope.activityRankChart.canvasWidth = 150 * data.length;
         $scope.activityRankChart.loaded = true;
     }
     $scope.recallActivityRankChart = function() {
