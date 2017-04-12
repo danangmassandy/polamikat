@@ -81,9 +81,14 @@ td.number {
     font-size: 14px;
 }
 .tooltipTitle {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+}
+.tooltipSubtitle {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 .tooltipTotalLabel {
     color:#babcbe;
@@ -99,7 +104,7 @@ td.number {
     color:#babcbe;
 }
 .tooltipNumber {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: bold;
 }
 .tooltipDivLeft:before{

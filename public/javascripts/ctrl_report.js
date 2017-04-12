@@ -593,10 +593,21 @@ var activityRankCustomTooltips = function(tooltip) {
         var bodyLines = tooltip.body.map(getBody);
         var innerHtml = '<div class="arrowRight tooltipBody layout-column flex">';
         innerHtml += '<div class="tooltipTitle">';
-        titleLines.forEach(function(title) {
-            innerHtml += '<span>' + title + '</span>';
-        });
+        if (tooltip.dataPoints.length && tooltip.dataPoints[0].displayName) {
+            innerHtml += '<span>' + tooltip.dataPoints[0].displayName + '</span>';
+        } else {
+            titleLines.forEach(function(title) {
+                innerHtml += '<span>' + title + '</span>';
+            });
+        }
         innerHtml += '</div>';
+
+        innerHtml += '<div class="tooltipSubtitle">';
+        if (tooltip.dataPoints.length && tooltip.dataPoints[0].personilNRP) {
+            innerHtml += '<span>' + tooltip.dataPoints[0].personilNRP + '</span>';
+        }
+        innerHtml += '</div>';
+
         innerHtml += '<div class="layout-row"><span class="tooltipTotalLabel">Nilai</span>&nbsp;&nbsp;&nbsp;<span class="tooltipNumber">'+sum+'</span></div>';
         innerHtml += '</div>';
         tooltipEl.innerHTML = innerHtml;
@@ -900,7 +911,19 @@ app.controller('reportCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav
                 enabled: false,
                 mode: 'index',
                 position: 'average',
-                custom: activityRankCustomTooltips
+                custom: activityRankCustomTooltips,
+                callbacks : {
+                    label : function(tooltipItem, data) {
+                        // console.log("tooltipItem ", tooltipItem);
+                        if (!$scope.activityRankChart.originalData[tooltipItem.index]) {
+                            tooltipItem.displayName = "";
+                            return "";
+                        }
+                        tooltipItem.displayName = $scope.activityRankChart.originalData[tooltipItem.index].personil.pangkat + " " + $scope.activityRankChart.originalData[tooltipItem.index].personil.name;
+                        tooltipItem.personilNRP = $scope.activityRankChart.originalData[tooltipItem.index].personil.nrp;
+                        return $scope.activityRankChart.originalData[tooltipItem.index].personilName;
+                    }
+                }
             },
             responsive : true,
             maintainAspectRatio : false
@@ -908,7 +931,8 @@ app.controller('reportCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav
         datasetsOverrides : {},
         canvasWidth : 1000,
         personil : "",
-        loaded : false
+        loaded : false,
+        originalData : []
     }
 
     $scope.resetActivityRankChart = function() {
@@ -927,6 +951,7 @@ app.controller('reportCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav
             data1.push(data[i].total);
             backgroundColor.push('rgb(59, 191, 189)');
         }
+        $scope.activityRankChart.originalData = data;
         $scope.activityRankChart.labels = labels;
         $scope.activityRankChart.data = data1;
         $scope.activityRankChart.datasetsOverrides = {

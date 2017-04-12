@@ -32,10 +32,21 @@ var attendanceRankCustomTooltips = function(tooltip) {
         var bodyLines = tooltip.body.map(getBody);
         var innerHtml = '<div class="arrowRight tooltipBody layout-column flex">';
         innerHtml += '<div class="tooltipTitle">';
-        titleLines.forEach(function(title) {
-            innerHtml += '<span>' + title + '</span>';
-        });
+        if (tooltip.dataPoints.length && tooltip.dataPoints[0].displayName) {
+            innerHtml += '<span>' + tooltip.dataPoints[0].displayName + '</span>';
+        } else {
+            titleLines.forEach(function(title) {
+                innerHtml += '<span>' + title + '</span>';
+            });
+        }
         innerHtml += '</div>';
+
+        innerHtml += '<div class="tooltipSubtitle">';
+        if (tooltip.dataPoints.length && tooltip.dataPoints[0].personilNRP) {
+            innerHtml += '<span>' + tooltip.dataPoints[0].personilNRP + '</span>';
+        }
+        innerHtml += '</div>';
+        
         innerHtml += '<div class="layout-row"><span class="tooltipTotalLabel">Total</span>&nbsp;&nbsp;&nbsp;<span class="tooltipNumber">'+sum+'</span></div>';
         innerHtml += '</div>';
         tooltipEl.innerHTML = innerHtml;
@@ -115,7 +126,19 @@ app.controller('attendanceReportCtrl', function ($scope, $rootScope, $routeParam
                 enabled: false,
                 mode: 'index',
                 position: 'average',
-                custom: attendanceRankCustomTooltips
+                custom: attendanceRankCustomTooltips,
+                callbacks : {
+                    label : function(tooltipItem, data) {
+                        // console.log("tooltipItem ", tooltipItem);
+                        if (!$scope.attendanceRankByOnLeaveChart.originalData[tooltipItem.index]) {
+                            tooltipItem.displayName = "";
+                            return "";
+                        }
+                        tooltipItem.displayName = $scope.attendanceRankByOnLeaveChart.originalData[tooltipItem.index].personilPangkat + " " + $scope.attendanceRankByOnLeaveChart.originalData[tooltipItem.index].personilName;
+                        tooltipItem.personilNRP = $scope.attendanceRankByOnLeaveChart.originalData[tooltipItem.index].personilNRP;
+                        return $scope.attendanceRankByOnLeaveChart.originalData[tooltipItem.index].personilName;
+                    }
+                }
             },
             responsive : true,
             maintainAspectRatio : false
@@ -123,7 +146,8 @@ app.controller('attendanceReportCtrl', function ($scope, $rootScope, $routeParam
         datasetsOverrides : {},
         canvasWidth : 1000,
         personil : "",
-        loaded : false
+        loaded : false,
+        originalData : []
     }
 
     $scope.resetAttendanceRankByOnLeaveChart = function() {
@@ -142,6 +166,7 @@ app.controller('attendanceReportCtrl', function ($scope, $rootScope, $routeParam
             data1.push(data[i].total);
             backgroundColor.push('rgb(30, 66, 199)');
         }
+        $scope.attendanceRankByOnLeaveChart.originalData = data;
         $scope.attendanceRankByOnLeaveChart.labels = labels;
         $scope.attendanceRankByOnLeaveChart.data = data1;
         $scope.attendanceRankByOnLeaveChart.datasetsOverrides = {
@@ -205,7 +230,19 @@ app.controller('attendanceReportCtrl', function ($scope, $rootScope, $routeParam
                 enabled: false,
                 mode: 'index',
                 position: 'average',
-                custom: attendanceRankCustomTooltips
+                custom: attendanceRankCustomTooltips,
+                callbacks : {
+                    label : function(tooltipItem, data) {
+                        // console.log("tooltipItem ", tooltipItem);
+                        if (!$scope.attendanceRankByMedicalLeaveChart.originalData[tooltipItem.index]) {
+                            tooltipItem.displayName = "";
+                            return "";
+                        }
+                        tooltipItem.displayName = $scope.attendanceRankByMedicalLeaveChart.originalData[tooltipItem.index].personilPangkat + " " + $scope.attendanceRankByMedicalLeaveChart.originalData[tooltipItem.index].personilName;
+                        tooltipItem.personilNRP = $scope.attendanceRankByMedicalLeaveChart.originalData[tooltipItem.index].personilNRP;
+                        return $scope.attendanceRankByMedicalLeaveChart.originalData[tooltipItem.index].personilName;
+                    }
+                }
             },
             responsive : true,
             maintainAspectRatio : false
@@ -213,7 +250,8 @@ app.controller('attendanceReportCtrl', function ($scope, $rootScope, $routeParam
         datasetsOverrides : {},
         canvasWidth : 1000,
         personil : "",
-        loaded : false
+        loaded : false,
+        originalData : []
     }
 
     $scope.resetAttendanceRankByMedicalLeaveChart = function() {
@@ -232,6 +270,7 @@ app.controller('attendanceReportCtrl', function ($scope, $rootScope, $routeParam
             data1.push(data[i].total);
             backgroundColor.push('rgb(225, 149, 18)');
         }
+        $scope.attendanceRankByMedicalLeaveChart.originalData = data;
         $scope.attendanceRankByMedicalLeaveChart.labels = labels;
         $scope.attendanceRankByMedicalLeaveChart.data = data1;
         $scope.attendanceRankByMedicalLeaveChart.datasetsOverrides = {
@@ -295,7 +334,19 @@ app.controller('attendanceReportCtrl', function ($scope, $rootScope, $routeParam
                 enabled: false,
                 mode: 'index',
                 position: 'average',
-                custom: attendanceRankCustomTooltips
+                custom: attendanceRankCustomTooltips,
+                callbacks : {
+                    label : function(tooltipItem, data) {
+                        // console.log("tooltipItem ", tooltipItem);
+                        if (!$scope.attendanceRankByNoNoticeChart.originalData[tooltipItem.index]) {
+                            tooltipItem.displayName = "";
+                            return "";
+                        }
+                        tooltipItem.displayName = $scope.attendanceRankByNoNoticeChart.originalData[tooltipItem.index].personilPangkat + " " + $scope.attendanceRankByNoNoticeChart.originalData[tooltipItem.index].personilName;
+                        tooltipItem.personilNRP = $scope.attendanceRankByNoNoticeChart.originalData[tooltipItem.index].personilNRP;
+                        return $scope.attendanceRankByNoNoticeChart.originalData[tooltipItem.index].personilName;
+                    }
+                }
             },
             responsive : true,
             maintainAspectRatio : false
@@ -303,7 +354,8 @@ app.controller('attendanceReportCtrl', function ($scope, $rootScope, $routeParam
         datasetsOverrides : {},
         canvasWidth : 1000,
         personil : "",
-        loaded : false
+        loaded : false,
+        originalData : []
     }
 
     $scope.resetAttendanceRankByNoNoticeChart = function() {
@@ -322,6 +374,7 @@ app.controller('attendanceReportCtrl', function ($scope, $rootScope, $routeParam
             data1.push(data[i].total);
             backgroundColor.push('rgb(59, 191, 189)');
         }
+        $scope.attendanceRankByNoNoticeChart.originalData = data;
         $scope.attendanceRankByNoNoticeChart.labels = labels;
         $scope.attendanceRankByNoNoticeChart.data = data1;
         $scope.attendanceRankByNoNoticeChart.datasetsOverrides = {

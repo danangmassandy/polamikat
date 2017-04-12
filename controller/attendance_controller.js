@@ -151,6 +151,7 @@ AttendanceController.prototype.attendanceByValue = function attendanceByValue(p_
                 total            : { $sum : 1 },
                 personilName     : { $last : "$personil.name" },
                 personilPangkat  : { $last : "$personil.pangkat" },
+                personilNRP  : { $last : "$personil.nrp" },
                 lastAttendance   : { $last :"$date"  }
             }
         },
