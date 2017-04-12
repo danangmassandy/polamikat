@@ -51,7 +51,7 @@ var createKeycloakUser = function(username, email, name, pwd, isAdmin, callback)
             });
         }, ({accessToken}, callback) => {
             if (accessToken) {
-                log.info("accessToken kc exists ", accessToken);
+                //log.info("accessToken kc exists ", accessToken);
                 callback(null, {accessToken});
             } else {
                 requestKeycloakAccessToken(callback);
@@ -80,6 +80,8 @@ var createKeycloakUser = function(username, email, name, pwd, isAdmin, callback)
                 if (body && body.errorMessage) {
                     return callback("Create user in keycloak error because " + body.errorMessage);
                 }
+                log.info("headers ", httpResponse.headers);
+                log.info("location ", httpResponse.headers.location);
                 var keycloakUserURL = httpResponse.headers.location;
                 callback(null, {accessToken, keycloakUserURL}); 
             });
@@ -175,7 +177,7 @@ var deleteKeycloakUser = function(sub, callback) {
             });
         }, ({accessToken}, callback) => {
             if (accessToken) {
-                log.info("accessToken kc exists ", accessToken);
+                //log.info("accessToken kc exists ", accessToken);
                 callback(null, {accessToken});
             } else {
                 requestKeycloakAccessToken(callback);

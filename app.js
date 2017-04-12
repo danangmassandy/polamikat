@@ -78,8 +78,8 @@ var keycloak = new Keycloak({
 app.use(keycloak.middleware());
 
 var isSystemAdministrator = function (token) {
-    console.log(token);
-    console.log("roles ", token.content.realm_access.roles);
+    //console.log(token);
+    //console.log("roles ", token.content.realm_access.roles);
     if (token.content.realm_access.roles.indexOf('admin') < 0 && !token.hasRole('PolamikatAdmin')) {
         return false;
     }
