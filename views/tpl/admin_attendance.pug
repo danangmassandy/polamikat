@@ -1,70 +1,69 @@
-div(class="padding20" layout="column" style="background: #F1F1F1;" flex)
+md-content(class="padding20" layout="column" style="background: #F1F1F1;" flex="noshrink")
     h2 Absen Personil Tanggal {{ currentDate | date:'dd-MM-yyyy'}}
     .marginTop40
     div(layout="row" layout-align="end center" ng-if="lastUpdated" style="font-size:12px;font-style:italic;margin-bottom:10px;") Update Terakhir : {{ lastUpdated  | date:'dd-MM-yyyy HH:mm':'UTC+7' }}
-    md-content
-        table(class="table table-bordered table-striped")
-            thead
-                tr
-                    th 
-                        a(href="")
-                            span No 
-                    th 
-                        a(href="" ng-click="tblSortType = 'personil.nrp'; tblSortReverse = !tblSortReverse;")
-                            span NRP 
-                            span(class="fa fa-caret-up" ng-show="tblSortType == 'personil.nrp' && tblSortReverse")
-                            span(class="fa fa-caret-down" ng-show="tblSortType == 'personil.nrp' && !tblSortReverse")
-                    th 
-                        a(href="" ng-click="tblSortType = 'personil.pangkat'; tblSortReverse = !tblSortReverse;")
-                            span Pangkat 
-                            span(class="fa fa-caret-up" ng-show="tblSortType == 'personil.pangkat' && tblSortReverse")
-                            span(class="fa fa-caret-down" ng-show="tblSortType == 'personil.pangkat' && !tblSortReverse")
-                    th 
-                        a(href="" ng-click="tblSortType = 'personil.name'; tblSortReverse = !tblSortReverse;")
-                            span Nama 
-                            span(class="fa fa-caret-up" ng-show="tblSortType == 'personil.name' && tblSortReverse")
-                            span(class="fa fa-caret-down" ng-show="tblSortType == 'personil.name' && !tblSortReverse")
-                    th 
-                        md-checkbox(ng-model="isHadirAllChecked" ng-change="checkAll(0)" aria-label="Check All Hadir") 
-                        a(href="" ng-click="tblSortType = 'isHadirChecked'; tblSortReverse = !tblSortReverse;")
-                            span Hadir 
-                            span(class="fa fa-caret-up" ng-show="tblSortType == 'isHadirChecked' && tblSortReverse")
-                            span(class="fa fa-caret-down" ng-show="tblSortType == 'isHadirChecked' && !tblSortReverse")
-                    th 
-                        md-checkbox(ng-model="isIjinAllChecked" ng-change="checkAll(1)" aria-label="Check All Ijin") 
-                        a(href="" ng-click="tblSortType = 'isIjinChecked'; tblSortReverse = !tblSortReverse;")
-                            span Ijin 
-                            span(class="fa fa-caret-up" ng-show="tblSortType == 'isIjinChecked' && tblSortReverse")
-                            span(class="fa fa-caret-down" ng-show="tblSortType == 'isIjinChecked' && !tblSortReverse")
-                    th 
-                        md-checkbox(ng-model="isSakitAllChecked" ng-change="checkAll(2)" aria-label="Check All Sakit") 
-                        a(href="" ng-click="tblSortType = 'isSakitChecked'; tblSortReverse = !tblSortReverse;")
-                            span Sakit 
-                            span(class="fa fa-caret-up" ng-show="tblSortType == 'isSakitChecked' && tblSortReverse")
-                            span(class="fa fa-caret-down" ng-show="tblSortType == 'isSakitChecked' && !tblSortReverse")
-                    th 
-                        md-checkbox(ng-model="isTanpaKeteranganAllChecked" ng-change="checkAll(3)" aria-label="Check All Tanpa Keterangan") 
-                        a(href="" ng-click="tblSortType = 'isTanpaKeteranganChecked'; tblSortReverse = !tblSortReverse;")
-                            span Tanpa Keterangan 
-                            span(class="fa fa-caret-up" ng-show="tblSortType == 'isTanpaKeteranganChecked' && tblSortReverse")
-                            span(class="fa fa-caret-down" ng-show="tblSortType == 'isTanpaKeteranganChecked' && !tblSortReverse")
-            tbody(ng-if="attendanceListData && attendanceListData.length > 0")
-                tr(ng-repeat="x in attendanceListData | orderBy:tblSortType:tblSortReverse")
-                    td {{ $index + 1 }}
-                    td {{ x.personil.nrp }}
-                    td {{ x.personil.pangkat }}
-                    td {{ x.personil.name }}
-                    td
-                        md-checkbox(ng-model="x.isHadirChecked" ng-change="checkSingle(x, 0)" aria-label="Hadir")
-                    td
-                        md-checkbox(ng-model="x.isIjinChecked" ng-change="checkSingle(x, 1)" aria-label="Ijin")
-                    td
-                        md-checkbox(ng-model="x.isSakitChecked" ng-change="checkSingle(x, 2)" aria-label="Sakit")
-                    td
-                        md-checkbox(ng-model="x.isTanpaKeteranganChecked" ng-change="checkSingle(x, 3)" aria-label="Tanpa Keterangan")
-            tbody(ng-if="!attendanceListData || !attendanceListData.length")
-                tr
-                    td(colspan="8") No Data
+    table(class="table table-bordered table-striped")
+        thead
+            tr
+                th 
+                    a(href="")
+                        span No 
+                th 
+                    a(href="" ng-click="tblSortType = 'personil.nrp'; tblSortReverse = !tblSortReverse;")
+                        span NRP 
+                        span(class="fa fa-caret-up" ng-show="tblSortType == 'personil.nrp' && tblSortReverse")
+                        span(class="fa fa-caret-down" ng-show="tblSortType == 'personil.nrp' && !tblSortReverse")
+                th 
+                    a(href="" ng-click="tblSortType = 'personil.pangkat'; tblSortReverse = !tblSortReverse;")
+                        span Pangkat 
+                        span(class="fa fa-caret-up" ng-show="tblSortType == 'personil.pangkat' && tblSortReverse")
+                        span(class="fa fa-caret-down" ng-show="tblSortType == 'personil.pangkat' && !tblSortReverse")
+                th 
+                    a(href="" ng-click="tblSortType = 'personil.name'; tblSortReverse = !tblSortReverse;")
+                        span Nama 
+                        span(class="fa fa-caret-up" ng-show="tblSortType == 'personil.name' && tblSortReverse")
+                        span(class="fa fa-caret-down" ng-show="tblSortType == 'personil.name' && !tblSortReverse")
+                th 
+                    md-checkbox(ng-model="isHadirAllChecked" ng-change="checkAll(0)" aria-label="Check All Hadir") 
+                    a(href="" ng-click="tblSortType = 'isHadirChecked'; tblSortReverse = !tblSortReverse;")
+                        span Hadir 
+                        span(class="fa fa-caret-up" ng-show="tblSortType == 'isHadirChecked' && tblSortReverse")
+                        span(class="fa fa-caret-down" ng-show="tblSortType == 'isHadirChecked' && !tblSortReverse")
+                th 
+                    md-checkbox(ng-model="isIjinAllChecked" ng-change="checkAll(1)" aria-label="Check All Ijin") 
+                    a(href="" ng-click="tblSortType = 'isIjinChecked'; tblSortReverse = !tblSortReverse;")
+                        span Ijin 
+                        span(class="fa fa-caret-up" ng-show="tblSortType == 'isIjinChecked' && tblSortReverse")
+                        span(class="fa fa-caret-down" ng-show="tblSortType == 'isIjinChecked' && !tblSortReverse")
+                th 
+                    md-checkbox(ng-model="isSakitAllChecked" ng-change="checkAll(2)" aria-label="Check All Sakit") 
+                    a(href="" ng-click="tblSortType = 'isSakitChecked'; tblSortReverse = !tblSortReverse;")
+                        span Sakit 
+                        span(class="fa fa-caret-up" ng-show="tblSortType == 'isSakitChecked' && tblSortReverse")
+                        span(class="fa fa-caret-down" ng-show="tblSortType == 'isSakitChecked' && !tblSortReverse")
+                th 
+                    md-checkbox(ng-model="isTanpaKeteranganAllChecked" ng-change="checkAll(3)" aria-label="Check All Tanpa Keterangan") 
+                    a(href="" ng-click="tblSortType = 'isTanpaKeteranganChecked'; tblSortReverse = !tblSortReverse;")
+                        span Tanpa Keterangan 
+                        span(class="fa fa-caret-up" ng-show="tblSortType == 'isTanpaKeteranganChecked' && tblSortReverse")
+                        span(class="fa fa-caret-down" ng-show="tblSortType == 'isTanpaKeteranganChecked' && !tblSortReverse")
+        tbody(ng-if="attendanceListData && attendanceListData.length > 0")
+            tr(ng-repeat="x in attendanceListData | orderBy:tblSortType:tblSortReverse")
+                td {{ $index + 1 }}
+                td {{ x.personil.nrp }}
+                td {{ x.personil.pangkat }}
+                td {{ x.personil.name }}
+                td
+                    md-checkbox(ng-model="x.isHadirChecked" ng-change="checkSingle(x, 0)" aria-label="Hadir")
+                td
+                    md-checkbox(ng-model="x.isIjinChecked" ng-change="checkSingle(x, 1)" aria-label="Ijin")
+                td
+                    md-checkbox(ng-model="x.isSakitChecked" ng-change="checkSingle(x, 2)" aria-label="Sakit")
+                td
+                    md-checkbox(ng-model="x.isTanpaKeteranganChecked" ng-change="checkSingle(x, 3)" aria-label="Tanpa Keterangan")
+        tbody(ng-if="!attendanceListData || !attendanceListData.length")
+            tr
+                td(colspan="8") No Data
     div(class="marginTop20" layout="row" layout-align="end center")
         md-button(class="button" layout-align="center center"  ng-click="saveAttendanceList()" layout) Save 
     
