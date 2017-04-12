@@ -5,21 +5,21 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
             .marginTop20
             div(class="marginRight20" ng-if="me.isAdmin" layout flex)
                 div(layout="column" flex)
-                    md-input-container(class="md-block" class="paddingRight40" layout flex)
+                    md-input-container(class="md-block" style="min-width:250px;" class="paddingRight40" layout flex)
                         label Pilih Personil
                         md-select(ng-model="activity.personil" placeholder="Personil" ng-disabled="!me.isAdmin")
                             md-option(ng-repeat="personil in personilList" value="{{personil._id}}") {{personil.name}}
             div(class="marginTop20")
             div(class="marginRight20" layout flex="60")
                 div(layout="column" flex)
-                    md-input-container(class="md-block" class="paddingRight40" layout flex)
+                    md-input-container(class="md-block" style="min-width:250px;" class="paddingRight40" layout flex)
                         label Pilih Kategori Kegiatan
                         md-select(ng-model="activity.category" placeholder="Kategori" required)
                             md-option(ng-repeat="category in categoryList" value="{{category._id}}") {{category.name}}
             div(class="marginTop20")
             div(class="marginRight20" layout="column" flex="40")
                 span(style="margin-bottom:10px;") Tanggal Kegiatan
-                div(class="input-group" moment-picker="activity.startDate" format="DD-MM-YYYY HH:mm" start-view="day" autoclose="true" today="true")
+                div(class="input-group" style="min-width:200px;" moment-picker="activity.startDate" format="DD-MM-YYYY HH:mm" start-view="day" autoclose="true" today="true")
                     span(class="input-group-addon")
                         i(class="material-icons") date_range
                     input(class="form-control"
@@ -49,7 +49,7 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
                         pre {{ photo.description || 'Tambah Deskripsi' }}
                         //- edit-disabled="true"
             div(class="marginTop40")
-            div(layout="row" class="paddingTop10 paddingRight50 paddingBottom25" layout-align="end center")
+            div(layout="row" class="paddingTop10 paddingRight50 paddingBottom25" layout-align="end center" layout-xs="column" layout-align-xs="start start")
                 md-button(class="plainButton" layout-align="center center" ng-click="back()" layout) Cancel
                 md-button(class="button" layout-align="center center"  ng-click="addKegiatan()" layout) Save 
             div(class="marginTop20")
