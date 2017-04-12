@@ -187,6 +187,8 @@ var deleteKeycloakUser = function(sub, callback) {
                 requestKeycloakAccessToken(callback);
             }
         }, ({accessToken}, callback) => {
+            log.info("delete user sub ", sub);
+            log.info("delete req url ", (PROPERTIES.keycloak.restConfig.restURL+"/"+sub));
             request.delete({
                 url : PROPERTIES.keycloak.restConfig.restURL+"/"+sub,
                 headers: {
@@ -199,6 +201,8 @@ var deleteKeycloakUser = function(sub, callback) {
                 if (body && body.errorMessage) {
                     return callback("delete user in keycloak error because " + body.errorMessage);
                 }
+                log.info("headers ", httpResponse.headers);
+                log.info("body ", body);
                 callback(null, { status : "Ok" }); 
             });
         }
@@ -372,6 +376,8 @@ ProfileController.prototype.deactivatePersonil = function deactivatePersonil(per
                 if (err || !user)
                     return callback1(null, data);
                 disableKeycloakLogin = user.status == Constants.STATUS_ACTIVE;
+                log.info("disableKeycloakLogin ", disableKeycloakLogin);
+                log.info("user ", user);
                 user.status = Constants.STATUS_INACTIVE;
                 user.updatedAt = new Date();
                 user.updater = userName;
