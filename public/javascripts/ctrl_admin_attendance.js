@@ -84,8 +84,8 @@ app.controller('adminAttendanceCtrl', function ($scope, $rootScope, $mdDialog, $
         console.log("saveAttendanceList ");
         rest.attendance.updateAttendance($scope.currentDate, $scope.attendanceListData, function(response) {
             console.log("saveAttendanceList response ", response);
-            showMessage.error("Success", "Sukses update daftar hadir personil!", "Ok", function(){
-                $rootScope.back();
+            showMessage.success("Success", "Sukses update daftar hadir personil!", "Ok", function(){
+                
             });
         }, function(response) {
             // error

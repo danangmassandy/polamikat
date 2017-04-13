@@ -71,7 +71,7 @@ app.controller('kegiatanAddCtrl', function ($scope, $rootScope, $mdDialog, $mdSi
         console.log("activity ", $scope.activity);
         rest.activities.add($scope.activity, function(response) {
             console.log("addKegiatan response ", response);
-            showMessage.error("Success", "Sukses tambah kegiatan personil!", "Ok", function(){
+            showMessage.success("Success", "Sukses tambah kegiatan personil!", "Ok", function(){
                 $rootScope.back();
             });
         }, function(response) {

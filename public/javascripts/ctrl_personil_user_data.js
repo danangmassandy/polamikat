@@ -32,8 +32,8 @@ app.controller('personilUserDataCtrl', function ($scope, $rootScope, $mdDialog, 
         console.log($scope.updatePersonil);
         rest.users.createOrUpdatePersonil($scope.updatePersonil, function(response) {
             console.log("createOrUpdatePersonil response ", response);
-            showMessage.error("Success", "Sukses update personil!", "Ok", function(){
-                $rootScope.back();
+            showMessage.success("Success", "Sukses update personil!", "Ok", function(){
+                
             });
         }, function(response) {            
             // error

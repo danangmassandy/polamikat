@@ -1,5 +1,7 @@
 md-content(class="padding20" layout="column" style="background: #F1F1F1;" flex)
-    md-whiteframe(class="md-whiteframe-2dp marginTop30", layout="column", style="flex: none;")
+    div(layout flex="noshrink")
+        md-button(class="md-raised md-warn redButton" style="margin: 0px;" ng-click="goTo('kegiatan_add')") Tambah Kegiatan
+    md-whiteframe(class="md-whiteframe-2dp marginTop10", layout="column", style="flex: none;")
         div(class="titleBar" layout="row" layout-align="space-between center")
             div Grafik Ringkasan Kegiatan Satlantas
         div(ng-show="!activitySummaryChart.loaded" flex style="height:440px;padding:20px;" layout="row" layout-align="center center")

@@ -28,7 +28,7 @@ app.controller('adminAddPersonilCtrl', function ($scope, $rootScope, $mdDialog, 
             updateUserInfo = $scope.updateUser;
         rest.admin.addPersonil($scope.updatePersonil, updateUserInfo, function(response) {
             console.log("addPersonil response ", response);
-            showMessage.error("Success", "Sukses tambah personil!", "Ok", function(){
+            showMessage.success("Success", "Sukses tambah personil!", "Ok", function(){
                 $rootScope.back();
             });
         }, function(response) {            

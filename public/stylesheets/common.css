@@ -283,6 +283,24 @@ md-input-container.phone.md-input-focused label{
     min-width: 120px;
 }
 
+.md-raised.md-warn.redButton {
+    background-color: red;
+    color: white;
+    padding: 0px 20px;
+    border-radius: 12px;
+    font-size: 12px;
+    min-width: 120px;
+}
+
+.md-raised.md-warn.redButton:not([disabled]):hover {
+    background-color: red;
+    color: white;
+    padding: 0px 20px;
+    border-radius: 12px;
+    font-size: 12px;
+    min-width: 120px;
+}
+
 .md-resize-wrapper {
     width: 100%;
 }

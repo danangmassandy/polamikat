@@ -33,8 +33,8 @@ app.controller('adminAttendanceHistoryCtrl', function ($scope, $rootScope, $mdDi
         showMessage.confirm("Konfirm Reset Daftar Hadir", "Anda yakin untuk reset daftar hadir personil?", "Ok", "Cancel", function(){
             rest.attendance.resetAttendance(function(response) {
                 console.log("reset daftar hadir response ", response);
-                showMessage.error("Success", "Sukses reset daftar hadir!", "Ok", function(){
-                    $rootScope.back();
+                showMessage.success("Success", "Sukses reset daftar hadir!", "Ok", function(){
+                    $scope.loadAttendanceByPeriod();
                 });
             }, function(response) {            
                 // error

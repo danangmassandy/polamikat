@@ -39,7 +39,7 @@ app.controller('adminUpdatePersonilCtrl', function ($scope, $rootScope, $routePa
         showMessage.confirm("Konfirm Delete Personil", "Anda yakin untuk delete personil?", "Ok", "Cancel", function(){
             rest.admin.deletePersonil($scope.updatePersonil._id, function(response) {
                 console.log("doDeletePersonil response ", response);
-                showMessage.error("Success", "Sukses delete personil!", "Ok", function(){
+                showMessage.success("Success", "Sukses delete personil!", "Ok", function(){
                     $rootScope.back();
                 });
             }, function(response) {            
@@ -55,8 +55,8 @@ app.controller('adminUpdatePersonilCtrl', function ($scope, $rootScope, $routePa
         console.log($scope.updatePersonil);
         rest.users.updatePersonil($scope.updatePersonil, function(response) {
             console.log("doUpdatePersonil response ", response);
-            showMessage.error("Success", "Sukses update personil!", "Ok", function(){
-                $rootScope.back();
+            showMessage.success("Success", "Sukses update personil!", "Ok", function(){
+                
             });
         }, function(response) {            
             // error

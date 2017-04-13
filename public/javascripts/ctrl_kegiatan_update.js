@@ -108,7 +108,7 @@ app.controller('kegiatanUpdateCtrl', function ($scope, $rootScope, $routeParams,
         showMessage.confirm("Konfirm Delete Kegiatan", "Anda yakin untuk delete kegiatan?", "Ok", "Cancel", function(){
             rest.activities.delete($scope.activity._id, function(response) {
                 console.log("doDeleteKegiatan response ", response);
-                showMessage.error("Success", "Sukses delete kegiatan!", "Ok", function(){
+                showMessage.success("Success", "Sukses delete kegiatan!", "Ok", function(){
                     $rootScope.back();
                 });
             }, function(response) {            
@@ -134,8 +134,8 @@ app.controller('kegiatanUpdateCtrl', function ($scope, $rootScope, $routeParams,
         console.log("activity ", $scope.activity);
         rest.activities.update($scope.activity, function(response) {
             console.log("doUpdateKegiatan response ", response);
-            showMessage.error("Success", "Sukses update kegiatan personil!", "Ok", function(){
-                $rootScope.back();
+            showMessage.success("Success", "Sukses update kegiatan personil!", "Ok", function(){
+                
             });
         }, function(response) {
             // error

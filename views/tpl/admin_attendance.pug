@@ -3,7 +3,6 @@ md-content.padding20(layout="column" flex)
         div(class="" layout="row" layout-align="center center")
             h2 Absen Personil Tanggal {{ currentDate | date:'dd-MM-yyyy'}}
         .marginTop40
-        div(layout="row" layout-align="end center" ng-if="lastUpdated" style="font-size:12px;font-style:italic;margin-bottom:10px;") Update Terakhir : {{ lastUpdated  | date:'dd-MM-yyyy HH:mm':'UTC+7' }}
         table(class="table table-bordered table-striped")
             thead
                 tr
