@@ -1,8 +1,8 @@
-md-content.padding20(layout="column"  flex)
-    div(class="" layout="row" layout-align="center center" flex="noshrink")
+md-content.padding20(layout="column" flex)
+    div(class="" layout="row" layout-align="center center")
         h2 Data Personil Satlantas
     .marginTop40(flex="noshrink")
-    div(ng-if="me.isAdmin" layout flex)
+    div(ng-if="me.isAdmin" layout)
         md-button(class="plainButton" style="margin: 0px;" ng-click="goTo('admin_add_personil')") Tambah Data Personil
     .marginTop30(ng-if="me.isAdmin" flex="noshrink")
     table(class="table table-bordered table-striped" flex)
