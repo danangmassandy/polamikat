@@ -1,11 +1,11 @@
-md-content.padding20(layout="column"  flex="noshrink")
-    div(class="" layout="row" layout-align="center center")
+md-content.padding20(layout="column"  flex)
+    div(class="" layout="row" layout-align="center center" flex)
         h2 Data Personil Satlantas
-    .marginTop40
-    div(ng-if="me.isAdmin" layout)
+    .marginTop40(flex)
+    div(ng-if="me.isAdmin" layout flex)
         md-button(class="plainButton" style="margin: 0px;" ng-click="goTo('admin_add_personil')") Tambah Data Personil
-    .marginTop30(ng-if="me.isAdmin")
-    table(class="table table-bordered table-striped")
+    .marginTop30(ng-if="me.isAdmin" flex)
+    table(class="table table-bordered table-striped" flex)
         thead
             tr
                 th 
