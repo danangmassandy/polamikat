@@ -19,7 +19,7 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex ng-if="i
                             label Email
                             input(ng-model="updatePersonil.email" name="email" type="email" ng-disabled="true")
                 div(class="marginTop20")
-                div(class="marginRight20" layout flex)
+                div(class="marginRight20" layout flex layout-xs="column")
                     div(layout="column" flex)
                         md-input-container(class="md-block" layout flex)
                             label Pangkat
@@ -36,7 +36,7 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex ng-if="i
                             input(ng-model="updatePersonil.nrp" name="nrp" type="text" required)
                 div(class="marginTop20")
                 span Tempat, Tanggal Lahir
-                div(class="marginRight20" layout="row" layout-align="start start" flex)
+                div(class="marginRight20" layout="row" layout-align="start start" flex layout-xs="column")
                     div(layout="column" flex="40" style="margin-right:20px;")
                         md-input-container(class="md-block" layout flex)
                             label Kota
@@ -50,7 +50,7 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex ng-if="i
                                 ng-model="updatePersonil.dob"
                                 ng-model-options="{ updateOn: 'blur' }" style="height:40px;" required)
                 div(class="marginTop20")
-                div(class="marginRight20" layout flex)
+                div(class="marginRight20" layout flex layout-xs="column")
                     md-input-container(class="md-block" layout flex)
                         label Jenis Kelamin
                         md-select(ng-model="updatePersonil.gender" style="margin-top: 0px;" name="gender" required layout flex)
@@ -71,7 +71,7 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex ng-if="i
                             label Handphone
                             input(ng-model="updatePersonil.mobile" name="mobile" type="text" required)
                 div(class="marginTop20")
-                div(class="marginRight20" layout flex)
+                div(class="marginRight20" layout flex layout-xs="column")
                     div(layout="column" flex)
                         md-input-container(class="md-block" layout flex)
                             label Unit
@@ -86,7 +86,7 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex ng-if="i
                             label Skep
                             input(ng-model="updatePersonil.skep" name="skep" type="text" ng-disabled="true")
                 div(class="marginTop20")
-                div(class="marginRight20" layout flex)
+                div(class="marginRight20" layout flex layout-xs="column")
                     div(layout="column" flex)
                         md-input-container(class="md-block" layout flex)
                             label Dikum
@@ -112,9 +112,9 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex ng-if="i
                             label Prestasi Dalam Tugas
                             input(ng-model="updatePersonil.prestasiDalamTugas" name="prestasiDalamTugas" type="text")
                 div(class="marginTop20")
-                div(layout="row" class="paddingTop10 paddingRight50 paddingBottom25" layout-align="space-between center")
+                div(layout="row" class="paddingTop10 paddingRight50 paddingBottom25" layout-align="space-between center"  layout-xs="column" layout-align-xs="center center")
                     div(layout="row" layout-align="start center")
                         md-button(class="plainButton" layout-align="center center" ng-click="doDeletePersonil()" layout) Delete Personil
-                    div(layout="row" layout-align="end center")
+                    div(layout="row" layout-align="end center" layout-xs="column" layout-align-xs="center center")
                         md-button(class="plainButton" layout-align="center center" ng-click="back()" layout) Cancel
                         md-button(class="button" layout-align="center center"  ng-click="doUpdatePersonil()" layout) Save 
