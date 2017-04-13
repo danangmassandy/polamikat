@@ -16,7 +16,7 @@ app.controller('personilUserDataCtrl', function ($scope, $rootScope, $mdDialog, 
             
             $scope.isAddPersonil = false;
             $scope.updatePersonil = angular.copy(response.data.data.personil);
-            $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).toDate();
+            $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).format("DD-MM-YYYY");
             if ($scope.updatePersonil.photo && $scope.updatePersonil.photo.publicURL) {
                 rest.files.getImage($scope.updatePersonil.photo.publicURL, function(response) {
                     $scope.profileSrc = response.blobURL;
@@ -35,6 +35,7 @@ app.controller('personilUserDataCtrl', function ($scope, $rootScope, $mdDialog, 
         console.log($scope.updatePersonil);
         showMessage.showLoadingIndicator($scope, "Saving personil data...");
         rest.users.createOrUpdatePersonil($scope.updatePersonil, function(response) {
+            $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).format("DD-MM-YYYY");
             showMessage.hideLoadingIndicator($scope);
             console.log("createOrUpdatePersonil response ", response);
             showMessage.success("Success", "Sukses update personil!", "Ok", function(){
@@ -42,6 +43,7 @@ app.controller('personilUserDataCtrl', function ($scope, $rootScope, $mdDialog, 
             });
         }, function(response) {            
             // error
+            $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).format("DD-MM-YYYY");
             showMessage.hideLoadingIndicator($scope);
             showMessage.error("Error", "Error pada update personil. Silahkan kontak system administrator.", "Ok", function(){});
             $rootScope.back();
