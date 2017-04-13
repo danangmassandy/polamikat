@@ -1,31 +1,32 @@
 md-content.padding20(layout="column" flex)
-    div(class="" layout="row" layout-align="center center")
-        h2 Kategori Kegiatan
-    .marginTop40
-    div(layout)
-        md-button(class="plainButton" style="margin: 0px;" ng-click="tambahKategori($event);") Tambah Kategori Kegiatan
-    .marginTop30
-    table(class="table table-bordered table-striped")
-        thead
-            tr
-                th 
-                    a(href="#/")
-                        span No
-                th 
-                    a(href="#/" ng-click="sortType = 'total'; sortReverse = !sortReverse;")
-                        span Kategori 
-                        span(class="fa fa-caret-up" ng-show="sortType == 'total' && sortReverse")
-                        span(class="fa fa-caret-down" ng-show="sortType == 'total' && !sortReverse")
-                th 
-                    a(href="#/" ng-click="sortType = 'user.name'; sortReverse = !sortReverse;")
-                        span Nilai
-                        span(class="fa fa-caret-up" ng-show="sortType == 'user.name' && sortReverse")
-                        span(class="fa fa-caret-down" ng-show="sortType == 'user.name' && !sortReverse")
-        tbody(ng-if="kategoriKegiatanData && kategoriKegiatanData.length > 0")
-            tr(ng-repeat="x in kategoriKegiatanData | orderBy:sortType:sortReverse" ng-click="updateKategori($event, x);")
-                td {{ $index + 1 }}
-                td.serviceName {{ x.name }}
-                td.number {{ x.value }}
-        tbody(ng-if="!kategoriKegiatanData || !kategoriKegiatanData.length")
-            tr
-                td(colspan="6") No Data
+    div(layout="column" flex="noshrink")
+        div(class="" layout="row" layout-align="center center")
+            h2 Kategori Kegiatan
+        .marginTop40
+        div(layout)
+            md-button(class="plainButton" style="margin: 0px;" ng-click="tambahKategori($event);") Tambah Kategori Kegiatan
+        .marginTop30
+        table(class="table table-bordered table-striped")
+            thead
+                tr
+                    th 
+                        a(href="#/")
+                            span No
+                    th 
+                        a(href="#/" ng-click="sortType = 'total'; sortReverse = !sortReverse;")
+                            span Kategori 
+                            span(class="fa fa-caret-up" ng-show="sortType == 'total' && sortReverse")
+                            span(class="fa fa-caret-down" ng-show="sortType == 'total' && !sortReverse")
+                    th 
+                        a(href="#/" ng-click="sortType = 'user.name'; sortReverse = !sortReverse;")
+                            span Nilai
+                            span(class="fa fa-caret-up" ng-show="sortType == 'user.name' && sortReverse")
+                            span(class="fa fa-caret-down" ng-show="sortType == 'user.name' && !sortReverse")
+            tbody(ng-if="kategoriKegiatanData && kategoriKegiatanData.length > 0")
+                tr(ng-repeat="x in kategoriKegiatanData | orderBy:sortType:sortReverse" ng-click="updateKategori($event, x);")
+                    td {{ $index + 1 }}
+                    td.serviceName {{ x.name }}
+                    td.number {{ x.value }}
+            tbody(ng-if="!kategoriKegiatanData || !kategoriKegiatanData.length")
+                tr
+                    td(colspan="6") No Data
