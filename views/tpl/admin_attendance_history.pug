@@ -2,20 +2,23 @@ md-content.padding20(layout="column" flex)
     div(layout="column" flex="noshrink")
         div(class="" layout="row" layout-align="center center")
             h2 Riwayat Daftar Hadir Personil
-        .marginTop20(layout="row" layout-align="end center" layout-xs="column" layout-align-xs="start start")
-            .marginRight20(layout="row")
-                div(ng-class="{'selectedPeriod' : period=='daily' }" class="segmentedButton first" style="cursor: pointer;" layout-align="center center" layout ng-click="changePeriod('daily')") Harian
-                div(ng-class="{'selectedPeriod' : period=='weekly' }" class="segmentedButton" style="cursor: pointer;" layout-align="center center" layout ng-click="changePeriod('weekly')") Mingguan
-                div(ng-class="{'selectedPeriod' : period=='monthly' }" class="segmentedButton last" style="cursor: pointer;" layout-align="center center" layout ng-click="changePeriod('monthly')") Bulanan
-            div(class="input-group" style="width:120px;" moment-picker="currDateStr" ng-model="currDate" format="DD-MM-YYYY" autoclose="true" change="onCurrDateChanged(newValue, oldValue)")
-                span(class="input-group-addon")
-                    i(class="material-icons") date_range
-                input(class="form-control"
-                    placeholder="Pilih tanggal "
-                    value="{{currDateStr}}"
-                    ng-model-options="{ updateOn: 'blur' }" 
-                    style="height:40px;width:100px;" readonly)
-        .marginTop10(style="background-color:white;"  flex="noshrink")
+        .marginTop20(layout="row" layout-align="space-between center" layout-xs="column" layout-align-xs="start start" layout-margin)
+            div(layout)
+                md-button(class="plainButton" style="margin: 0px;" ng-click="downloadDataAsCSV();" ng-disabled="!attendanceListData || !attendanceListData.length") Download CSV
+            div(layout="row" layout-align="end center" layout-xs="column" layout-align-xs="start start" layout-margin)
+                .marginRight20(layout="row")
+                    div(ng-class="{'selectedPeriod' : period=='daily' }" class="segmentedButton first" style="cursor: pointer;" layout-align="center center" layout ng-click="changePeriod('daily')") Harian
+                    div(ng-class="{'selectedPeriod' : period=='weekly' }" class="segmentedButton" style="cursor: pointer;" layout-align="center center" layout ng-click="changePeriod('weekly')") Mingguan
+                    div(ng-class="{'selectedPeriod' : period=='monthly' }" class="segmentedButton last" style="cursor: pointer;" layout-align="center center" layout ng-click="changePeriod('monthly')") Bulanan
+                div(class="input-group" style="width:120px;" moment-picker="currDateStr" ng-model="currDate" format="DD-MM-YYYY" autoclose="true" change="onCurrDateChanged(newValue, oldValue)")
+                    span(class="input-group-addon")
+                        i(class="material-icons") date_range
+                    input(class="form-control"
+                        placeholder="Pilih tanggal "
+                        value="{{currDateStr}}"
+                        ng-model-options="{ updateOn: 'blur' }" 
+                        style="height:40px;width:100px;" readonly)
+        div(style="background-color:white;"  flex="noshrink")
             md-content
                 table(class="table table-bordered table-striped")
                     thead
