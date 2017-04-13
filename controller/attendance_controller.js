@@ -146,6 +146,11 @@ AttendanceController.prototype.attendanceByValue = function attendanceByValue(p_
             $unwind : "$personil"
         },
         {
+            $match : {
+                "$personil.status" : Constants.STATUS_ACTIVE
+            }
+        },
+        {
             $group : {
                 _id              : "$personil._id",
                 total            : { $sum : 1 },
@@ -196,6 +201,11 @@ AttendanceController.prototype.attendanceByPeriod = function attendanceByPeriod(
         },
         {
             $unwind : "$personil"
+        },
+        {
+            $match : {
+                "$personil.status" : Constants.STATUS_ACTIVE
+            }
         },
         {
             $project : {

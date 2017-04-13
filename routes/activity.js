@@ -37,7 +37,7 @@ router.post('/personil_activities', function(req, res) {
     ], function(err, result) {
         if (err)
             return res.fail(err);
-        log.info("personil_activities ", result);
+        //log.info("personil_activities ", result);
         res.success({data:result});
     });
     
@@ -49,7 +49,7 @@ router.post('/rank_personil', function(req, res) {
     activityController.rankActivities(function(err, results) {
         if (err)
             return res.fail(err);
-        log.info("rank_personil ", results);
+        //log.info("rank_personil ", results);
         res.success({data:results});
     });
 });
@@ -63,7 +63,7 @@ router.post('/random_activities', function(req, res) {
         function(callback) {
             actCategoryController.list(callback);
         }, function(categories, callback) {
-            log.info("categories ", categories);
+            //log.info("categories ", categories);
             profileController.personilListSummary(function(err, results) {
                 callback(null, {
                     categories : categories,
@@ -71,7 +71,7 @@ router.post('/random_activities', function(req, res) {
                 });
             });
         }, function(data, callback) {
-            log.info("personils ", data.personils);
+            //log.info("personils ", data.personils);
             Vasync.forEachParallel({
                     'func' : function(personil, callback1) {
                         var randActivitiesCreate = getRandomInt(5,20);
@@ -129,7 +129,7 @@ router.post('/detail', function(req, res) {
     activityController.details(req.body.activityID, function(err, result) {
         if (err)
             return res.fail(err);
-        log.info("detail ", result);
+        //log.info("detail ", result);
         res.success({data:result});
     });
 });
@@ -138,7 +138,7 @@ router.post('/list_by_categories', function(req, res) {
     activityController.groupActivityCategories(function(err, results) {
         if (err)
             return res.fail(err);
-        log.info("list_by_categories ", results);
+        //log.info("list_by_categories ", results);
         res.success({data:results});
     });
 });
@@ -147,7 +147,7 @@ router.post('/list_category', function(req, res) {
     actCategoryController.list(function(err, results) {
         if (err)
             return res.fail(err);
-        log.info("list_category ", results);
+        //log.info("list_category ", results);
         res.success({data:results});
     });
 });
@@ -156,7 +156,7 @@ router.post('/list', function(req, res) {
     activityController.listActivity(1, function(err, results) {
         if (err)
             return res.fail(err);
-        log.info("list ", results);
+        //log.info("list ", results);
         res.success({data:results});
     });
 });
@@ -165,7 +165,7 @@ router.post('/photos', function(req, res) {
     activityController.getPhotos(function(err, results) {
         if (err)
             return res.fail(err);
-        log.info("list photos ", results);
+        //log.info("list photos ", results);
         res.success({data:results});
     });
 });

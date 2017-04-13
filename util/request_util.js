@@ -22,7 +22,7 @@ module.exports = {
                     status : {
                         $nin : 'inactive'
                     }
-                }).populate('photo').populate('personil').exec(callback);
+                }).populate('userPhoto').populate('personil').exec(callback);
             },
             function(user, callback) {//create user if null
                 var isNewUser = false;

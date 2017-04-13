@@ -176,7 +176,7 @@ ActivityController.prototype.updateActivity = function updateActivity(activity, 
                         photo.updater = userName;
                         photo.save(function(err, photo) {
                             // remove from disk
-                            FS.unlink(Path.join(BASE_DIR, photo.path), function (err) {
+                            FS.unlink(photo.path, function (err) {
                                 log.info("is photo removed ", err);
                                 callback2(null, null);
                             });

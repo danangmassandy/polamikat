@@ -8,6 +8,8 @@ const mongoose = require('mongoose');
 const ObjectId = require('mongoose').Types.ObjectId;
 const Randomstring = require('randomstring');
 var request = require('request');
+const FS = require('fs');
+const Path = require('path');
 
 const keycloakAccessTokenKey = "KEYCLOAK-ACCESS-TOKEN";
 
@@ -448,7 +450,7 @@ ProfileController.prototype.updatePersonilInfo = function updatePersonilInfo(per
                     }
             }).exec(function(err, result){
                 log.info("update info ",err,"  ", result);
-                callback1(err, result);
+                callback1(err, data);
             });
         }, function (data, callback1) {
             // find user 
@@ -464,10 +466,39 @@ ProfileController.prototype.updatePersonilInfo = function updatePersonilInfo(per
                     user.displayName = personil.pangkat + " " + personil.name;
                 else
                     user.displayName = personil.name;
+                if (user.userPhoto && data.photo && JSON.stringify(user.userPhoto) != JSON.stringify(data.photo))
+                    deletePhotoPersonil = user.userPhoto;
+                if (data.photo)
+                    user.userPhoto = data.photo;
                 user.save(function(err, user) {
                     callback1(null, null);
                 })
             });
+        }, function(data, callback1) {
+            // delete user photo
+            if (deletePhotoPersonil) {
+                log.info("Deleting old photo...", deletePhotoPersonil);
+                Model.UploadedFile.findOne({
+                    _id : deletePhotoPersonil
+                }).exec(function(err, deletedPhoto) {
+                    if (err || !deletedPhoto) {
+                        log.error("No Uploaded file found for deleting photo...");
+                        log.error(err);
+                        return callback1(null, null);
+                    }
+                    deletedPhoto.status = Constants.STATUS_INACTIVE;
+                    deletedPhoto.updatedAt = new Date();
+                    deletedPhoto.updater = userName;
+                    deletedPhoto.save(function(err, deletedPhoto) {
+                        FS.unlink(deletedPhoto.path, function (err) {
+                            log.info("is photo removed ", err);
+                            callback1(null, null);
+                        });
+                    });
+                });
+            } else {
+                callback1(null, null);
+            }
         }
     ], function (err, results) {
         if (err)

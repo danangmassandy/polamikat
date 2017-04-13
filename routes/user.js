@@ -15,7 +15,7 @@ router.post("/me", function(req, res) {
         profileController.getPersonilInfo(req.polamikatPersonilProfile._id, function (err, results) {
             if (err)
                 return res.fail(err);
-            log.info("personil_list ", results);
+            //log.info("personil_list ", results);
             res.success({data:results});
         });
     } else {
@@ -28,7 +28,7 @@ router.post("/personil_list", function(req, res) {
     profileController.personilListSummary(function (err, results) {
         if (err)
             return res.fail(err);
-        log.info("personil_list ", results);
+        //log.info("personil_list ", results);
         res.success({data:results});
     });
 });
@@ -37,7 +37,7 @@ router.post("/personil_list_all", function(req, res) {
     profileController.personilList(1, function (err, results) {
         if (err)
             return res.fail(err);
-        log.info("personil_list ", results);
+        //log.info("personil_list ", results);
         res.success({data:results});
     });
 });
@@ -47,7 +47,7 @@ router.post("/personil_detail", function(req, res) {
     profileController.getPersonilInfo(req.body.personilID, function (err, results) {
         if (err)
             return res.fail(err);
-        log.info("personil_list ", results);
+        //log.info("personil_list ", results);
         res.success({data:results});
     });
 });
@@ -65,7 +65,7 @@ router.post("/update_personil_info", function(req, res) {
     profileController.updatePersonilInfo(req.body.personil, req.polamikatUser.username, function (err, results) {
         if (err)
             return res.fail(err);
-        log.info("update_personil_info ", results);
+        //log.info("update_personil_info ", results);
         res.success({data:results});
     });
 });
@@ -85,7 +85,7 @@ router.post("/create_or_update_personil", function(req, res) {
         profileController.updatePersonilInfo(req.body.personil, req.polamikatUser.username, function (err, results) {
             if (err)
                 return res.fail(err);
-            log.info("update_personil_info ", results);
+            //log.info("update_personil_info ", results);
             res.success({data:results});
         });
     } else {
