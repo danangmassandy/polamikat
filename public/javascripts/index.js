@@ -205,6 +205,9 @@ app.controller('mainCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, 
     $rootScope.title = title;
     $rootScope.me = me;
 
+    $rootScope.isLoaded = true;
+    $rootScope.loadingText = "";
+
     $rootScope.back = function() {
         window.history.back();
     };
@@ -286,13 +289,15 @@ app.filter('capitalize', function() {
 });
 
  
-app.factory('showMessage', ['$mdDialog',  function($mdDialog) {
+app.factory('showMessage', ['$rootScope', '$mdDialog',  function($rootScope, $mdDialog) {
     var showMessage = {};
     showMessage.accessDenied = showAccessDenied;
     showMessage.warning = showWarningMessage;
     showMessage.confirm = showConfirmMessage;
     showMessage.success = showSuccessMessage;
     showMessage.error = showErrorMessage;
+    showMessage.showLoadingIndicator = showLoadingIndicator;
+    showMessage.hideLoadingIndicator = hideLoadingIndicator;
 
     function showAccessDenied(okButton, okListener) {
         $mdDialog.show(
@@ -354,6 +359,20 @@ app.factory('showMessage', ['$mdDialog',  function($mdDialog) {
                 .targetEvent(null)
         ).then(okListener);
     }
+
+    function showLoadingIndicator(scope, message){
+        scope.isLoaded = false;
+        scope.loadingText = message;
+    }
+
+    function hideLoadingIndicator(scope){
+        scope.$evalAsync(function() {
+            scope.isLoaded = true;
+            scope.loadingText = "";
+        });
+        
+    }
+
 // Test
     return showMessage;
 }]);

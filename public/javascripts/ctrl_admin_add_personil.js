@@ -26,8 +26,10 @@ app.controller('adminAddPersonilCtrl', function ($scope, $rootScope, $mdDialog, 
         var updateUserInfo = null;
         if ($scope.createUserLogin)
             updateUserInfo = $scope.updateUser;
+        showMessage.showLoadingIndicator($scope, "Adding personil...");
         rest.admin.addPersonil($scope.updatePersonil, updateUserInfo, function(response) {
             console.log("addPersonil response ", response);
+            showMessage.hideLoadingIndicator($scope);
             showMessage.success("Success", "Sukses tambah personil!", "Ok", function(){
                 $rootScope.back();
             });
@@ -63,12 +65,13 @@ app.controller('adminAddPersonilCtrl', function ($scope, $rootScope, $mdDialog, 
         var fd = new FormData();
         fd.append('file', file);
 
-       console.log(JSON.stringify(file));
+        console.log(JSON.stringify(file));
+        showMessage.showLoadingIndicator($scope, "Uploading file...");
         rest.files.uploadImage(fd, function(response) {
             console.log(JSON.stringify(response));
             $scope.updatePersonil.photo = {};
             $scope.updatePersonil.photo.key = response.data.uploadedFileKey;
-
+            showMessage.hideLoadingIndicator($scope);
             rest.files.getImage(response.data.uploadedFileUrl, function(response) {
                 $scope.profileSrc = response.blobURL;
             });

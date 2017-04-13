@@ -656,7 +656,11 @@ var getLabelActivityRankChart = function(data) {
 
 app.controller('reportCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, $timeout, $location, showMessage, rest, globalConstant) {
     $rootScope.selectedMenu = 'report';
-
+    // test only
+    // showMessage.showLoadingIndicator($scope, "Uploading file...");
+    // setTimeout(function() {
+    //     showMessage.hideLoadingIndicator($scope);
+    // }, 5000);
 
     $scope.rankSortType     = 'total';
     $scope.rankSortReverse  = true;
