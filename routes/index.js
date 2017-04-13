@@ -15,10 +15,10 @@ router.get('/', function (req, res) {
     res.render('index', {
         title: 'Polamikat',
         me: JSON.stringify({
-            polamikatUser : req.polamikatUser,
-            username: req.polamikatUser.username,
-            displayName: displayName,
-            isAdmin : req.isAdmin
+            polamikatUser   : req.polamikatUser,
+            username        : req.polamikatUser.username,
+            displayName     : displayName,
+            isAdmin         : req.isAdmin
         })
     });
 });

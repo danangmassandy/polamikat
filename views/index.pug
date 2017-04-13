@@ -8,8 +8,8 @@ block menu
         md-content
             div(class="logo") Polamikat
             div(class="account marginTop30 marginRight20 marginBottom20 marginLeft20", layout="row", layout-align="start center" flex)
-                div(class="avatar md-48" ng-if="me.photo" ng-style="{'background':'url('+me.photo+') center center','background-size':'cover'}" style="border-radius:50%; font-size: 48px; height: 48px; width: 48px;")
-                md-icon(class="avatar md-48" style="width: 48px; height: 48px;" ng-if="!me.photo") account_circle
+                div(class="avatar md-48" ng-if="me.polamikatUser.userPhoto" ng-style="{'background':'url('+me.photoSrc+') center center','background-size':'cover'}" style="border-radius:50%; font-size: 48px; height: 48px; width: 48px;")
+                md-icon(class="avatar md-48" style="width: 48px; height: 48px;" ng-if="!me.polamikatUser.userPhoto") account_circle
                 div(class="marginLeft5" layout="column" flex)
                     div(layout-align="start center" ng-cloak="me.displayName") {{me.displayName}}
                     div(layout-align="start center" ng-if="me.isAdmin") Administrator

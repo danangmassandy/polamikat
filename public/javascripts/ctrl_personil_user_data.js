@@ -38,6 +38,11 @@ app.controller('personilUserDataCtrl', function ($scope, $rootScope, $mdDialog, 
             $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).format("DD-MM-YYYY");
             showMessage.hideLoadingIndicator($scope);
             console.log("createOrUpdatePersonil response ", response);
+            $rootScope.me.photoSrc = $scope.profileSrc;
+            if ($scope.updatePersonil.pangkat)
+                $rootScope.me.displayName = $scope.updatePersonil.pangkat + " " + $scope.updatePersonil.name;
+            else 
+                $rootScope.me.displayName = $scope.updatePersonil.name;
             showMessage.success("Success", "Sukses update personil!", "Ok", function(){
                 
             });

@@ -220,6 +220,14 @@ app.controller('mainCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, 
         $rootScope.activityPhotosCache = CacheFactory('activityPhotosCache');
     }
 
+
+    if ($rootScope.me.polamikatUser.userPhoto) {
+        console.log($rootScope.me.polamikatUser.userPhoto.publicURL);
+        rest.files.getImage($rootScope.me.polamikatUser.userPhoto.publicURL, function(response) {
+            $rootScope.me.photoSrc = response.blobURL;
+        });
+    }
+
     /**
      * Supplies a function that will continue to operate until the
      * time is up.
