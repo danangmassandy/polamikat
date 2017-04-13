@@ -202,6 +202,7 @@ app.directive('fileUpload', ['$parse', function ($parse) {
 }]);
 
 app.controller('mainCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, $location, $timeout, $filter, $route, rest, CacheFactory) {
+    $rootScope.title = title;
     $rootScope.me = me;
 
     $rootScope.back = function() {
