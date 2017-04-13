@@ -58,14 +58,14 @@ app.controller('kegiatanAddCtrl', function ($scope, $rootScope, $mdDialog, $mdSi
     };
 
     $scope.addKegiatan = function() {
-        if (!me.isAdmin) {
-            if (!me.polamikatUser.personil) {
+        if (!$rootScope.me.isAdmin) {
+            if (!$rootScope.me.polamikatUser.personil) {
                 showMessage.error("Error", "Error anda belum mengisi data personil. Silahkan kontak system administrator.", "Ok", function(){    
                 });
                 $rootScope.back();
                 return;
             }
-            $scope.activity.personil = me.polamikatUser.personil._id;    
+            $scope.activity.personil = $rootScope.me.polamikatUser.personil;    
         }
         $scope.activity.startDate = moment($scope.activity.startDate, "DD-MM-YYYY HH:mm").format();
         console.log("activity ", $scope.activity);
@@ -89,7 +89,7 @@ app.controller('kegiatanAddCtrl', function ($scope, $rootScope, $mdDialog, $mdSi
 
         if (!$rootScope.me.isAdmin) {
             for (var i = 0; i < $scope.personilList.length; ++i) {
-                if ($scope.personilList[i]._id == $rootScope.me.polamikatUser._id) {
+                if ($scope.personilList[i]._id == $rootScope.me.polamikatUser.personil) {
                     $scope.activity.personil = $scope.personilList[i]._id;
                     break;
                 }

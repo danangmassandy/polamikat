@@ -120,14 +120,14 @@ app.controller('kegiatanUpdateCtrl', function ($scope, $rootScope, $routeParams,
     }
 
     $scope.doUpdateKegiatan = function() {
-        if (!me.isAdmin) {
-            if (!me.polamikatUser.personil) {
+        if (!$rootScope.me.isAdmin) {
+            if (!$rootScope.me.polamikatUser.personil) {
                 showMessage.error("Error", "Error anda belum mengisi data personil. Silahkan kontak system administrator.", "Ok", function(){    
                 });
                 $rootScope.back();
                 return;
             }
-            $scope.activity.personil = me.polamikatUser.personil._id;    
+            $scope.activity.personil = $rootScope.me.polamikatUser.personil;    
         }
         $scope.activity.startDate = moment($scope.activity.startDate, "DD-MM-YYYY HH:mm").format();
         $scope.activity.category = $scope.activity.category._id;
