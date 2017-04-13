@@ -1,4 +1,7 @@
-md-content.padding20(layout="column" flex)
+div(layout="column" layout-align="center center" flex ng-if="!isLoaded")
+    md-progress-circular(class="md-accent" layout-align="center center" md-mode="indeterminate")
+    div(class="regular marginTop10" ng-cloak="loadingText") {{loadingText}}
+md-content.padding20(layout="column" flex ng-if="isLoaded")
     div(layout="column" flex="noshrink")
         div(class="" layout="row" layout-align="center center")
             h2 Absen Personil Tanggal {{ currentDate | date:'dd-MM-yyyy'}}

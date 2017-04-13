@@ -9,13 +9,15 @@ app.controller('adminAddPersonilCtrl', function ($scope, $rootScope, $mdDialog, 
     }
 
     $scope.updatePersonil = {};
-    $scope.createUserLogin = false;
+    $scope.createUserLogin = {
+        value : false
+    };
 
     $scope.updateUser = {};
 
     $scope.addPersonil = function() {
         // check password and retype password is match
-        if ($scope.createUserLogin && !($scope.updateUser.password
+        if ($scope.createUserLogin.value && !($scope.updateUser.password
             && $scope.updateUser.password == $scope.updateUser.repassword)) {
             showMessage.error("Error", "Password tidak sama", "Ok", function(){});
             return;
@@ -24,7 +26,7 @@ app.controller('adminAddPersonilCtrl', function ($scope, $rootScope, $mdDialog, 
         console.log($scope.updatePersonil);
         console.log($scope.updateUser);
         var updateUserInfo = null;
-        if ($scope.createUserLogin)
+        if ($scope.createUserLogin.value)
             updateUserInfo = $scope.updateUser;
         showMessage.showLoadingIndicator($scope, "Adding personil...");
         rest.admin.addPersonil($scope.updatePersonil, updateUserInfo, function(response) {
@@ -34,6 +36,7 @@ app.controller('adminAddPersonilCtrl', function ($scope, $rootScope, $mdDialog, 
                 $rootScope.back();
             });
         }, function(response) {            
+            showMessage.hideLoadingIndicator($scope);
             // error
             showMessage.error("Error", "Error pada tambah personil. Silahkan kontak system administrator.", "Ok", function(){});
             $rootScope.back();
@@ -48,7 +51,8 @@ app.controller('adminAddPersonilCtrl', function ($scope, $rootScope, $mdDialog, 
     }
 
     $scope.stateChanged = function() {
-        if ($scope.createUserLogin) {
+        console.log("stateChanged", $scope.createUserLogin.value);
+        if ($scope.createUserLogin.value) {
             $scope.updateUser.email = $scope.updatePersonil.email;
             $scope.updateUser.role = "user";
         }
@@ -76,6 +80,7 @@ app.controller('adminAddPersonilCtrl', function ($scope, $rootScope, $mdDialog, 
                 $scope.profileSrc = response.blobURL;
             });
         }, function(err) {
+            showMessage.hideLoadingIndicator($scope);
             showMessage.error("Upload failed", "We failed to upload the file due to some server error! Please try again.", 
                               null, 
                               function(ok) {});

@@ -1,4 +1,7 @@
-div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
+div(layout="column" layout-align="center center" flex ng-if="!isLoaded")
+    md-progress-circular(class="md-accent" layout-align="center center" md-mode="indeterminate")
+    div(class="regular marginTop10" ng-cloak="loadingText") {{loadingText}}
+div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex ng-if="isLoaded")
     div(class="bold" layout="row" style="background-color: #ffffff; font-size: 14px; height: 100%;" flex)
         md-content(class="paddingTop25 paddingRight50 paddingBottom10 paddingLeft50" style="color: #636363;" flex)
             h2 Tambah Data Kegiatan

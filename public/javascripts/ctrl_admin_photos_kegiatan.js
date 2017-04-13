@@ -11,7 +11,9 @@ app.controller('adminPhotosKegiatanCtrl', function ($scope, $rootScope, $mdDialo
     $scope.photos = [];
 
     $scope.getPhotos = function() {
+        showMessage.showLoadingIndicator($scope, "Loading activity photos...");
         rest.activities.photos(function(response){
+            showMessage.hideLoadingIndicator($scope);
             console.log("photos ", response);
             if (response.data) {
                 $scope.photos = angular.copy(response.data);
@@ -21,6 +23,11 @@ app.controller('adminPhotosKegiatanCtrl', function ($scope, $rootScope, $mdDialo
             } else {
                 $scope.photos = [];
             }
+        }, function(response) {            
+            // error
+            showMessage.hideLoadingIndicator($scope);
+            showMessage.error("Error", "Error pada load foto. Silahkan kontak system administrator.", "Ok", function(){});
+            $scope.photos = [];
         });
     }
 

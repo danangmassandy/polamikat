@@ -117,9 +117,9 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex ng-if="i
                             input(ng-model="updatePersonil.prestasiDalamTugas" name="prestasiDalamTugas" type="text")
                 div(class="marginTop20")
                 div(class="marginRight20")
-                    md-checkbox(ng-model="createUserLogin" class="plain" layout-align="center center"   ng-change="stateChanged()"  ) Buat Akun Login
+                    md-checkbox(ng-model="createUserLogin.value" class="plain" layout-align="center center"   ng-change="stateChanged()"  ) Buat Akun Login
                 div(class="marginTop20")
-                div(class="marginRight20" ng-if="createUserLogin" layout="column" flex)
+                div(class="marginRight20" ng-if="createUserLogin.value" layout="column" flex)
                     div(layout flex  layout-xs="column")
                         div(layout="column" flex)
                             md-input-container(class="md-block" layout flex)

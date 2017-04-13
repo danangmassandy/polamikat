@@ -76,6 +76,11 @@ app.controller('adminAttendanceHistoryCtrl', function ($scope, $rootScope, $mdDi
                 $scope.attendanceListData = angular.copy(response.data.data);
             else
                 $scope.attendanceListData = [];
+        }, function(response) {            
+            // error
+            showMessage.hideLoadingIndicator($scope);
+            showMessage.error("Error", "Error pada load daftar hadir. Silahkan kontak system administrator.", "Ok", function(){});
+            $scope.attendanceListData = [];
         });
     }
 
@@ -93,6 +98,7 @@ app.controller('adminAttendanceHistoryCtrl', function ($scope, $rootScope, $mdDi
                 });
             }, function(response) {            
                 // error
+                showMessage.hideLoadingIndicator($scope);
                 showMessage.error("Error", "Error pada reset daftar hadir. Silahkan kontak system administrator.", "Ok", function(){});
                 $rootScope.back();
             });

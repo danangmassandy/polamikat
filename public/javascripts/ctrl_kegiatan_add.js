@@ -36,8 +36,9 @@ app.controller('kegiatanAddCtrl', function ($scope, $rootScope, $mdDialog, $mdSi
         console.log("uploadPhotoFile clicked");
         var fd = new FormData();
         fd.append('file', file);
-
+        showMessage.showLoadingIndicator($scope, "Uploading photo...");
         rest.files.uploadImage(fd, function(response) {
+            showMessage.hideLoadingIndicator($scope);
             console.log(JSON.stringify(response));
             if (!$scope.activity.photos)
                 $scope.activity.photos = [];
@@ -51,6 +52,7 @@ app.controller('kegiatanAddCtrl', function ($scope, $rootScope, $mdDialog, $mdSi
                 });
             });
         }, function(err) {
+            showMessage.hideLoadingIndicator($scope);
             showMessage.error("Upload failed", "We failed to upload the file due to some server error! Please try again.", 
                               null, 
                               function(ok) {});
@@ -69,33 +71,42 @@ app.controller('kegiatanAddCtrl', function ($scope, $rootScope, $mdDialog, $mdSi
         }
         $scope.activity.startDate = moment($scope.activity.startDate, "DD-MM-YYYY HH:mm").format();
         console.log("activity ", $scope.activity);
+        showMessage.showLoadingIndicator($scope, "Saving activity...");
         rest.activities.add($scope.activity, function(response) {
+            showMessage.hideLoadingIndicator($scope);
             console.log("addKegiatan response ", response);
             showMessage.success("Success", "Sukses tambah kegiatan personil!", "Ok", function(){
                 $rootScope.back();
             });
         }, function(response) {
             // error
+            showMessage.hideLoadingIndicator($scope);
             showMessage.error("Error", "Error pada tambah kegiatan personil. Silahkan kontak system administrator.", "Ok", function(){});
-            $rootScope.back();
         });
     }
+    if ($rootScope.me.isAdmin) {
+        showMessage.showLoadingIndicator($scope, "Loading personil list...");
+        rest.users.personilList(function(response) {
+            showMessage.hideLoadingIndicator($scope);
+            if (response.data)
+                $scope.personilList = angular.copy(response.data);
+            else
+                $scope.personilList = [];
 
-    rest.users.personilList(function(response) {
-        if (response.data)
-            $scope.personilList = angular.copy(response.data);
-        else
-            $scope.personilList = [];
-
-        if (!$rootScope.me.isAdmin) {
-            for (var i = 0; i < $scope.personilList.length; ++i) {
-                if ($scope.personilList[i]._id == $rootScope.me.polamikatUser.personil) {
-                    $scope.activity.personil = $scope.personilList[i]._id;
-                    break;
+            if (!$rootScope.me.isAdmin) {
+                for (var i = 0; i < $scope.personilList.length; ++i) {
+                    if ($scope.personilList[i]._id == $rootScope.me.polamikatUser.personil) {
+                        $scope.activity.personil = $scope.personilList[i]._id;
+                        break;
+                    }
                 }
             }
-        }
-    });
+        }, function(response) {
+            // error
+            showMessage.hideLoadingIndicator($scope);
+            showMessage.error("Error", "Error pada load personil list. Silahkan kontak system administrator.", "Ok", function(){});
+        });
+    }
 
     rest.activities.categoryList(function(response) {
         if (response.data)

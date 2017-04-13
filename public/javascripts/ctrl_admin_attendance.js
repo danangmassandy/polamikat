@@ -57,7 +57,9 @@ app.controller('adminAttendanceCtrl', function ($scope, $rootScope, $mdDialog, $
     }
     
     $scope.loadAttendanceList = function() {
+        showMessage.showLoadingIndicator($scope, "Loading attendance list...");
         rest.attendance.attendanceList($scope.currentDate, function(response){
+            showMessage.hideLoadingIndicator($scope);
             console.log("attendanceList response ", response);
             if (response.data.data)
                 $scope.attendanceListData = angular.copy(response.data.data);
@@ -73,6 +75,11 @@ app.controller('adminAttendanceCtrl', function ($scope, $rootScope, $mdDialog, $
                     $scope.attendanceListData[i].isTanpaKeteranganChecked = $scope.attendanceListData[i].value == globalConstant.ATTENDANCE_VALUES.WITHOUT_NOTICE;
                 }
             }
+        }, function(response) {            
+            // error
+            showMessage.hideLoadingIndicator($scope);
+            showMessage.error("Error", "Error pada load daftar hadir. Silahkan kontak system administrator.", "Ok", function(){});
+            $scope.attendanceListData = [];
         });
     }
     $scope.loadAttendanceList();
@@ -82,12 +89,15 @@ app.controller('adminAttendanceCtrl', function ($scope, $rootScope, $mdDialog, $
 
     $scope.saveAttendanceList = function() {
         console.log("saveAttendanceList ");
+        showMessage.showLoadingIndicator($scope, "Saving attendance list...");
         rest.attendance.updateAttendance($scope.currentDate, $scope.attendanceListData, function(response) {
+            showMessage.hideLoadingIndicator($scope);
             console.log("saveAttendanceList response ", response);
             showMessage.success("Success", "Sukses update daftar hadir personil!", "Ok", function(){
                 
             });
         }, function(response) {
+            showMessage.hideLoadingIndicator($scope);
             // error
             showMessage.error("Error", "Error pada update daftar hadir personil. Silahkan kontak system administrator.", "Ok", function(){});
             $rootScope.back();

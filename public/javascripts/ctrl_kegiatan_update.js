@@ -59,8 +59,9 @@ app.controller('kegiatanUpdateCtrl', function ($scope, $rootScope, $routeParams,
         console.log("uploadPhotoFile clicked");
         var fd = new FormData();
         fd.append('file', file);
-
+        showMessage.showLoadingIndicator($scope, "Uploading photo...");
         rest.files.uploadImage(fd, function(response) {
+            showMessage.hideLoadingIndicator($scope);
             console.log(JSON.stringify(response));
             if (!$scope.activity.photos)
                 $scope.activity.photos = [];
@@ -74,6 +75,7 @@ app.controller('kegiatanUpdateCtrl', function ($scope, $rootScope, $routeParams,
                 });
             });
         }, function(err) {
+            showMessage.hideLoadingIndicator($scope);
             showMessage.error("Upload failed", "We failed to upload the file due to some server error! Please try again.", 
                               null, 
                               function(ok) {});
@@ -106,13 +108,16 @@ app.controller('kegiatanUpdateCtrl', function ($scope, $rootScope, $routeParams,
 
     $scope.doDeleteKegiatan = function() {
         showMessage.confirm("Konfirm Delete Kegiatan", "Anda yakin untuk delete kegiatan?", "Ok", "Cancel", function(){
+            showMessage.showLoadingIndicator($scope, "Deleting activity...");
             rest.activities.delete($scope.activity._id, function(response) {
+                showMessage.hideLoadingIndicator($scope);
                 console.log("doDeleteKegiatan response ", response);
                 showMessage.success("Success", "Sukses delete kegiatan!", "Ok", function(){
                     $rootScope.back();
                 });
             }, function(response) {            
                 // error
+                showMessage.hideLoadingIndicator($scope);
                 showMessage.error("Error", "Error pada delete kegiatan. Silahkan kontak system administrator.", "Ok", function(){});
                 $rootScope.back();
             });
@@ -132,13 +137,16 @@ app.controller('kegiatanUpdateCtrl', function ($scope, $rootScope, $routeParams,
         $scope.activity.startDate = moment($scope.activity.startDate, "DD-MM-YYYY HH:mm").format();
         $scope.activity.category = $scope.activity.category._id;
         console.log("activity ", $scope.activity);
+        showMessage.showLoadingIndicator($scope, "Saving activity...");
         rest.activities.update($scope.activity, function(response) {
+            showMessage.hideLoadingIndicator($scope);
             console.log("doUpdateKegiatan response ", response);
             showMessage.success("Success", "Sukses update kegiatan personil!", "Ok", function(){
                 
             });
         }, function(response) {
             // error
+            showMessage.hideLoadingIndicator($scope);
             showMessage.error("Error", "Error pada update kegiatan personil. Silahkan kontak system administrator.", "Ok", function(){});
             $rootScope.back();
         });

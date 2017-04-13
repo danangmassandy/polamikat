@@ -3,16 +3,22 @@ var app = angular.module('polamikatApp');
 app.factory('rest', function($rootScope, $http) {
     var restService = {
         activities : {
-            personilActivity : function(personilID, onSuccess) {
+            personilActivity : function(personilID, onSuccess, onError) {
                 $http.post("/activity/personil_activities", {
                     personil : personilID
                 }).then(function(response) {
                     onSuccess(response);
+                }, function(response) {
+                    console.log('Error personilActivity');
+                    if(onError) onError(response.data.message);
                 });
             },
-            rankPersonil : function(onSuccess) {
+            rankPersonil : function(onSuccess, onError) {
                 $http.post("/activity/rank_personil", {}).then(function(response) {
                     onSuccess(response);
+                }, function(response) {
+                    console.log('Error rankPersonil');
+                    if(onError) onError(response.data.message);
                 });
             },
             list : function(onSuccess, onError) {
@@ -25,9 +31,12 @@ app.factory('rest', function($rootScope, $http) {
                     if(onError) onError(response.data.message);
                 });
             },
-            listByCategory : function(onSuccess) {
+            listByCategory : function(onSuccess, onError) {
                 $http.post("/activity/list_by_categories", {}).then(function(response) {
                     onSuccess(response);
+                }, function(response) {
+                    console.log('Error listByCategory');
+                    if(onError) onError(response.data.message);
                 });
             },
             categoryList : function(onSuccess, onError) {
