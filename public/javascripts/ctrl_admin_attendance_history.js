@@ -127,7 +127,17 @@ app.controller('adminAttendanceHistoryCtrl', function ($scope, $rootScope, $mdDi
         });
 
         // generate filename
-        var filename;
+        var filename = "absen-";
+        if ($scope.period == "daily") {
+            filename += "harian-" + $scope.currDate.format("DDMMYYYY") + ".csv";
+        } else if ($scope.period == "monthly") {
+            filename += "bulanan-" + $scope.currDate.format("DDMMYYYY") + ".csv";
+        } else if ($scope.period == "weekly") {
+            filename += "mingguan-" + $scope.currDate.format("DDMMYYYY") + ".csv";
+        } else {
+            filename += ".csv";
+        }
+
         downloadCSV({
             filename : filename
         }, csv);
