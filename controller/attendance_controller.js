@@ -147,7 +147,7 @@ AttendanceController.prototype.attendanceByValue = function attendanceByValue(p_
         },
         {
             $match : {
-                "$personil.status" : Constants.STATUS_ACTIVE
+                "personil.status" : Constants.STATUS_ACTIVE
             }
         },
         {
@@ -204,7 +204,7 @@ AttendanceController.prototype.attendanceByPeriod = function attendanceByPeriod(
         },
         {
             $match : {
-                "$personil.status" : Constants.STATUS_ACTIVE
+                "personil.status" : Constants.STATUS_ACTIVE
             }
         },
         {
