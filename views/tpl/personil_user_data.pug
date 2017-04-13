@@ -5,16 +5,16 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
                 h2 Personil Data
                 .marginTop20
                 div(layout-align="center center" layout="column" flex)
-                    div(class="marginBottom10" ng-hide="!updateUser.photo" ng-style="{'background':'url('+profileSrc+') center center','background-size':'cover'}" style="border-radius:50%; font-size: 150px; height: 150px; width: 150px;")
-                    md-icon(ng-hide="updateUser.photo" class="avatar"   style="font-size: 150px; height: 150px; width: 150px;") account_circle
+                    div(class="marginBottom10" ng-hide="!updatePersonil.photo" ng-style="{'background':'url('+profileSrc+') center center','background-size':'cover'}" style="border-radius:50%; font-size: 150px; height: 150px; width: 150px;")
+                    md-icon(ng-hide="updatePersonil.photo" class="avatar"   style="font-size: 150px; height: 150px; width: 150px;") account_circle
                     md-button(class="plainButton" style="margin: 0px;" ng-click="onUploadImageClicked(1)") Upload Photo
-                    input(id="image1" type="file" accept="image/*" file-upload="uploadPhotoFile" style="display: none;")
+                    input(id="image1" type="file" accept="image/*" file-upload="uploadPhotoFile" style="display:none;" )
                 div(class="marginTop30")
                 div(class="marginRight20" layout flex)
                     div(layout="column" flex)
                         md-input-container(class="md-block" class="paddingRight40" layout flex)
                             label Email
-                            input(ng-model="updatePersonil.email" name="email" type="email" required ng-readonly="!addPersonil")
+                            input(ng-model="updatePersonil.email" name="email" type="email" required ng-readonly="!isAddPersonil")
                 div(class="marginTop20")
                 div(class="marginRight20" layout flex  layout-xs="column")
                     div(layout="column" flex)
@@ -39,9 +39,13 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
                             label Kota
                             input(ng-model="updatePersonil.birthTown" name="birthTown" type="text" required)
                     div(layout="column" flex)
-                        md-input-container(class="md-block" layout flex)
-                            label Tanggal Lahir
-                            input(ng-model="updatePersonil.dob" name="dob" type="text" required)
+                        div(class="input-group" moment-picker="updatePersonil.dob" format="DD-MM-YYYY" start-view="year" autoclose="true")
+                            span(class="input-group-addon")
+                                i(class="material-icons") date_range
+                            input(class="form-control"
+                                placeholder="Pilih tanggal lahir "
+                                ng-model="updatePersonil.dob"
+                                ng-model-options="{ updateOn: 'blur' }" style="height:40px;" required)
                 div(class="marginTop20")
                 div(class="marginRight20" layout flex  layout-xs="column")
                     md-input-container(class="md-block" layout flex)
@@ -71,12 +75,12 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
                     div(layout="column" flex)
                         md-input-container(class="md-block" layout flex)
                             label Wilayah
-                            input(ng-model="updatePersonil.wilayahPenugasan" name="wilayahPenugasan" type="text" required)
+                            input(ng-model="updatePersonil.wilayahPenugasan" name="wilayahPenugasan" type="text" ng-disabled="true")
                 div(class="marginRight20" layout flex)
                     div(layout="column" flex)
                         md-input-container(class="md-block" layout flex)
                             label Skep
-                            input(ng-model="updatePersonil.skep" name="skep" type="text")
+                            input(ng-model="updatePersonil.skep" name="skep" type="text" ng-disabled="true")
                 div(class="marginTop20")
                 div(class="marginRight20" layout flex  layout-xs="column")
                     div(layout="column" flex)
@@ -106,4 +110,4 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
                 div(class="marginTop20")
                 div(layout="row" class="paddingTop10 paddingRight50 paddingBottom25" layout-align="end center" layout-xs="column" layout-align-xs="start start")
                     md-button(class="plainButton" layout-align="center center" ng-click="back()" layout) Cancel
-                    md-button(class="button" layout-align="center center"  ng-click="addPersonil ? addPersonil() : updatePersonil()" layout) Save 
+                    md-button(class="button" layout-align="center center"  ng-click="doCreateOrUpdatePersonil()" layout) Save 

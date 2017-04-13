@@ -135,7 +135,29 @@ app.factory('rest', function($rootScope, $http) {
                         onSuccess(response);
                     else if (onError) onError(response.message);
                 }, function(response) {
-                    console.log("add personil error ", response);
+                    console.log("update personil error ", response);
+                    if (onError) onError(response.message);
+                });
+            },
+            me : function(onSuccess, onError) {
+                $http.post("/user/me", {}).then(function(response) {
+                    if (response.data.status == "Ok")
+                        onSuccess(response);
+                    else if (onError) onError(response.message);
+                }, function(response) {
+                    console.log("user me error ", response);
+                    if (onError) onError(response.message);
+                });
+            },
+            createOrUpdatePersonil : function(personil, onSuccess, onError) {
+                $http.post("/user/create_or_update_personil", {
+                    personil : personil
+                }).then(function(response) {
+                    if (response.data.status == "Ok")
+                        onSuccess(response);
+                    else if (onError) onError(response.message);
+                }, function(response) {
+                    console.log("createOrUpdatePersonil error ", response);
                     if (onError) onError(response.message);
                 });
             }

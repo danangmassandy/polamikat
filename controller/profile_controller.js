@@ -325,6 +325,7 @@ ProfileController.prototype.getPersonilInfo = function getPersonilInfo(personilI
 
 ProfileController.prototype.deactivatePersonil = function deactivatePersonil(personilID, userName, callback) {
     var disableKeycloakLogin = false;
+    var deletePhotoPersonil = null; // Todo : deactivate & delete file photo personil
     Vasync.waterfall([
         function(callback1) {
             Model.Personil.findOne({
@@ -399,6 +400,7 @@ ProfileController.prototype.deactivatePersonil = function deactivatePersonil(per
 
 // update personil info
 ProfileController.prototype.updatePersonilInfo = function updatePersonilInfo(personil, userName, callback) {
+    var deletePhotoPersonil = null; // Todo : deactivate & delete file photo personil
     Vasync.waterfall([
         function (callback1) {
             if (!personil.photo || !personil.photo.key) {
