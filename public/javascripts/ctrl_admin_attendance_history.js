@@ -107,11 +107,14 @@ app.controller('adminAttendanceHistoryCtrl', function ($scope, $rootScope, $mdDi
     $scope.downloadDataAsCSV = function() {
         var data = [];
         for (var i = 0; i < $scope.attendanceListData.length; ++i) {
+            var name = $scope.attendanceListData[i].name;
+            if (name.indexOf(",") >= 0)
+                name = '"' + name + '"';
             data.push({
                 No : i + 1,
                 NRP : $scope.attendanceListData[i].nrp,
                 Pangkat : $scope.attendanceListData[i].pangkat,
-                Nama : $scope.attendanceListData[i].name,
+                Nama : name,
                 Hadir : $scope.attendanceListData[i].totalPresent,
                 Ijin : $scope.attendanceListData[i].totalOnLeave,
                 Sakit : $scope.attendanceListData[i].totalMedicalLeave,

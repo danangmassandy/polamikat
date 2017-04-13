@@ -19,7 +19,7 @@ html(ng-app="polamikatApp")
         block stylesheets
         title {{title}}
 
-    body(layout="column", ng-controller="mainCtrl", flex)
+    body(layout="column" ng-controller="mainCtrl" flex ng-cloak)
         section(layout="row", flex)
             md-sidenav(class="sidemenu md-sidenav-left md-whiteframe-z2", ng-hide="toolbarHidden", md-component-id="left", md-is-locked-open="$mdMedia('min-width: 1600px')")
                 block menu
