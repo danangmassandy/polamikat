@@ -1,49 +1,50 @@
 md-content.padding20(layout="column" flex)
-    div(class="" layout="row" layout-align="center center")
-        h2 Data Personil Satlantas
-    .marginTop40
-    div(ng-if="me.isAdmin" layout)
-        md-button(class="plainButton" style="margin: 0px;" ng-click="goTo('admin_add_personil')") Tambah Data Personil
-    .marginTop30(ng-if="me.isAdmin")
-    table(class="table table-bordered table-striped")
-        thead
-            tr
-                th 
-                    a(href="")
-                        span No
-                th 
-                    a(href="" ng-click="sortType = 'name'; sortReverse = !sortReverse;")
-                        span Nama 
-                        span(class="fa fa-caret-up" ng-show="sortType == 'name' && sortReverse")
-                        span(class="fa fa-caret-down" ng-show="sortType == 'name' && !sortReverse")
-                th 
-                    a(href="" ng-click="sortType = 'pangkat'; sortReverse = !sortReverse;")
-                        span Pangkat
-                        span(class="fa fa-caret-up" ng-show="sortType == 'pangkat' && sortReverse")
-                        span(class="fa fa-caret-down" ng-show="sortType == 'pangkat' && !sortReverse")
-                th 
-                    a(href="" ng-click="sortType = 'nrp'; sortReverse = !sortReverse;")
-                        span NRP 
-                        span(class="fa fa-caret-up" ng-show="sortType == 'nrp' && sortReverse")
-                        span(class="fa fa-caret-down" ng-show="sortType == 'nrp' && !sortReverse")
-                th 
-                    a(href="" ng-click="sortType = 'unit'; sortReverse = !sortReverse;")
-                        span Unit
-                        span(class="fa fa-caret-up" ng-show="sortType == 'unit' && sortReverse")
-                        span(class="fa fa-caret-down" ng-show="sortType == 'unit' && !sortReverse")
-                th 
-                    a(href="" ng-click="sortType = 'mobile'; sortReverse = !sortReverse;")
-                        span No HP
-                        span(class="fa fa-caret-up" ng-show="sortType == 'mobile' && sortReverse")
-                        span(class="fa fa-caret-down" ng-show="sortType == 'mobile' && !sortReverse")
-        tbody(ng-if="personilListData && personilListData.length > 0")
-            tr(ng-repeat="x in personilListData | orderBy:sortType:sortReverse"  ng-click="personilClick(x)")
-                td {{ $index + 1 }}
-                td.serviceName {{ x.name }}
-                td {{ x.pangkat }}
-                td {{ x.nrp }}
-                td {{ x.unit }}
-                td {{ x.mobile }}
-        tbody(ng-if="!personilListData || !personilListData.length")
-            tr
-                td(colspan="6") No Data
+    div(layout="column" flex="noshrink")
+        div(layout="row" layout-align="center center")
+            h2 Data Personil Satlantas
+        .marginTop40
+        div(ng-if="me.isAdmin" layout)
+            md-button(class="plainButton" style="margin: 0px;" ng-click="goTo('admin_add_personil')") Tambah Data Personil
+        .marginTop30(ng-if="me.isAdmin")
+        table(class="table table-bordered table-striped")
+            thead
+                tr
+                    th 
+                        a(href="")
+                            span No
+                    th 
+                        a(href="" ng-click="sortType = 'name'; sortReverse = !sortReverse;")
+                            span Nama 
+                            span(class="fa fa-caret-up" ng-show="sortType == 'name' && sortReverse")
+                            span(class="fa fa-caret-down" ng-show="sortType == 'name' && !sortReverse")
+                    th 
+                        a(href="" ng-click="sortType = 'pangkat'; sortReverse = !sortReverse;")
+                            span Pangkat
+                            span(class="fa fa-caret-up" ng-show="sortType == 'pangkat' && sortReverse")
+                            span(class="fa fa-caret-down" ng-show="sortType == 'pangkat' && !sortReverse")
+                    th 
+                        a(href="" ng-click="sortType = 'nrp'; sortReverse = !sortReverse;")
+                            span NRP 
+                            span(class="fa fa-caret-up" ng-show="sortType == 'nrp' && sortReverse")
+                            span(class="fa fa-caret-down" ng-show="sortType == 'nrp' && !sortReverse")
+                    th 
+                        a(href="" ng-click="sortType = 'unit'; sortReverse = !sortReverse;")
+                            span Unit
+                            span(class="fa fa-caret-up" ng-show="sortType == 'unit' && sortReverse")
+                            span(class="fa fa-caret-down" ng-show="sortType == 'unit' && !sortReverse")
+                    th 
+                        a(href="" ng-click="sortType = 'mobile'; sortReverse = !sortReverse;")
+                            span No HP
+                            span(class="fa fa-caret-up" ng-show="sortType == 'mobile' && sortReverse")
+                            span(class="fa fa-caret-down" ng-show="sortType == 'mobile' && !sortReverse")
+            tbody(ng-if="personilListData && personilListData.length > 0")
+                tr(ng-repeat="x in personilListData | orderBy:sortType:sortReverse"  ng-click="personilClick(x)")
+                    td {{ $index + 1 }}
+                    td.serviceName {{ x.name }}
+                    td {{ x.pangkat }}
+                    td {{ x.nrp }}
+                    td {{ x.unit }}
+                    td {{ x.mobile }}
+            tbody(ng-if="!personilListData || !personilListData.length")
+                tr
+                    td(colspan="6") No Data
