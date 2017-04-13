@@ -83,8 +83,8 @@ app.controller('adminAttendanceHistoryCtrl', function ($scope, $rootScope, $mdDi
     $scope.loadAttendanceByPeriod();
 
     $scope.reset = function() {
-        showMessage.showLoadingIndicator($scope, "Deleting attendance history...");
         showMessage.confirm("Konfirm Reset Daftar Hadir", "Anda yakin untuk reset daftar hadir personil?", "Ok", "Cancel", function(){
+            showMessage.showLoadingIndicator($scope, "Deleting attendance history...");
             rest.attendance.resetAttendance(function(response) {
                 showMessage.hideLoadingIndicator($scope);
                 console.log("reset daftar hadir response ", response);
