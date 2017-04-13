@@ -375,6 +375,7 @@ ProfileController.prototype.deactivatePersonil = function deactivatePersonil(per
                 if (err || !user)
                     return callback1(null, data);
                 disableKeycloakLogin = user.status == Constants.STATUS_ACTIVE || user.status == Constants.STATUS_NEW;
+                deletePhotoPersonil = user.userPhoto;
                 user.status = Constants.STATUS_INACTIVE;
                 user.updatedAt = new Date();
                 user.updater = userName;
@@ -391,10 +392,35 @@ ProfileController.prototype.deactivatePersonil = function deactivatePersonil(per
             deleteKeycloakUser(data.user.sub, function(err, results){
                 callback1(null, data);
             });
+        }, function(data, callback1) {
+            // delete user photo
+            if (deletePhotoPersonil) {
+                log.info("Deleting old photo...", deletePhotoPersonil);
+                Model.UploadedFile.findOne({
+                    _id : deletePhotoPersonil
+                }).exec(function(err, deletedPhoto) {
+                    if (err || !deletedPhoto) {
+                        log.error("No Uploaded file found for deleting photo...");
+                        log.error(err);
+                        return callback1(null, data);
+                    }
+                    deletedPhoto.status = Constants.STATUS_INACTIVE;
+                    deletedPhoto.updatedAt = new Date();
+                    deletedPhoto.updater = userName;
+                    deletedPhoto.save(function(err, deletedPhoto) {
+                        FS.unlink(deletedPhoto.path, function (err) {
+                            log.info("is photo removed ", err);
+                            callback1(null, data);
+                        });
+                    });
+                });
+            } else {
+                callback1(null, data);
+            }
         }
     ], function(err, result) {
         if (err) 
-            log.error("updatePersonilStatus error ", err);
+            log.error("deactivatePersonil error ", err);
         callback(err, result);
     });
     
