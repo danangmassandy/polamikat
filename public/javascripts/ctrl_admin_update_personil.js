@@ -13,7 +13,6 @@ app.controller('adminUpdatePersonilCtrl', function ($scope, $rootScope, $routePa
         return;
     }
     $scope.updatePersonil = {};
-    $scope.originalPhotoKey = null;
     $scope.uploadedPhotos = [];
 
     $scope.doGetDetailPersonil = function() {
@@ -28,7 +27,6 @@ app.controller('adminUpdatePersonilCtrl', function ($scope, $rootScope, $routePa
             $scope.updatePersonil = angular.copy(response.data.personil);
             $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).toDate();
             if ($scope.updatePersonil.photo && $scope.updatePersonil.photo.publicURL) {
-                $scope.originalPhotoKey = $scope.updatePersonil.photo.key;
                 rest.files.getImage($scope.updatePersonil.photo.publicURL, function(response) {
                     $scope.profileSrc = response.blobURL;
                 });
@@ -69,7 +67,6 @@ app.controller('adminUpdatePersonilCtrl', function ($scope, $rootScope, $routePa
             $rootScope.deletePreviousUploadedFile($scope);
 
             $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).toDate();
-            $scope.originalPhotoKey = $scope.updatePersonil.photo.key;
             showMessage.hideLoadingIndicator($scope);
             console.log("doUpdatePersonil response ", response);
             showMessage.success("Success", "Sukses update personil!", "Ok", function(){

@@ -8,6 +8,8 @@ app.controller('adminAddPersonilCtrl', function ($scope, $rootScope, $mdDialog, 
         return;
     }
 
+    $scope.uploadedPhotos = [];
+
     $scope.updatePersonil = {
         dob : new Date()
     };
@@ -32,12 +34,17 @@ app.controller('adminAddPersonilCtrl', function ($scope, $rootScope, $mdDialog, 
             updateUserInfo = $scope.updateUser;
         showMessage.showLoadingIndicator($scope, "Adding personil...");
         rest.admin.addPersonil($scope.updatePersonil, updateUserInfo, function(response) {
+            $scope.uploadedPhotos = $scope.uploadedPhotos.slice(0, $scope.uploadedPhotos.length - 1);
+            $rootScope.deletePreviousUploadedFile($scope);
+
             console.log("addPersonil response ", response);
             showMessage.hideLoadingIndicator($scope);
             showMessage.success("Success", "Sukses tambah personil!", "Ok", function(){
                 $rootScope.back();
             });
         }, function(response) {            
+            $rootScope.deletePreviousUploadedFile($scope);
+            
             showMessage.hideLoadingIndicator($scope);
             // error
             showMessage.error("Error", "Error pada tambah personil. Silahkan kontak system administrator.", "Ok", function(){});
@@ -77,6 +84,7 @@ app.controller('adminAddPersonilCtrl', function ($scope, $rootScope, $mdDialog, 
             console.log(JSON.stringify(response));
             $scope.updatePersonil.photo = {};
             $scope.updatePersonil.photo.key = response.data.uploadedFileKey;
+            $scope.uploadedPhotos.push($scope.updatePersonil.photo.key);
             showMessage.hideLoadingIndicator($scope);
             rest.files.getImage(response.data.uploadedFileUrl, function(response) {
                 $scope.profileSrc = response.blobURL;
@@ -88,5 +96,11 @@ app.controller('adminAddPersonilCtrl', function ($scope, $rootScope, $mdDialog, 
                               function(ok) {});
         });
     };
+
+    $scope.onCancelClicked = function() {
+        $rootScope.deletePreviousUploadedFile($scope);
+        
+        $rootScope.back();
+    }
 
 });

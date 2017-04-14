@@ -3,7 +3,6 @@ var app = angular.module('polamikatApp');
 app.controller('personilUserDataCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, $timeout, $location, showMessage, globalConstant, rest) {
     $scope.isAddPersonil = false;
     $scope.updatePersonil = {};
-    $scope.originalPhotoKey = null;
     $scope.uploadedPhotos = [];
 
     $scope.doGetDetailPersonil = function() {
@@ -20,7 +19,6 @@ app.controller('personilUserDataCtrl', function ($scope, $rootScope, $mdDialog, 
             $scope.updatePersonil = angular.copy(response.data.data.personil);
             $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).toDate();
             if ($scope.updatePersonil.photo && $scope.updatePersonil.photo.publicURL) {
-                $scope.originalPhotoKey = $scope.updatePersonil.photo.key;
                 rest.files.getImage($scope.updatePersonil.photo.publicURL, function(response) {
                     $scope.profileSrc = response.blobURL;
                 });
@@ -42,7 +40,6 @@ app.controller('personilUserDataCtrl', function ($scope, $rootScope, $mdDialog, 
             $rootScope.deletePreviousUploadedFile($scope);
 
             $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).toDate();
-            $scope.originalPhotoKey = $scope.updatePersonil.photo.key;
             
             showMessage.hideLoadingIndicator($scope);
             console.log("createOrUpdatePersonil response ", response);
