@@ -24,7 +24,7 @@ app.controller('adminUpdatePersonilCtrl', function ($scope, $rootScope, $routePa
                 return;    
             }
             $scope.updatePersonil = angular.copy(response.data.personil);
-            $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).format("DD-MM-YYYY");
+            $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).toDate();
             if ($scope.updatePersonil.photo && $scope.updatePersonil.photo.publicURL) {
                 rest.files.getImage($scope.updatePersonil.photo.publicURL, function(response) {
                     $scope.profileSrc = response.blobURL;
@@ -57,11 +57,11 @@ app.controller('adminUpdatePersonilCtrl', function ($scope, $rootScope, $routePa
     }
 
     $scope.doUpdatePersonil = function() {
-        $scope.updatePersonil.dob = moment($scope.updatePersonil.dob, "DD-MM-YYYY").startOf('day').format();
+        $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).startOf('day').format();
         console.log($scope.updatePersonil);
         showMessage.showLoadingIndicator($scope, "Saving personil data...");
         rest.users.updatePersonil($scope.updatePersonil, function(response) {
-            $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).format("DD-MM-YYYY");
+            $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).toDate();
             showMessage.hideLoadingIndicator($scope);
             console.log("doUpdatePersonil response ", response);
             showMessage.success("Success", "Sukses update personil!", "Ok", function(){
@@ -69,7 +69,7 @@ app.controller('adminUpdatePersonilCtrl', function ($scope, $rootScope, $routePa
             });
         }, function(response) {            
             // error
-            $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).format("DD-MM-YYYY");
+            $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).toDate();
             showMessage.hideLoadingIndicator($scope);
             showMessage.error("Error", "Error pada update personil. Silahkan kontak system administrator.", "Ok", function(){});
             $rootScope.back();

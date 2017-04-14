@@ -8,7 +8,9 @@ app.controller('adminAddPersonilCtrl', function ($scope, $rootScope, $mdDialog, 
         return;
     }
 
-    $scope.updatePersonil = {};
+    $scope.updatePersonil = {
+        dob : new Date()
+    };
     $scope.createUserLogin = {
         value : false
     };

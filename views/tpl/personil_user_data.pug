@@ -42,13 +42,14 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex ng-if="i
                             label Kota
                             input(ng-model="updatePersonil.birthTown" name="birthTown" type="text" required)
                     div(layout="column" flex)
-                        div(class="input-group" moment-picker="updatePersonil.dob" format="DD-MM-YYYY" start-view="year" autoclose="true")
-                            span(class="input-group-addon")
-                                i(class="material-icons") date_range
-                            input(class="form-control"
-                                placeholder="Pilih tanggal lahir "
-                                ng-model="updatePersonil.dob"
-                                ng-model-options="{ updateOn: 'blur' }" style="height:40px;" required)
+                        .dropdown(style="width:150px;")
+                            a(class="dropdown-toggle" id="dropdown" role="button" data-toggle="dropdown" href="#" ng-click="$event.preventDefault()")
+                                div(class="input-group")
+                                    input(type="text" id="date" name="date" class="form-control" data-ng-model="updatePersonil.dob" data-date-time-input="DD-MM-YYYY")
+                                    span(class="input-group-addon")
+                                        i(class="glyphicon glyphicon-calendar")
+                            ul(class="dropdown-menu  dropdown-menu-left" role="menu" aria-labelledby="dLabel")
+                                datetimepicker(data-ng-model="updatePersonil.dob" data-datetimepicker-config="{ dropdownSelector: '#dropdown', startView:'day', minView:'day', modelType:'Date' }")
                 div(class="marginTop20")
                 div(class="marginRight20" layout flex  layout-xs="column")
                     md-input-container(class="md-block" layout flex)

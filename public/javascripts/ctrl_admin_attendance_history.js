@@ -64,7 +64,6 @@ app.controller('adminAttendanceHistoryCtrl', function ($scope, $rootScope, $mdDi
 
     $scope.period = "monthly";
     $scope.currDate = moment();
-    $scope.currDateStr = $scope.currDate.format("DD-MM-YYYY");
     $scope.attendanceListData = [];
 
     $scope.loadAttendanceByPeriod = function() {
@@ -110,7 +109,9 @@ app.controller('adminAttendanceHistoryCtrl', function ($scope, $rootScope, $mdDi
         $scope.loadAttendanceByPeriod();
     }
 
-    $scope.onCurrDateChanged = function(newValue, oldValue) {
+    $scope.onCurrDateChanged = function(newValue) {
+        $scope.currDate = newValue;
+        console.log($scope.currDate.format());
         $scope.loadAttendanceByPeriod();
     }
 

@@ -13,14 +13,16 @@ md-content.padding20(layout="column" flex ng-if="isLoaded")
                     div(ng-class="{'selectedPeriod' : period=='daily' }" class="segmentedButton first" style="cursor: pointer;" layout-align="center center" layout ng-click="changePeriod('daily')") Harian
                     div(ng-class="{'selectedPeriod' : period=='weekly' }" class="segmentedButton" style="cursor: pointer;" layout-align="center center" layout ng-click="changePeriod('weekly')") Mingguan
                     div(ng-class="{'selectedPeriod' : period=='monthly' }" class="segmentedButton last" style="cursor: pointer;" layout-align="center center" layout ng-click="changePeriod('monthly')") Bulanan
-                div(class="input-group" style="width:120px;" moment-picker="currDateStr" ng-model="currDate" format="DD-MM-YYYY" autoclose="true" change="onCurrDateChanged(newValue, oldValue)")
-                    span(class="input-group-addon")
-                        i(class="material-icons") date_range
-                    input(class="form-control"
-                        placeholder="Pilih tanggal "
-                        value="{{currDateStr}}"
-                        ng-model-options="{ updateOn: 'blur' }" 
-                        style="height:40px;width:100px;" readonly)
+                .dropdown(style="width:150px;")
+                    a(class="dropdown-toggle" id="dropdown" role="button" data-toggle="dropdown" href="#" ng-click="$event.preventDefault()")
+                        div(class="input-group")
+                            input(type="text" id="date" name="date" class="form-control" data-ng-model="currDate" data-date-time-input="DD-MM-YYYY")
+                            span(class="input-group-addon")
+                                i(class="glyphicon glyphicon-calendar")
+                    ul(class="dropdown-menu  dropdown-menu-right" role="menu" aria-labelledby="dLabel" hide-xs show-gt-xs)
+                        datetimepicker(data-ng-model="currDate" ng-change="onCurrDateChanged(currDate)" data-datetimepicker-config="{ dropdownSelector: '#dropdown', startView:'day', minView:'day', modelType:'moment' }")
+                    ul(class="dropdown-menu  dropdown-menu-left" role="menu" aria-labelledby="dLabel" show-xs hide-gt-xs)
+                        datetimepicker(data-ng-model="currDate" ng-change="onCurrDateChanged(currDate)" data-datetimepicker-config="{ dropdownSelector: '#dropdown', startView:'day', minView:'day', modelType:'moment' }")
         div(style="background-color:white;"  flex="noshrink")
             md-content
                 table(class="table table-bordered table-striped")

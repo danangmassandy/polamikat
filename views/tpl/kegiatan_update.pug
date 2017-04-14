@@ -22,13 +22,14 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex ng-if="i
             div(class="marginTop20")
             div(class="marginRight20" layout="column" flex="40")
                 span(style="margin-bottom:10px;") Tanggal Kegiatan
-                div(class="input-group" style="min-width:200px;" moment-picker="activity.startDate" format="DD-MM-YYYY HH:mm" start-view="day" autoclose="true" today="true")
-                    span(class="input-group-addon")
-                        i(class="material-icons") date_range
-                    input(class="form-control"
-                        placeholder="Pilih tanggal kegiatan "
-                        ng-model="activity.startDate"
-                        ng-model-options="{ updateOn: 'blur' }" style="height:40px;" required  readonly)
+                .dropdown(style="width:200px;")
+                    a(class="dropdown-toggle" id="dropdown" role="button" data-toggle="dropdown" href="#" ng-click="$event.preventDefault()")
+                        div(class="input-group")
+                            input(type="text" id="date" name="date" class="form-control" data-ng-model="activity.startDate" data-date-time-input="DD-MM-YYYY HH:mm")
+                            span(class="input-group-addon")
+                                i(class="glyphicon glyphicon-calendar")
+                    ul(class="dropdown-menu  dropdown-menu-left" role="menu" aria-labelledby="dLabel")
+                        datetimepicker(data-ng-model="activity.startDate" data-datetimepicker-config="{ dropdownSelector: '#dropdown', startView:'day', minView:'minute', modelType:'Date' }")
             div(class="marginTop20")
             div(class="marginRight20" layout flex)
                 div(layout="column" flex)

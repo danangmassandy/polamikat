@@ -1,7 +1,9 @@
 var app = angular.module('polamikatApp');
 
 app.controller('kegiatanAddCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, $timeout, $location, showMessage, globalConstant, rest) {
-    $scope.activity = {};
+    $scope.activity = {
+        startDate : new Date()
+    };
     $scope.personilList = [];
     $scope.categoryList = [];
 
