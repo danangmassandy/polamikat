@@ -8,10 +8,11 @@ const mongoose = require('mongoose');
 const ObjectId = require('mongoose').Types.ObjectId;
 const Randomstring = require('randomstring');
 var request = require('request');
-const FS = require('fs');
-const Path = require('path');
+const FileController = require('../controller/file_controller');
 
 const keycloakAccessTokenKey = "KEYCLOAK-ACCESS-TOKEN";
+
+var fileCtrl = new FileController();
 
 function ProfileController() {
     
@@ -396,23 +397,8 @@ ProfileController.prototype.deactivatePersonil = function deactivatePersonil(per
             // delete user photo
             if (deletePhotoPersonil) {
                 log.info("Deleting old photo...", deletePhotoPersonil);
-                Model.UploadedFile.findOne({
-                    _id : deletePhotoPersonil
-                }).exec(function(err, deletedPhoto) {
-                    if (err || !deletedPhoto) {
-                        log.error("No Uploaded file found for deleting photo...");
-                        log.error(err);
-                        return callback1(null, data);
-                    }
-                    deletedPhoto.status = Constants.STATUS_INACTIVE;
-                    deletedPhoto.updatedAt = new Date();
-                    deletedPhoto.updater = userName;
-                    deletedPhoto.save(function(err, deletedPhoto) {
-                        FS.unlink(deletedPhoto.path, function (err) {
-                            log.info("is photo removed ", err);
-                            callback1(null, data);
-                        });
-                    });
+                fileCtrl.checkAndDeleteUploadedFileById(deletePhotoPersonil, userName, function(err, result) {
+                    callback1(null, data);
                 });
             } else {
                 callback1(null, data);
@@ -443,6 +429,18 @@ ProfileController.prototype.updatePersonilInfo = function updatePersonilInfo(per
                 callback1(null, {
                     photo : photo._id
                 });
+            });
+        }, function (data, callback1) {
+            Model.Personil.findOne({
+                _id : personil._id
+            }).exec(function(err, personil) {
+                if (err)
+                    return callback1(err);
+                if (!personil)
+                    return callback1("No personil found.");
+                if (personil.photo)
+                    deletePhotoPersonil = personil.photo;
+                callback1(null, data);
             });
         }, function (data, callback1) {
             Model.Personil.update({
@@ -504,23 +502,8 @@ ProfileController.prototype.updatePersonilInfo = function updatePersonilInfo(per
             // delete user photo
             if (deletePhotoPersonil) {
                 log.info("Deleting old photo...", deletePhotoPersonil);
-                Model.UploadedFile.findOne({
-                    _id : deletePhotoPersonil
-                }).exec(function(err, deletedPhoto) {
-                    if (err || !deletedPhoto) {
-                        log.error("No Uploaded file found for deleting photo...");
-                        log.error(err);
-                        return callback1(null, null);
-                    }
-                    deletedPhoto.status = Constants.STATUS_INACTIVE;
-                    deletedPhoto.updatedAt = new Date();
-                    deletedPhoto.updater = userName;
-                    deletedPhoto.save(function(err, deletedPhoto) {
-                        FS.unlink(deletedPhoto.path, function (err) {
-                            log.info("is photo removed ", err);
-                            callback1(null, null);
-                        });
-                    });
+                fileCtrl.checkAndDeleteUploadedFileById(deletePhotoPersonil, userName, function(err, result) {
+                    callback1(null, null);
                 });
             } else {
                 callback1(null, null);

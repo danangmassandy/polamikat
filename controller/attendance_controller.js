@@ -2,7 +2,7 @@ const Bunyan = require('bunyan');
 const Constants = require("../util/constants");
 const Model = require('../models/model');
 const Vasync = require('vasync');
-const log = Bunyan.createLogger({ name: "polamikat:activity_controller" });
+const log = Bunyan.createLogger({ name: "polamikat:attendance_controller" });
 const mongoose = require('mongoose');
 const Moment = require('moment');
 

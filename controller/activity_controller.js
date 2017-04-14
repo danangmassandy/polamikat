@@ -5,8 +5,9 @@ const Vasync = require('vasync');
 const log = Bunyan.createLogger({ name: "polamikat:activity_controller" });
 const mongoose = require('mongoose');
 const ObjectId = require('mongoose').Types.ObjectId;
-const FS = require('fs');
-const Path = require('path');
+const FileController = require('../controller/file_controller');
+
+var fileCtrl = new FileController();
 
 function ActivityController() {
     
@@ -171,19 +172,8 @@ ActivityController.prototype.updateActivity = function updateActivity(activity, 
                         });
                     } else {
                         // photo is removed
-                        photo.status = Constants.STATUS_INACTIVE;
-                        photo.updatedAt = new Date();
-                        photo.updater = userName;
-                        photo.save(function(err, photo) {
-                            // remove from disk
-                            FS.unlink(photo.path, function (err) {
-                                log.info("is photo removed ", err);
-                                callback2(null, null);
-                            });
-                            // filesController.removePhoto(photo, function(err, res) {
-                            //     log.info("is photo removed ", res, " ", err);
-                            //     callback2(null, null);
-                            // });
+                        fileCtrl.checkAndDeleteUploadedFile(photo, userName, function(err, res) {
+                            callback2(null, null);
                         });
                     }
                 },
@@ -255,23 +245,70 @@ ActivityController.prototype.updateActivity = function updateActivity(activity, 
 
 // delete
 ActivityController.prototype.deleteActivities = function deleteActivities(activities, userName, callback) {
-    Model.Activity.update(
-        {
-            _id         : { $in : activities },
-            status      : Constants.STATUS_ACTIVE
-        }, 
-        {
-            $set : {
-                status          : Constants.STATUS_INACTIVE,
-                updatedAt       : new Date(),
-                updater         : userName
+    Vasync.waterfall([
+        function(callback1) {
+            Model.Activity.find({
+                _id         : { $in : activities },
+                status      : Constants.STATUS_ACTIVE
+            })
+            .select('photos')
+            .exec(function(err, activities) {
+                if (err) {
+                    log.error("error getting activities ", err);
+                    return callback1(err, null);
+                }
+                if (!activities || activities.length == 0) {
+                    log.error("error no activities is found.");
+                    return callback1("No activities is found.",null);
+                }
+                callback1(null, activities);
+            });
+        }, function(activities, callback1) {
+            var photos = [];
+            for (var i = 0; i < activities.length; ++i) {
+                if (activities[i].photos && activities[i].photos.length) {
+                    photos = photos.concat(activities[i].photos);
+                }
             }
-        },
-        {
-            multi : true
-        }).exec(function(err, res) {
-            callback(err, res);
-        });
+            if (photos.length) {
+                Vasync.forEachPipeline({
+                    'func' : function (photoId, callback2) {
+                        fileCtrl.checkAndDeleteUploadedFileById(photoId, userName, callback2);
+                    },
+                    'inputs' : photos
+                }, function(err, res) {
+                    if (err)
+                        log.error("error deleting activity uploaded files ", err);
+                    callback1(null, null);
+                });
+            } else {
+                callback1(null, null);
+            }
+        }, function(data, callback1) {
+            Model.Activity.update(
+            {
+                _id         : { $in : activities },
+                status      : Constants.STATUS_ACTIVE
+            }, 
+            {
+                $set : {
+                    status          : Constants.STATUS_INACTIVE,
+                    updatedAt       : new Date(),
+                    updater         : userName
+                }
+            },
+            {
+                multi : true
+            }).exec(function(err, res) {
+                callback1(err, res);
+            });
+        }
+    ], function(err, result) {
+        if (err) {
+            log.error("Error deleting activities ", err);
+        }
+        callback(err, result);
+    });
 }
 
 // get activity group by category based on user

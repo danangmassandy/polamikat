@@ -3,6 +3,8 @@ var app = angular.module('polamikatApp');
 app.controller('personilUserDataCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, $timeout, $location, showMessage, globalConstant, rest) {
     $scope.isAddPersonil = false;
     $scope.updatePersonil = {};
+    $scope.originalPhotoKey = null;
+    $scope.uploadedPhotos = [];
 
     $scope.doGetDetailPersonil = function() {
         showMessage.showLoadingIndicator($scope, "Loading personil data...");
@@ -18,6 +20,7 @@ app.controller('personilUserDataCtrl', function ($scope, $rootScope, $mdDialog, 
             $scope.updatePersonil = angular.copy(response.data.data.personil);
             $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).toDate();
             if ($scope.updatePersonil.photo && $scope.updatePersonil.photo.publicURL) {
+                $scope.originalPhotoKey = $scope.updatePersonil.photo.key;
                 rest.files.getImage($scope.updatePersonil.photo.publicURL, function(response) {
                     $scope.profileSrc = response.blobURL;
                 });
@@ -35,7 +38,12 @@ app.controller('personilUserDataCtrl', function ($scope, $rootScope, $mdDialog, 
         console.log($scope.updatePersonil);
         showMessage.showLoadingIndicator($scope, "Saving personil data...");
         rest.users.createOrUpdatePersonil($scope.updatePersonil, function(response) {
+            $scope.uploadedPhotos = $scope.uploadedPhotos.slice(0, $scope.uploadedPhotos.length - 1);
+            $rootScope.deletePreviousUploadedFile($scope);
+
             $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).toDate();
+            $scope.originalPhotoKey = $scope.updatePersonil.photo.key;
+            
             showMessage.hideLoadingIndicator($scope);
             console.log("createOrUpdatePersonil response ", response);
             $rootScope.me.photoSrc = $scope.profileSrc;
@@ -48,6 +56,7 @@ app.controller('personilUserDataCtrl', function ($scope, $rootScope, $mdDialog, 
             });
         }, function(response) {            
             // error
+            $rootScope.deletePreviousUploadedFile($scope);
             $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).toDate();
             showMessage.hideLoadingIndicator($scope);
             showMessage.error("Error", "Error pada update personil. Silahkan kontak system administrator.", "Ok", function(){});
@@ -73,6 +82,7 @@ app.controller('personilUserDataCtrl', function ($scope, $rootScope, $mdDialog, 
             console.log(JSON.stringify(response));
             $scope.updatePersonil.photo = {};
             $scope.updatePersonil.photo.key = response.data.uploadedFileKey;
+            $scope.uploadedPhotos.push($scope.updatePersonil.photo.key);
 
             rest.files.getImage(response.data.uploadedFileUrl, function(response) {
                 $scope.profileSrc = response.blobURL;
@@ -84,6 +94,12 @@ app.controller('personilUserDataCtrl', function ($scope, $rootScope, $mdDialog, 
                               function(ok) {});
         });
     };
+
+    $scope.onCancelClicked = function() {
+        $rootScope.deletePreviousUploadedFile($scope);
+        
+        $rootScope.back();
+    }
 
     // init
     $scope.doGetDetailPersonil();

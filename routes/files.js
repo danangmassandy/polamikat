@@ -8,10 +8,13 @@ const Vasync = require('vasync');
 const Multer  =   require('multer');
 const Path = require('path');
 const FS = require('fs');
+const FileController = require('../controller/file_controller');
 
 const log = Bunyan.createLogger({ name: "polamikat:files" });
 
 const router = Express.Router();
+
+var fileCtrl = new FileController();
 
 var upload = Multer({
     dest : Path.join(BASE_DIR, 'uploads/private')
@@ -118,6 +121,18 @@ router.post('/upload_public', upload_public.single('file'), function (req, res) 
     });
 });
 
-// upload
+// delete file
+router.post('/delete', function(req, res) {
+    var uploadedFileKey = req.body.uploadedFileKey;
+    if (!uploadedFileKey) {
+        return res.fail("Invalid uploaded file key.");
+    }
+    fileCtrl.checkAndDeleteUploadedFileByKey(uploadedFileKey, req.polamikatUser.username, function(err, result) {
+        if (err) {
+            log.error("error delete uploaded file by key ", err);
+        }
+        res.success({});
+    });
+});
 
 module.exports = router;

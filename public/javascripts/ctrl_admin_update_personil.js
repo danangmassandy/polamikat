@@ -13,6 +13,8 @@ app.controller('adminUpdatePersonilCtrl', function ($scope, $rootScope, $routePa
         return;
     }
     $scope.updatePersonil = {};
+    $scope.originalPhotoKey = null;
+    $scope.uploadedPhotos = [];
 
     $scope.doGetDetailPersonil = function() {
         showMessage.showLoadingIndicator($scope, "Getting personil detail...");
@@ -26,6 +28,7 @@ app.controller('adminUpdatePersonilCtrl', function ($scope, $rootScope, $routePa
             $scope.updatePersonil = angular.copy(response.data.personil);
             $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).toDate();
             if ($scope.updatePersonil.photo && $scope.updatePersonil.photo.publicURL) {
+                $scope.originalPhotoKey = $scope.updatePersonil.photo.key;
                 rest.files.getImage($scope.updatePersonil.photo.publicURL, function(response) {
                     $scope.profileSrc = response.blobURL;
                 });
@@ -42,6 +45,7 @@ app.controller('adminUpdatePersonilCtrl', function ($scope, $rootScope, $routePa
         showMessage.confirm("Konfirm Delete Personil", "Anda yakin untuk delete personil?", "Ok", "Cancel", function(){
             showMessage.showLoadingIndicator($scope, "Deleting personil...");
             rest.admin.deletePersonil($scope.updatePersonil._id, function(response) {
+                $rootScope.deletePreviousUploadedFile($scope);
                 showMessage.hideLoadingIndicator($scope);
                 console.log("doDeletePersonil response ", response);
                 showMessage.success("Success", "Sukses delete personil!", "Ok", function(){
@@ -61,7 +65,11 @@ app.controller('adminUpdatePersonilCtrl', function ($scope, $rootScope, $routePa
         console.log($scope.updatePersonil);
         showMessage.showLoadingIndicator($scope, "Saving personil data...");
         rest.users.updatePersonil($scope.updatePersonil, function(response) {
+            $scope.uploadedPhotos = $scope.uploadedPhotos.slice(0, $scope.uploadedPhotos.length - 1);
+            $rootScope.deletePreviousUploadedFile($scope);
+
             $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).toDate();
+            $scope.originalPhotoKey = $scope.updatePersonil.photo.key;
             showMessage.hideLoadingIndicator($scope);
             console.log("doUpdatePersonil response ", response);
             showMessage.success("Success", "Sukses update personil!", "Ok", function(){
@@ -69,6 +77,8 @@ app.controller('adminUpdatePersonilCtrl', function ($scope, $rootScope, $routePa
             });
         }, function(response) {            
             // error
+            $rootScope.deletePreviousUploadedFile($scope);
+
             $scope.updatePersonil.dob = moment($scope.updatePersonil.dob).toDate();
             showMessage.hideLoadingIndicator($scope);
             showMessage.error("Error", "Error pada update personil. Silahkan kontak system administrator.", "Ok", function(){});
@@ -94,6 +104,7 @@ app.controller('adminUpdatePersonilCtrl', function ($scope, $rootScope, $routePa
             console.log(JSON.stringify(response));
             $scope.updatePersonil.photo = {};
             $scope.updatePersonil.photo.key = response.data.uploadedFileKey;
+            $scope.uploadedPhotos.push($scope.updatePersonil.photo.key);
             showMessage.hideLoadingIndicator($scope);
             rest.files.getImage(response.data.uploadedFileUrl, function(response) {
                 $scope.profileSrc = response.blobURL;
@@ -105,6 +116,12 @@ app.controller('adminUpdatePersonilCtrl', function ($scope, $rootScope, $routePa
                               function(ok) {});
         });
     };
+
+    $scope.onCancelClicked = function() {
+        $rootScope.deletePreviousUploadedFile($scope);
+        
+        $rootScope.back();
+    }
 
     // init
     $scope.doGetDetailPersonil();

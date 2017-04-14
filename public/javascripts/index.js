@@ -288,6 +288,14 @@ app.controller('mainCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, 
 
     // $scope.goTo('report');
 
+    $rootScope.deletePreviousUploadedFile = function(scope) {
+        if (!scope.uploadedPhotos) return;
+        for (var i = 0; i < scope.uploadedPhotos.length; ++i) {
+            rest.files.delete(scope.uploadedPhotos[i]);
+        }
+        scope.uploadedPhotos = [];
+    }
+
 });
 
 app.filter('capitalize', function() {

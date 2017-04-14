@@ -286,6 +286,19 @@ app.factory('rest', function($rootScope, $http) {
             }
         },
         files : {
+            delete : function(uploadedFileKey, onSuccess, onError) {
+                $http.post("/files/delete", {
+                    uploadedFileKey : uploadedFileKey
+                }).then(function(response) {
+                    if (response.data.status == "Ok") {
+                        if (onSuccess) onSuccess(response.data);
+                    }
+                    else if (onError) onError(response.data.message);
+                }, function(response) {
+                    console.log("ERROR in delete file ", response);
+                    if (onError) onError(response.data.message);
+                });
+            },
             uploadImage : function(fd, onSuccess, onError) {
                 $http.post("/files/upload", fd, {
                     transformRequest: angular.identity,
