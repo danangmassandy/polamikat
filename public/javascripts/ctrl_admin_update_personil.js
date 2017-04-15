@@ -84,14 +84,19 @@ app.controller('adminUpdatePersonilCtrl', function ($scope, $rootScope, $routePa
     }
     $scope.genders = ["Laki-laki", "Perempuan"];
 
-    $scope.onUploadImageClicked = function(position) {
-        $timeout(function() {
-            document.querySelector('#image' + (position)).click();
-        }, 10);
-    };
-
     $scope.uploadPhotoFile = function(file) {
-        console.log("uploadPhotoFile clicked");
+        // console.log("uploadPhotoFile clicked");
+        if (file && file.type && file.type.indexOf('image') < 0) {
+            showMessage.error("Upload failed", "Please choose image file only!", 
+                              null, 
+                              function(ok) {
+                                  return;
+                              });
+            return;
+        } else if (file == null) {
+            return;
+        }
+        
         var fd = new FormData();
         fd.append('file', file);
 
