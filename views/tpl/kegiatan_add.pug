@@ -46,15 +46,19 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex ng-if="i
                 input(id="image1" type="file" accept="image/*" file-upload="uploadPhotoFile" style="display:none;" )
             div(class="marginTop20" layout="row" flex ng-if="!activity.photos || !activity.photos.length")
                 span Belum ada foto yang diupload.
-            div(class="marginTop20" layout="row" layout-wrap flex ng-if="activity.photos && activity.photos.length > 0")
-                div(ng-repeat="photo in activity.photos" style="margin-right:10px; margin-bottom:10px;" layout="column" layout-align="center")
-                    thumbnail(file-type="image" source="{{photo.blobURL}}" max-height="150" max-width="300"  ng-click="showImage($event, photo)")
+            div(class="marginTop20" layout="row" layout-wrap layout-xs="column" layout-align-xs="center center" flex ng-if="activity.photos && activity.photos.length > 0")
+                div(ng-repeat="photo in activity.photos" style="margin-right:15px; margin-bottom:10px;" layout="column")
+                    div(layout="row" layout-align="end center")
+                        button(style="margin-right:-15px;" type="button" class="close" aria-label="Delete" ng-click="deletePhoto(photo)")
+                            span(aria-hidden="true") &times;
+                    div(style="height:155px;" layout="column" layout-align="center center")
+                        thumbnail(file-type="image" source="{{photo.blobURL}}" max-height="150" max-width="300"  ng-click="showImage($event, photo)")
                     a(href="" editable-textarea="photo.description" e-rows="1" e-cols="20") 
                         pre {{ photo.description || 'Tambah Deskripsi' }}
                         //- edit-disabled="true"
             div(class="marginTop40")
             div(layout="row" class="paddingTop10 paddingRight50 paddingBottom25" layout-align="end center" layout-xs="column" layout-align-xs="start start")
-                md-button(class="plainButton" layout-align="center center" ng-click="back()" layout) Cancel
+                md-button(class="plainButton" layout-align="center center" ng-click="onCancelClicked()" layout) Cancel
                 md-button(class="button" layout-align="center center"  ng-click="addKegiatan()" layout) Save 
             div(class="marginTop20")
                         

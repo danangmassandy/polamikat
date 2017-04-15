@@ -10,6 +10,7 @@ app.controller('kegiatanUpdateCtrl', function ($scope, $rootScope, $routeParams,
     $scope.activity = {};
     $scope.personilList = [];
     $scope.categoryList = [];
+    $scope.uploadedPhotos = [];
 
     $scope.getPersonilList = function() {
         rest.users.personilList(function(response) {
@@ -65,7 +66,7 @@ app.controller('kegiatanUpdateCtrl', function ($scope, $rootScope, $routeParams,
             console.log(JSON.stringify(response));
             if (!$scope.activity.photos)
                 $scope.activity.photos = [];
-            
+            $scope.uploadedPhotos.push(response.data.uploadedFileKey);
             rest.files.getImage(response.data.uploadedFileUrl, function(res) {
                 $scope.activity.photos.push({
                     blobURL : res.blobURL,
@@ -110,6 +111,7 @@ app.controller('kegiatanUpdateCtrl', function ($scope, $rootScope, $routeParams,
         showMessage.confirm("Konfirm Delete Kegiatan", "Anda yakin untuk delete kegiatan?", "Ok", "Cancel", function(){
             showMessage.showLoadingIndicator($scope, "Deleting activity...");
             rest.activities.delete($scope.activity._id, function(response) {
+                $rootScope.deletePreviousUploadedFile($scope);
                 showMessage.hideLoadingIndicator($scope);
                 console.log("doDeleteKegiatan response ", response);
                 showMessage.success("Success", "Sukses delete kegiatan!", "Ok", function(){
@@ -117,6 +119,7 @@ app.controller('kegiatanUpdateCtrl', function ($scope, $rootScope, $routeParams,
                 });
             }, function(response) {            
                 // error
+                $rootScope.deletePreviousUploadedFile($scope);
                 showMessage.hideLoadingIndicator($scope);
                 showMessage.error("Error", "Error pada delete kegiatan. Silahkan kontak system administrator.", "Ok", function(){});
                 $rootScope.back();
@@ -140,16 +143,47 @@ app.controller('kegiatanUpdateCtrl', function ($scope, $rootScope, $routeParams,
         showMessage.showLoadingIndicator($scope, "Saving activity...");
         rest.activities.update($scope.activity, function(response) {
             showMessage.hideLoadingIndicator($scope);
+            $scope.uploadedPhotos = [];
             console.log("doUpdateKegiatan response ", response);
             showMessage.success("Success", "Sukses update kegiatan personil!", "Ok", function(){
                 
             });
         }, function(response) {
             // error
+            $rootScope.deletePreviousUploadedFile($scope);
             showMessage.hideLoadingIndicator($scope);
             showMessage.error("Error", "Error pada update kegiatan personil. Silahkan kontak system administrator.", "Ok", function(){});
             $rootScope.back();
         });
+    }
+
+    $scope.onCancelClicked = function() {
+        $rootScope.deletePreviousUploadedFile($scope);
+        
+        $rootScope.back();
+    }
+
+    $scope.deletePhoto = function(photo) {
+        if ($scope.activity.photos) {
+            var idxInActivity = -1;
+            for (var i = 0; i < $scope.activity.photos.length; ++i) {
+                if ($scope.activity.photos[i].key == photo.key) {
+                    idxInActivity = i;
+                    break;
+                }
+            }
+            if (idxInActivity > -1) {
+                $scope.activity.photos.splice(idxInActivity, 1);
+                return;
+            }
+        }
+
+        var index = $scope.uploadedPhotos.indexOf(photo.key);
+        if (index > -1) {
+            // it's new uploaded photo
+            $scope.uploadedPhotos.splice(index, 1);
+            rest.files.delete(photo.key);
+        }
     }
 
     // Init

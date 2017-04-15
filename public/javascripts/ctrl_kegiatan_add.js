@@ -6,6 +6,7 @@ app.controller('kegiatanAddCtrl', function ($scope, $rootScope, $mdDialog, $mdSi
     };
     $scope.personilList = [];
     $scope.categoryList = [];
+    $scope.uploadedPhotos = [];
 
     $scope.showImage = function($event, photo) {
         var parentEl = angular.element(document.body);
@@ -44,7 +45,7 @@ app.controller('kegiatanAddCtrl', function ($scope, $rootScope, $mdDialog, $mdSi
             console.log(JSON.stringify(response));
             if (!$scope.activity.photos)
                 $scope.activity.photos = [];
-            
+            $scope.uploadedPhotos.push(response.data.uploadedFileKey);
             rest.files.getImage(response.data.uploadedFileUrl, function(res) {
                 $scope.activity.photos.push({
                     blobURL : res.blobURL,
@@ -76,12 +77,15 @@ app.controller('kegiatanAddCtrl', function ($scope, $rootScope, $mdDialog, $mdSi
         showMessage.showLoadingIndicator($scope, "Saving activity...");
         rest.activities.add($scope.activity, function(response) {
             showMessage.hideLoadingIndicator($scope);
+            $scope.uploadedPhotos = [];
             console.log("addKegiatan response ", response);
             showMessage.success("Success", "Sukses tambah kegiatan personil!", "Ok", function(){
                 $rootScope.back();
             });
         }, function(response) {
             // error
+            $rootScope.deletePreviousUploadedFile($scope);
+            $scope.activity.photos = [];
             showMessage.hideLoadingIndicator($scope);
             showMessage.error("Error", "Error pada tambah kegiatan personil. Silahkan kontak system administrator.", "Ok", function(){});
         });
@@ -116,4 +120,30 @@ app.controller('kegiatanAddCtrl', function ($scope, $rootScope, $mdDialog, $mdSi
         else
             $scope.categoryList = [];
     });
+
+    $scope.onCancelClicked = function() {
+        $rootScope.deletePreviousUploadedFile($scope);
+        
+        $rootScope.back();
+    }
+
+    $scope.deletePhoto = function(photo) {
+        rest.files.delete(photo.key);
+        var index = $scope.uploadedPhotos.indexOf(photo.key);
+        if (index > -1) {
+            $scope.uploadedPhotos.splice(index, 1);
+        }
+        if (!$scope.activity.photos)
+            return;
+        var idxInActivity = -1;
+        for (var i = 0; i < $scope.activity.photos.length; ++i) {
+            if ($scope.activity.photos[i].key == photo.key) {
+                idxInActivity = i;
+                break;
+            }
+        }
+        if (idxInActivity > -1) {
+            $scope.activity.photos.splice(idxInActivity, 1);
+        }
+    }
 });

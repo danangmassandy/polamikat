@@ -38,9 +38,10 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex)
             md-divider
             div(class="marginTop20" layout="row" flex ng-if="!activity.photos || !activity.photos.length")
                 span Belum ada foto yang diupload.
-            div(class="marginTop20" layout="row" layout-wrap flex ng-if="activity.photos && activity.photos.length > 0")
+            div(class="marginTop20" layout="row" layout-wrap layout-xs="column" layout-align-xs="center center" flex ng-if="activity.photos && activity.photos.length > 0")
                 div(ng-repeat="photo in activity.photos" style="margin-right:10px; margin-bottom:10px;" layout="column" layout-align="center" ng-click="showImage($event, photo)")
-                    thumbnail(file-type="image" source="{{photo.blobURL}}" max-height="150" max-width="300")
+                    div(style="height:155px;" layout="column" layout-align="center center")
+                        thumbnail(file-type="image" source="{{photo.blobURL}}" max-height="150" max-width="300")
                     a(href="" editable-textarea="photo.description" e-rows="1" e-cols="20" edit-disabled="true") 
                         pre {{ photo.description || 'Tidak Ada Deskripsi' }}
                         //- edit-disabled="true"
