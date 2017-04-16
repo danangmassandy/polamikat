@@ -191,30 +191,30 @@ angular.module("material.components.virtualRepeat")._invokeQueue[1][2][1]().cont
     this.isVirtualRepeatUpdating_ = false;
 };
 
-app.factory('httpInterceptor', ['$q', '$rootScope',
-    function ($q, $rootScope) {
-        var loadingCount = 0;
+// app.factory('httpInterceptor', ['$q', '$rootScope',
+//     function ($q, $rootScope) {
+//         var loadingCount = 0;
 
-        return {
-            request: function (config) {
-                return config || $q.when(config);
-            },
+//         return {
+//             request: function (config) {
+//                 return config || $q.when(config);
+//             },
 
-            response: function (response) {
-                return response || $q.when(response);
-            },
+//             response: function (response) {
+//                 return response || $q.when(response);
+//             },
 
-            responseError: function (response) {
-                console.log("responseError");
-                // alert("Session sudah berakhir, silahkan login lagi.");
-                // window.location.reload(true);
-                return $q.reject(response);
-            }
-        };
-    }
-]).config(['$httpProvider', function ($httpProvider) {
-    $httpProvider.interceptors.push('httpInterceptor');
-}]);
+//             responseError: function (response) {
+//                 console.log("responseError");
+//                 // alert("Session sudah berakhir, silahkan login lagi.");
+//                 // window.location.reload(true);
+//                 return $q.reject(response);
+//             }
+//         };
+//     }
+// ]).config(['$httpProvider', function ($httpProvider) {
+//     $httpProvider.interceptors.push('httpInterceptor');
+// }]);
 
 app.controller('mainCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, $location, $timeout, $filter, $route, rest, CacheFactory) {
     $rootScope.title = title;
