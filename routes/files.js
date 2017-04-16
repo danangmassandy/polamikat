@@ -49,11 +49,18 @@ router.post('/protected/:uploadedFile', function(req, res) {
         if (error) {
             res.fail(error);
         } else {
-            res.set('Content-Type', data.uploadedFile.mimetype);
-            res.set('Content-Length', data.uploadedFile.size);
-            var readStream = FS.createReadStream(data.uploadedFile.path);
-            // We replaced all the event handlers with a simple call to readStream.pipe()
-            readStream.pipe(res);
+            FS.exists(data.uploadedFile.path, function(exists) {
+                if (exists) {
+                    res.set('Content-Type', data.uploadedFile.mimetype);
+                    res.set('Content-Length', data.uploadedFile.size);
+                    var readStream = FS.createReadStream(data.uploadedFile.path);
+                    // We replaced all the event handlers with a simple call to readStream.pipe()
+                    readStream.pipe(res);
+                } else {
+                    res.fail("File not found.");
+                }
+            });
+            
         }
     });
 });

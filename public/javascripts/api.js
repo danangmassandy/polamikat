@@ -283,6 +283,61 @@ app.factory('rest', function($rootScope, $http) {
                     console.log("deletePersonil error ", response);
                     if (onError) onError(response);
                 });
+            },
+            dbBackupList : function(onSuccess, onError) {
+                $http.post("/admin/db_backup_list", {
+                }).then(function(response) {
+                    if (response.data.status == "Ok")
+                        onSuccess(response);
+                    else if (onError) onError(response);
+                }, function(response) {
+                    console.log("db_backup_list error ", response);
+                    if (onError) onError(response);
+                });
+            },
+            dbBackupDownload : function(backup_file, onSuccess, onError) {
+                $http({
+                    method: 'POST',
+                    url: '/admin/db_backup_download',
+                    data: { backup_file : backup_file },
+                    responseType: 'arraybuffer',
+                    headers: {
+                            'Content-Type' : 'application/json',
+                            //'Access-Control-Allow-Credentials' : 'true',
+                            //'Access-Control-Allow-Origin' : s_base,
+                            // 'Access-Control-Allow-Origin' : '*',
+                            'Access-Control-Allow-Methods' : 'GET, POST, OPTIONS, PUT, PATCH, DELETE, HEAD',
+                            'Access-Control-Allow-Headers' : 'Access-Control-Allow-Headers, Authorization, Origin, Accept, Key, If-None-Match, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, X-CLIENT-ID, X-CLIENT_SECRET',
+                            //'Access-Control-Max-Age' : '2520',
+                        }
+                }).then(function successCallback(response) {
+                    headers = response.headers();
+            
+                    var filename = backup_file;
+                    var contentType = headers['content-type'];
+                    var linkElement = document.createElement('a');
+                    try {
+                        var blob = new Blob([response.data], { type: contentType });
+                        var url = window.URL.createObjectURL(blob);
+            
+                        linkElement.setAttribute('href', url);
+                        linkElement.setAttribute("download", filename);
+            
+                        var clickEvent = new MouseEvent("click", {
+                            "view": window,
+                            "bubbles": true,
+                            "cancelable": false
+                        });
+                        linkElement.dispatchEvent(clickEvent);
+                        //if (onSuccess) onSuccess("Success");
+                    } catch (ex) {
+                        console.log(ex);
+                        if (onError) onError("Error");
+                    }
+                }, function errorCallback(response) {
+                    console.log('Error getting file : ', response.status);
+                    if (onError) onError({message : response.statusText});
+                });
             }
         },
         files : {

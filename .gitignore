@@ -63,3 +63,6 @@ public/bower_components
 uploads/
 
 resources/properties.json
+
+# backup folder
+backup/

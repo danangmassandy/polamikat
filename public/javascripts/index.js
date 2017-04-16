@@ -39,6 +39,9 @@ app.config(function($routeProvider, $locationProvider) {
         }).when('/admin_attendance_history', {
             templateUrl: '/tpl/admin_attendance_history',
             controller: 'adminAttendanceHistoryCtrl',
+        }).when('/admin_data_management', {
+            templateUrl: '/tpl/admin_data_management',
+            controller: 'adminDataManagementCtrl',
         }).when('/data_kegiatan_personil', {
             templateUrl: '/tpl/data_kegiatan_personil',
             controller: 'dataKegiatanPersonilCtrl',

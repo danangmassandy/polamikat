@@ -1,0 +1,43 @@
+div(layout="column" layout-align="center center" flex ng-if="!isLoaded")
+    md-progress-circular(class="md-accent" layout-align="center center" md-mode="indeterminate")
+    div(class="regular marginTop10" ng-cloak="loadingText") {{loadingText}}
+md-content.padding20(layout="column" flex ng-if="isLoaded")
+    div(layout="column" flex="noshrink")
+        div(class="" layout="row" layout-align="center center")
+            h2 Database Backup Files
+        .marginTop40
+        table(class="table table-bordered table-striped")
+            thead
+                tr
+                    th 
+                        a(href="")
+                            span No
+                    th 
+                        a(href="" ng-click="sortType = 'filename'; sortReverse = !sortReverse;")
+                            span Filename 
+                            span(class="fa fa-caret-up" ng-show="sortType == 'filename' && sortReverse")
+                            span(class="fa fa-caret-down" ng-show="sortType == 'filename' && !sortReverse")
+                    th 
+                        a(href="" ng-click="sortType = 'size'; sortReverse = !sortReverse;")
+                            span Size
+                            span(class="fa fa-caret-up" ng-show="sortType == 'size' && sortReverse")
+                            span(class="fa fa-caret-down" ng-show="sortType == 'size' && !sortReverse")
+                    th 
+                        a(href="" ng-click="sortType = 'createdDate'; sortReverse = !sortReverse;")
+                            span Created Date 
+                            span(class="fa fa-caret-up" ng-show="sortType == 'createdDate' && sortReverse")
+                            span(class="fa fa-caret-down" ng-show="sortType == 'createdDate' && !sortReverse")
+                    th 
+                        a(href="")
+                            span Download
+            tbody(ng-if="listFiles && listFiles.length > 0")
+                tr(ng-repeat="x in listFiles | orderBy:sortType:sortReverse")
+                    td {{ $index + 1 }}
+                    td {{ x.filename }}
+                    td {{ humanFileSize(x.size) }}
+                    td {{ x.createdDate | date:'dd-MM-yyyy HH:mm':'UTC+7' }}
+                    td 
+                        md-button(class="plainButton" style="margin: 0px;" ng-click="downloadFile(x)") Download
+            tbody(ng-if="!listFiles || !listFiles.length")
+                tr
+                    td(colspan="7") No Data

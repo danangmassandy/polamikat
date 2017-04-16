@@ -38,6 +38,9 @@ block menu
                 div(ng-class="selectedMenu == 'admin_kategori_kegiatan' ? 'selected' : 'notSelected'" layout="row" layout-align="start center" ng-click="goTo('admin_kategori_kegiatan')" ng-if="isAdmin")
                     div Kategori Kegiatan Personil
                     div(flex)
+                div(ng-class="selectedMenu == 'admin_data_management' ? 'selected' : 'notSelected'" layout="row" layout-align="center center" ng-click="goTo('admin_data_management')" ng-if="isAdmin")
+                    div Data Management
+                    div(flex)
                 div(ng-class="selectedMenu == 'personil_user_data' ? 'selected' : 'notSelected'" layout="row" layout-align="center center" ng-click="goTo('personil_user_data')")
                     div Profil Saya
                     div(flex)
@@ -57,6 +60,7 @@ block script
     script(src="/javascripts/api.js")
     script(src="/javascripts/constants.js")
     script(src="/javascripts/ctrl_side_nav.js")
+    script(src="/javascripts/ctrl_admin_data_management.js")
     script(src="/javascripts/ctrl_admin_add_personil.js")
     script(src="/javascripts/ctrl_admin_data_personil.js")
     script(src="/javascripts/ctrl_admin_data_user.js")
