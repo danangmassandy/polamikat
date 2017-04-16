@@ -206,8 +206,8 @@ app.factory('httpInterceptor', ['$q', '$rootScope',
 
             responseError: function (response) {
                 console.log("responseError");
-                alert("Session sudah berakhir, silahkan login lagi.");
-                window.location.reload(true);
+                // alert("Session sudah berakhir, silahkan login lagi.");
+                // window.location.reload(true);
                 return $q.reject(response);
             }
         };
