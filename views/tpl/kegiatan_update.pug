@@ -42,7 +42,7 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex ng-if="i
                     label Foto Kegiatan
             md-divider
             div(class="marginTop10" layout="row" layout-align="end center" flex)
-                md-button(class="plainButton" style="margin: 0px;" ngf-select="uploadPhotoFile($file)" ngf-accept="'image/*'" ngf-capture="'camera'" ngf-resize-if="$file.size > 2000000" ngf-resize="{quality: 0.8, ratio: '3:4'}") Upload Photo
+                md-button(class="plainButton" style="margin: 0px;" ngf-select="uploadPhotoFile($file)" ngf-accept="'image/*'" ngf-resize-if="$file.size > 2000000" ngf-resize="{quality: 0.8, ratio: '3:4'}") Upload Photo
             div(class="marginTop20" layout="row" flex ng-if="!activity.photos || !activity.photos.length")
                 span Belum ada foto yang diupload.
             div(class="marginTop20" layout="row" layout-wrap layout-xs="column" layout-align-xs="center center" flex ng-if="activity.photos && activity.photos.length > 0")

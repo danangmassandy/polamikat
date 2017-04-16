@@ -10,7 +10,7 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex ng-if="i
                 div(layout-align="center center" layout="column" flex)
                     div(class="marginBottom10" ng-hide="!updatePersonil.photo" ng-style="{'background':'url('+profileSrc+') center center','background-size':'cover'}" style="border-radius:50%; font-size: 150px; height: 150px; width: 150px;")
                     md-icon(ng-hide="updatePersonil.photo" class="avatar"   style="font-size: 150px; height: 150px; width: 150px;") account_circle
-                    md-button(class="plainButton" style="margin: 0px;" ngf-select="uploadPhotoFile($file)" ngf-accept="'image/*'" ngf-capture="'camera'" ngf-resize-if="$file.size > 1000000" ngf-resize="{quality: 0.8, ratio: '3:4'}") Upload Photo
+                    md-button(class="plainButton" style="margin: 0px;" ngf-select="uploadPhotoFile($file)" ngf-accept="'image/*'" ngf-resize-if="$file.size > 1000000" ngf-resize="{quality: 0.8, ratio: '3:4'}") Upload Photo
                 div(class="marginTop30")
                 div(class="marginRight20" layout flex)
                     div(layout="column" flex)
