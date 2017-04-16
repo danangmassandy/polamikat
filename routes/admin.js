@@ -81,41 +81,49 @@ router.post('/update_category', function(req, res) {
 
 router.post('/db_backup_list', function(req, res) {
     var backupDir = Path.join(__dirname, '../backup');
-    FS.readdir(backupDir, function(err, items) {
+    FS.access(backupDir, function(err) {
         if (err) {
-            log.error("Error readdir ", err);
-            return res.fail("Error readdir ", err);
+            log.warn("Error access backupdir", err);
+            FS.mkdirSync(backupDir);
         }
-        var filteredList = [];
-        Vasync.forEachPipeline({
-            'func' : function(file, callback) {
-                var matched = file.match(/dump[0-9]{8}\.tar/);
-                if (matched) {
-                    FS.stat(Path.join(backupDir, file), function(err, stats) {
-                        if (err)
-                            return callback(err);
-                        filteredList.push({
-                            filename    : file,
-                            size        : stats.size,
-                            createdDate : stats.ctime
-                        });
-                        callback(null, null);
-                    });
-                } else {
-                    callback(null, null);
-                }
-            },
-            'inputs' : items
-        }, function(err, result) {
+
+        FS.readdir(backupDir, function(err, items) {
             if (err) {
-                log.error("error getting file info ", err);
-                return res.fail("Error getting file info");
+                log.error("Error readdir ", err);
+                return res.fail("Error readdir ", err);
             }
-            res.success({
-                data : filteredList
+            var filteredList = [];
+            Vasync.forEachPipeline({
+                'func' : function(file, callback) {
+                    var matched = file.match(/dump[0-9]{8}\.tar/);
+                    if (matched) {
+                        FS.stat(Path.join(backupDir, file), function(err, stats) {
+                            if (err)
+                                return callback(err);
+                            filteredList.push({
+                                filename    : file,
+                                size        : stats.size,
+                                createdDate : stats.ctime
+                            });
+                            callback(null, null);
+                        });
+                    } else {
+                        callback(null, null);
+                    }
+                },
+                'inputs' : items
+            }, function(err, result) {
+                if (err) {
+                    log.error("error getting file info ", err);
+                    return res.fail("Error getting file info");
+                }
+                res.success({
+                    data : filteredList
+                });
             });
         });
     });
+    
 });
 
 router.post('/db_backup_download', function(req, res) {
