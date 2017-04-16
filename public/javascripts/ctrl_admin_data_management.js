@@ -44,10 +44,11 @@ app.controller('adminDataManagementCtrl', function ($scope, $rootScope, $mdDialo
     }
 
     $scope.downloadFile = function(file) {
+        showMessage.showLoadingIndicator($scope, "Downloading backup file...");
         rest.admin.dbBackupDownload(file.filename, function(msgSuccess) {
-
+            showMessage.hideLoadingIndicator($scope);
         }, function(msgError) {
-
+            showMessage.hideLoadingIndicator($scope);
         });
     }
 

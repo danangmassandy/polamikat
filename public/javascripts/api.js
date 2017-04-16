@@ -329,7 +329,7 @@ app.factory('rest', function($rootScope, $http) {
                             "cancelable": false
                         });
                         linkElement.dispatchEvent(clickEvent);
-                        //if (onSuccess) onSuccess("Success");
+                        if (onSuccess) onSuccess("Success");
                     } catch (ex) {
                         console.log(ex);
                         if (onError) onError("Error");
