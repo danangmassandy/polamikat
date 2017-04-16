@@ -24,7 +24,7 @@ router.get('/', function (req, res) {
 });
 
 /* GET template page. */
-router.get('/tpl/:page', RequestUtil.authenticate, function (req, res) {
+router.get('/tpl/:page', function (req, res) {
     res.render('tpl/' + req.params.page, {});
 });
 
