@@ -10,7 +10,7 @@ var mode = process.env.MODE ? process.env.MODE : "local";
 
 process.env.TZ = 'Asia/Jakarta';
 //read properties.json
-PROPERTIES = JSON.parse(FS.readFileSync('./resources/properties.json', 'utf8'))[mode];
+PROPERTIES = JSON.parse(FS.readFileSync(Path.join(__dirname, 'resources/properties.json'), 'utf8'))[mode];
 
 var backup = require('mongodb-backup');
 
