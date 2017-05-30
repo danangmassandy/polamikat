@@ -31,22 +31,29 @@ app.controller('kegiatanDetailCtrl', function ($scope, $rootScope, $mdDialog, $m
 
     $scope.showImage = function($event, photo) {
         var parentEl = angular.element(document.body);
-        $mdDialog.show({
-                parent: parentEl,
-                targetEvent: $event,
-                templateUrl: '/tpl/dialog_photo',
-                locals: {
-                    photo : photo,
-                },
-                controller: DialogController
-            });
-        function DialogController($scope, $mdDialog, photo) {
-            $scope.photo = photo;
+        $rootScope.fetchImage(photo, false, function(error, photo) {
+            if (error) {
+                showMessage.error("Error", "Error pada load foto. Silahkan kontak system administrator.", "Ok", function(){});
+            } else {
+                $mdDialog.show({
+                    parent: parentEl,
+                    targetEvent: $event,
+                    templateUrl: '/tpl/dialog_photo',
+                    locals: {
+                        photo : photo,
+                    },
+                    controller: DialogController
+                });
+                function DialogController($scope, $mdDialog, photo) {
+                    $scope.photo = photo;
 
-            $scope.close = function() {
-                $mdDialog.cancel();
+                    $scope.close = function() {
+                        $mdDialog.cancel();
+                    }
+                }
             }
-        }
+            
+        });
     }
 
 
@@ -64,7 +71,7 @@ app.controller('kegiatanDetailCtrl', function ($scope, $rootScope, $mdDialog, $m
             $scope.isOwner = $rootScope.me.isAdmin || ($rootScope.me.polamikatUser.personil == $scope.activity.personil._id);
             if ($scope.activity.photos) {
                 for (var i = 0; i < $scope.activity.photos.length;++i) {
-                    $rootScope.fetchImage($scope.activity.photos[i]);
+                    $rootScope.fetchImageSync($scope.activity.photos[i], true);
                 }
             }
             

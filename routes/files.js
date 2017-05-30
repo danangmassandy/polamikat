@@ -8,6 +8,7 @@ const Vasync = require('vasync');
 const Multer  =   require('multer');
 const Path = require('path');
 const FS = require('fs');
+var easyimg = require('easyimage');
 const FileController = require('../controller/file_controller');
 
 const log = Bunyan.createLogger({ name: "polamikat:files" });
@@ -65,6 +66,48 @@ router.post('/protected/:uploadedFile', function(req, res) {
     });
 });
 
+router.post('/protected/thumb/:uploadedFile', function(req, res) {
+    var uploadedFileId = req.params.uploadedFile;
+
+    Vasync.waterfall([
+        function (callback) {
+            Model.UploadedFile.findOne({
+                _id    : uploadedFileId,
+                status : {$nin : [Constants.STATUS_INACTIVE]}
+            }).lean().exec(function(err, res) {
+                if (err)
+                    return callback(err);
+                if (!res)
+                    return callback('No file is found.');
+
+                callback(null, {
+                    uploadedFile : res
+                })
+            });
+        }, function(data, callback) {
+            callback(null, data);
+        }
+    ], function(error, data) {
+        if (error) {
+            res.fail(error);
+        } else if (data.uploadedFile.thumbnailPath) {
+            FS.exists(data.uploadedFile.thumbnailPath, function(exists) {
+                if (exists) {
+                    res.set('Content-Type', data.uploadedFile.mimetype);
+                    var readStream = FS.createReadStream(data.uploadedFile.thumbnailPath);
+                    // We replaced all the event handlers with a simple call to readStream.pipe()
+                    readStream.pipe(res);
+                } else {
+                    res.fail("File not found.");
+                }
+            });
+            
+        } else {
+            res.fail("Thumbnail does not exist.");
+        }
+    });
+});
+
 router.post('/upload', upload.single('file'), function (req, res) {
     var file = req.file;
     Vasync.waterfall([
@@ -80,6 +123,42 @@ router.post('/upload', upload.single('file'), function (req, res) {
                     callback(null, uploadedFile);
                 });
             });
+        }, function(uploadedFile, callback) {
+            // check if uploadedFile is photo
+            if (uploadedFile.mimetype && uploadedFile.mimetype.startsWith("image")) {
+                easyimg.info(uploadedFile.path).then(function(file) {
+                    var thumbnailPath = Path.join(BASE_DIR, 'uploads/private/thumb');
+                    thumbnailPath = Path.join(thumbnailPath, uploadedFile.id+"_thumb");
+                    var new_height = 200;
+                    if (file.width && file.height) {
+                        new_height = (file.height/file.width) * 200;
+                    }
+                    easyimg.thumbnail({
+                        src:uploadedFile.path, dst: thumbnailPath,
+                        width:200, height:new_height,
+                        x:0, y:0
+                    }).then(function(file) {
+                        uploadedFile.thumbnailPath = thumbnailPath;
+                        uploadedFile.thumbnailURL = "/files/protected/thumb/"+uploadedFile.id;
+                        uploadedFile.updatedAt = new Date();
+                        uploadedFile.save(function(err, uploadedFile) {
+                            if (err) {
+                                log.error("Error saving uploaded file ", err);
+                            }
+                            
+                            callback(null, uploadedFile);
+                        });
+                    }, function(err) {
+                        log.error("error converting: ", err);
+                        callback(null, uploadedFile);
+                    });
+                }, function(err) {
+                    log.error("cannot get image info: ", err);
+                    callback(null, uploadedFile);
+                });
+            } else {
+                callback(null, uploadedFile);
+            }
         }
     ], function(err, uploadedFile) {
         if(err) {
@@ -88,7 +167,8 @@ router.post('/upload', upload.single('file'), function (req, res) {
             res.success({
                 data : {
                     uploadedFileKey : uploadedFile.key,
-                    uploadedFileUrl: uploadedFile.publicURL
+                    uploadedFileUrl: uploadedFile.publicURL,
+                    uploadedFileThumbUrl : uploadedFile.thumbnailURL
                 }
             });
         }

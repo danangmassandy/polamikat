@@ -25,7 +25,7 @@ ActivityController.prototype.details = function details(activityId, callback) {
         select  : 'name pangkat nrp wilayahPenugasan unit'
     }).populate({
         path    : 'photos',
-        select  : 'key description publicURL contentType type mimetype'
+        select  : 'key description publicURL contentType type mimetype thumbnailURL'
     }).exec(function(err, activity) {
         callback(err, activity);
     });
@@ -498,7 +498,8 @@ ActivityController.prototype.getPhotos = function getPhotos(callback) {
                 key : "$photos.key",
                 description : "$photos.description",
                 publicURL : "$photos.publicURL",
-                createdAt : "$photos.createdAt"
+                createdAt : "$photos.createdAt",
+                thumbnailURL  : "$photos.thumbnailURL"
             }
         },
         {

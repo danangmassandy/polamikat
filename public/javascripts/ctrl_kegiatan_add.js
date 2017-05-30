@@ -10,22 +10,29 @@ app.controller('kegiatanAddCtrl', function ($scope, $rootScope, $mdDialog, $mdSi
 
     $scope.showImage = function($event, photo) {
         var parentEl = angular.element(document.body);
-        $mdDialog.show({
-                parent: parentEl,
-                targetEvent: $event,
-                templateUrl: '/tpl/dialog_photo',
-                locals: {
-                    photo : photo,
-                },
-                controller: DialogController
-            });
-        function DialogController($scope, $mdDialog, photo) {
-            $scope.photo = photo;
+        $rootScope.fetchImage(photo, false, function(error, photo) {
+            if (error) {
+                showMessage.error("Error", "Error pada load foto. Silahkan kontak system administrator.", "Ok", function(){});
+            } else {
+                $mdDialog.show({
+                    parent: parentEl,
+                    targetEvent: $event,
+                    templateUrl: '/tpl/dialog_photo',
+                    locals: {
+                        photo : photo,
+                    },
+                    controller: DialogController
+                });
+                function DialogController($scope, $mdDialog, photo) {
+                    $scope.photo = photo;
 
-            $scope.close = function() {
-                $mdDialog.cancel();
+                    $scope.close = function() {
+                        $mdDialog.cancel();
+                    }
+                }
             }
-        }
+            
+        });
     }
 
     $scope.uploadPhotoFile = function(file) {
@@ -50,13 +57,27 @@ app.controller('kegiatanAddCtrl', function ($scope, $rootScope, $mdDialog, $mdSi
             if (!$scope.activity.photos)
                 $scope.activity.photos = [];
             $scope.uploadedPhotos.push(response.data.uploadedFileKey);
-            rest.files.getImage(response.data.uploadedFileUrl, function(res) {
-                $scope.activity.photos.push({
-                    blobURL : res.blobURL,
-                    key : response.data.uploadedFileKey,
-                    publicURL : response.data.uploadedFileUrl,
-                    description : ""
-                });
+            var photoURL = response.data.uploadedFileUrl;
+            if (response.data.uploadedFileThumbUrl) {
+                photoURL = response.data.uploadedFileThumbUrl;
+            }
+            rest.files.getImage(photoURL, function(res) {
+                if (response.data.uploadedFileThumbUrl) {
+                    $scope.activity.photos.push({
+                        thumbnailBlobURL : res.blobURL,
+                        key : response.data.uploadedFileKey,
+                        publicURL : response.data.uploadedFileUrl,
+                        thumbnailURL : response.data.uploadedFileThumbUrl,
+                        description : ""
+                    });
+                } else {
+                    $scope.activity.photos.push({
+                        blobURL : res.blobURL,
+                        key : response.data.uploadedFileKey,
+                        publicURL : response.data.uploadedFileUrl,
+                        description : ""
+                    });
+                }
             });
         }, function(err) {
             showMessage.hideLoadingIndicator($scope);

@@ -20,6 +20,8 @@ var UploadedFile = new Schema({
     publicURL       : String,
     rawData         : String,
     path            : String,
+    thumbnailPath   : String,
+    thumbnailURL    : String,
     uploader        : { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // Real uploader
     user            : { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // Destination user
     type            : Number, // 0: Profile Image, 1: Activity Image

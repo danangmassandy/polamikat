@@ -295,9 +295,32 @@ app.controller('mainCtrl', function ($scope, $rootScope, $mdDialog, $mdSidenav, 
     };
 
 
-    $rootScope.fetchImage = function(photo) {
-        rest.files.getImage(photo.publicURL, function(res) {
-            photo.blobURL = res.blobURL;
+    $rootScope.fetchImageSync = function(photo, isThumbnail) {
+        var url = photo.publicURL;
+        if (isThumbnail && photo.thumbnailURL) {
+            url = photo.thumbnailURL;
+        }
+        rest.files.getImage(url, function(res) {
+            if (isThumbnail && photo.thumbnailURL) {
+                photo.thumbnailBlobURL = res.blobURL;
+            } else {
+                photo.blobURL = res.blobURL;
+            }
+        });
+    }
+
+    $rootScope.fetchImage = function(photo, isThumbnail, callback) {
+        var url = photo.publicURL;
+        if (isThumbnail && photo.thumbnailURL) {
+            url = photo.thumbnailURL;
+        }
+        rest.files.getImage(url, function(res) {
+            if (isThumbnail && photo.thumbnailURL) {
+                photo.thumbnailBlobURL = res.blobURL;
+            } else {
+                photo.blobURL = res.blobURL;
+            }
+            callback(null, photo);
         });
     }
 
