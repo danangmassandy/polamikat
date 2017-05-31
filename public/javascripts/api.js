@@ -21,8 +21,13 @@ app.factory('rest', function($rootScope, $http) {
                     if(onError) onError(response.data.message);
                 });
             },
-            list : function(onSuccess, onError) {
-                $http.post("/activity/list").then(function(response) {
+            list : function(pageNumber, itemsPerPage, sortType, sortReverse, onSuccess, onError) {
+                $http.post("/activity/list", {
+                    pageNumber: pageNumber,
+                    itemsPerPage: itemsPerPage,
+                    sort: sortType,
+                    sortReverse: sortReverse
+                }).then(function(response) {
                     if (response.data.status == "Ok")
                         onSuccess(response.data);
                     else if (onError) onError(response.data.message);

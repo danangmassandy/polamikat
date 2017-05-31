@@ -34,6 +34,7 @@ app.controller('adminPhotosKegiatanCtrl', function ($scope, $rootScope, $mdDialo
                 }
             } else {
                 $scope.photos = [];
+                $scope.totalPhotos = 0;
             }
         }, function(response) {            
             // error

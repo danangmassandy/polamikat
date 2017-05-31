@@ -405,7 +405,7 @@ ActivityController.prototype.rankActivities = function rankActivities(callback) 
     });
 }
 
-ActivityController.prototype.listActivity = function listActivity(page, callback) {
+ActivityController.prototype.listActivity = function listActivity(page, itemsPerPage, sort, sortReverse, callback) {
     Vasync.waterfall([
         function(callback1) {
             Model.Activity.count({
@@ -414,17 +414,56 @@ ActivityController.prototype.listActivity = function listActivity(page, callback
                 callback1(err, count);
             });
         }, function(count, callback1) {
-            var skip = page * Constants.PAGE_SIZE;
-            Model.Activity.find({
-                status : Constants.STATUS_ACTIVE
-            }).populate('personil category')
-            .sort({startDate : -1})
-            // .skip(skip).limit(Constants.PAGE_SIZE)
-            .exec(function(err, results) {
+            var skip = (page - 1) * itemsPerPage;
+            var sortArg = {};
+            if (sort) {
+               sortArg[sort] = sortReverse ? -1 : 1; 
+            } else {
+                sortArg = {
+                    startDate : -1
+                }
+            }
+
+            Model.Activity.aggregate([
+                {
+                    $match : { status : Constants.STATUS_ACTIVE }
+                },
+                {
+                    $lookup : {
+                        from : "personils",
+                        localField : "personil",
+                        foreignField : "_id",
+                        as: "personil"
+                    }
+                },
+                {
+                    $unwind: "$personil"
+                },
+                {
+                    $lookup : {
+                        from : "activitycategories",
+                        localField : "category",
+                        foreignField : "_id",
+                        as: "category"
+                    }
+                },
+                {
+                    $unwind: "$category"
+                },
+                {
+                    $sort : sortArg
+                },
+                {
+                    $skip : skip
+                },
+                {
+                    $limit : itemsPerPage
+                }
+            ]).exec(function(err, results) {
                 callback1(err, {
                     count : count,
                     activities : results
-                });
+                });    
             });
         }
     ], function(err, result) {

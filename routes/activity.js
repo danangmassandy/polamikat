@@ -154,7 +154,11 @@ router.post('/list_category', function(req, res) {
 });
 
 router.post('/list', function(req, res) {
-    activityController.listActivity(1, function(err, results) {
+    var pageNumber = req.body.pageNumber || 0;
+    var itemsPerPage = req.body.itemsPerPage || Constants.PAGE_SIZE;
+    var sort = req.body.sort;
+    var sortReverse = req.body.sortReverse;
+    activityController.listActivity(pageNumber, itemsPerPage, sort, sortReverse, function(err, results) {
         if (err)
             return res.fail(err);
         //log.info("list ", results);

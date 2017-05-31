@@ -16,38 +16,38 @@ md-content.padding20(layout="column" flex ng-if="isLoaded")
                         a(href="")
                             span No
                     th 
-                        a(href="" ng-click="sortType = 'personil.nrp'; sortReverse = !sortReverse;")
+                        a(href="" ng-click="refreshBySort('personil.nrp');")
                             span NRP 
                             span(class="fa fa-caret-up" ng-show="sortType == 'personil.nrp' && sortReverse")
                             span(class="fa fa-caret-down" ng-show="sortType == 'personil.nrp' && !sortReverse")
                     th 
-                        a(href="" ng-click="sortType = 'personil.pangkat'; sortReverse = !sortReverse;")
+                        a(href="" ng-click="refreshBySort('personil.pangkat');")
                             span Pangkat
                             span(class="fa fa-caret-up" ng-show="sortType == 'personil.pangkat' && sortReverse")
                             span(class="fa fa-caret-down" ng-show="sortType == 'personil.pangkat' && !sortReverse")
                     th 
-                        a(href="" ng-click="sortType = 'personil.name'; sortReverse = !sortReverse;")
+                        a(href="" ng-click="refreshBySort('personil.name');")
                             span Nama 
                             span(class="fa fa-caret-up" ng-show="sortType == 'personil.name' && sortReverse")
                             span(class="fa fa-caret-down" ng-show="sortType == 'personil.name' && !sortReverse")
                     th 
-                        a(href="" ng-click="sortType = 'personil.unit'; sortReverse = !sortReverse;")
+                        a(href="" ng-click="refreshBySort('personil.unit');")
                             span Unit
                             span(class="fa fa-caret-up" ng-show="sortType == 'personil.unit' && sortReverse")
                             span(class="fa fa-caret-down" ng-show="sortType == 'personil.unit' && !sortReverse")
                     th 
-                        a(href="" ng-click="sortType = 'category.name'; sortReverse = !sortReverse;")
+                        a(href="" ng-click="refreshBySort('category.name');")
                             span Kegiatan
                             span(class="fa fa-caret-up" ng-show="sortType == 'category.name' && sortReverse")
                             span(class="fa fa-caret-down" ng-show="sortType == 'category.name' && !sortReverse")
                     th 
-                        a(href="" ng-click="sortType = 'startDate'; sortReverse = !sortReverse;")
+                        a(href="" ng-click="refreshBySort('startDate');")
                             span Tgl Kegiatan
                             span(class="fa fa-caret-up" ng-show="sortType == 'startDate' && sortReverse")
                             span(class="fa fa-caret-down" ng-show="sortType == 'startDate' && !sortReverse")
             tbody(ng-if="kegiatanData && kegiatanData.length > 0")
-                tr(ng-repeat="x in kegiatanData | orderBy:sortType:sortReverse" ng-click="kegiatanDetail(x)")
-                    td {{ $index + 1 }}
+                tr(dir-paginate="x in kegiatanData | itemsPerPage: kegiatanPerPage" total-items="totalKegiatan" current-page="pagination.current" ng-click="kegiatanDetail(x)")
+                    td {{ $index + 1 + kegiatanPerPage * (pagination.current - 1) }}
                     td {{ x.personil.nrp }}
                     td {{ x.personil.pangkat }}
                     td {{ x.personil.name }}
@@ -57,3 +57,5 @@ md-content.padding20(layout="column" flex ng-if="isLoaded")
             tbody(ng-if="!kegiatanData || !kegiatanData.length")
                 tr
                     td(colspan="7") No Data
+        div(class="marginTop20" layout="column" flex ng-if="kegiatanData && kegiatanData.length > 0")
+            dir-pagination-controls(on-page-change="pageChanged(newPageNumber)")
