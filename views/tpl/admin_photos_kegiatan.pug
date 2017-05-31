@@ -13,6 +13,6 @@ div(layout="column" style="padding:20px 40px;background: #F1F1F1;" flex ng-if="i
                 div(dir-paginate="photo in photos | itemsPerPage: photosPerPage" total-items="totalPhotos" current-page="pagination.current" style="margin-right:10px; margin-bottom:10px;" layout="column" layout-align="end" ng-click="showImage($event, photo)")
                     thumbnail(file-type="image" source="{{photo.thumbnailBlobURL ? photo.thumbnailBlobURL : photo.blobURL}}" max-height="200" max-width="200")
                     a(href="" editable-textarea="photo.description" e-rows="1" e-cols="10" edit-disabled="true" style="max-width:200px;") 
-                        pre( style="word-wrap: break-word;white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;") {{ photo.description || 'Tidak Ada Deskripsi' }}
+                        pre( style="word-wrap: normal;white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;") {{ photo.description || 'Tidak Ada Deskripsi' }}
             div(class="marginTop20" layout="column" flex ng-if="photos && photos.length > 0")
                 dir-pagination-controls(on-page-change="pageChanged(newPageNumber)")
