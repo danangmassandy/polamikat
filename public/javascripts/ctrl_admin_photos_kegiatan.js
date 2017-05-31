@@ -44,8 +44,10 @@ app.controller('adminPhotosKegiatanCtrl', function ($scope, $rootScope, $mdDialo
     }
 
     $scope.showImage = function($event, photo) {
+        showMessage.showLoadingIndicator($scope, "Loading photo...");
         var parentEl = angular.element(document.body);
         $rootScope.fetchImage(photo, false, function(error, photo) {
+            showMessage.hideLoadingIndicator($scope);
             if (error) {
                 showMessage.error("Error", "Error pada load foto. Silahkan kontak system administrator.", "Ok", function(){});
             } else {
