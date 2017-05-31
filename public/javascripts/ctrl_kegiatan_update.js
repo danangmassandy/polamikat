@@ -32,7 +32,9 @@ app.controller('kegiatanUpdateCtrl', function ($scope, $rootScope, $routeParams,
 
     $scope.showImage = function($event, photo) {
         var parentEl = angular.element(document.body);
+        showMessage.showLoadingIndicator($scope, "Loading photo...");
         $rootScope.fetchImage(photo, false, function(error, photo) {
+            showMessage.hideLoadingIndicator($scope);
             if (error) {
                 showMessage.error("Error", "Error pada load foto. Silahkan kontak system administrator.", "Ok", function(){});
             } else {
