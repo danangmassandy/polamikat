@@ -6,7 +6,7 @@ function define(name, value) {
 }
 
 // Pagination
-define("PAGE_SIZE",20);
+define("PAGE_SIZE",25);
 
 // Entity Status
 define("STATUS_ACTIVE", "active");

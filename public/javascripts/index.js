@@ -1,4 +1,4 @@
-var app = angular.module('polamikatApp', [ 'ngMaterial', 'ngRoute', 'chart.js', 'angular-thumbnails', 'xeditable', 'angular-cache', 'ui.bootstrap.datetimepicker', 'ui.dateTimeInput', 'ngFileUpload' ]);
+var app = angular.module('polamikatApp', [ 'ngMaterial', 'ngRoute', 'chart.js', 'angular-thumbnails', 'xeditable', 'angular-cache', 'ui.bootstrap.datetimepicker', 'ui.dateTimeInput', 'ngFileUpload', 'angularUtils.directives.dirPagination' ]);
 
 app.run(function(editableOptions) {
   editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'

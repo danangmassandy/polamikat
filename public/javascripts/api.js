@@ -97,8 +97,11 @@ app.factory('rest', function($rootScope, $http) {
                     if (onError) onError(response.message);
                 });
             },
-            photos : function(onSuccess, onError) {
-                $http.post("/activity/photos", {}).then(function(response) {
+            photos : function(pageNumber, itemsPerPage, onSuccess, onError) {
+                $http.post("/activity/photos", {
+                    pageNumber : pageNumber,
+                    itemsPerPage : itemsPerPage
+                }).then(function(response) {
                     if (response.data.status == "Ok")
                         onSuccess(response.data);
                     else if (onError) onError(response.message);

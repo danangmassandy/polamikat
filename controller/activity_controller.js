@@ -470,44 +470,95 @@ ActivityController.prototype.groupActivityCategories = function groupActivityCat
     });
 }
 
-ActivityController.prototype.getPhotos = function getPhotos(callback) {
-    Model.Activity.aggregate([
-        {
-            $match : { 
-                status : Constants.STATUS_ACTIVE,
-                photos : { $ne : null }
+ActivityController.prototype.getPhotos = function getPhotos(pageNumber, itemsPerPage, callback) {
+    Vasync.waterfall([
+        function (callback1) {
+            // count total result
+            Model.Activity.aggregate([
+                {
+                    $match : { 
+                        status : Constants.STATUS_ACTIVE,
+                        photos : { $ne : null }
+                    }
+                },
+                {
+                    $group: {
+                        _id: null,
+                        total: { $sum: { $size:"$photos" } }
+                    }
+                }
+            ]).exec(function(err, results) {
+                if (err) {
+                    log.error("error on obtaining activity photos count ", err);
+                    return callback1(err);
+                }
+                log.info("Total activity photos ", results[0].total);
+                callback1(null, results[0].total);
+            });
+        }, function(totalResult, callback1) {
+            if (totalResult == 0) {
+                return callback1(null, {
+                    photos : [],
+                    count: totalResult
+                });
             }
-        },
-        {
-            $unwind : "$photos"
-        },
-        {
-            $lookup : {
-                from : "uploadedfiles",
-                localField : "photos",
-                foreignField : "_id",
-                as : "photos"
+            var aggregatePipes = [
+                {
+                    $match : { 
+                        status : Constants.STATUS_ACTIVE,
+                        photos : { $ne : null }
+                    }
+                },
+                {
+                    $unwind : "$photos"
+                },
+                {
+                    $lookup : {
+                        from : "uploadedfiles",
+                        localField : "photos",
+                        foreignField : "_id",
+                        as : "photos"
+                    }
+                },
+                {
+                    $unwind : "$photos"
+                },
+                {
+                    $project : {
+                        _id : 0,
+                        key : "$photos.key",
+                        description : "$photos.description",
+                        publicURL : "$photos.publicURL",
+                        createdAt : "$photos.createdAt",
+                        thumbnailURL  : "$photos.thumbnailURL"
+                    }
+                },
+                {
+                    $sort : { createdAt : -1 }
+                }
+            ];
+            // if itemsPerPage is 0, then use no limit and ignore pageNumber to get all items
+            if (itemsPerPage != 0) {
+                aggregatePipes.push({
+                    $skip : itemsPerPage * (pageNumber - 1)
+                });
+                aggregatePipes.push({
+                    $limit : itemsPerPage
+                });
             }
-        },
-        {
-            $unwind : "$photos"
-        },
-        {
-            $project : {
-                _id : 0,
-                key : "$photos.key",
-                description : "$photos.description",
-                publicURL : "$photos.publicURL",
-                createdAt : "$photos.createdAt",
-                thumbnailURL  : "$photos.thumbnailURL"
-            }
-        },
-        {
-            $sort : { createdAt : -1 }
+            Model.Activity.aggregate(aggregatePipes).exec(function(err, results) {
+                callback1(err, {
+                    photos: results,
+                    count: totalResult
+                });
+            });
         }
-    ]).exec(function(err, results) {
-        callback(err, results);
+    ], function(err, result) {
+        callback(err, result);
     });
+    
+
+    
 }
 
 module.exports = ActivityController;

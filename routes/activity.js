@@ -9,6 +9,7 @@ const router = Express.Router();
 const ActivityController = require('../controller/activity_controller');
 const ActivityCategoryController  = require('../controller/activity_category_controller');
 const ProfileController = require('../controller/profile_controller');
+const Constants = require("../util/constants");
 
 var activityController = new ActivityController();
 var actCategoryController = new ActivityCategoryController();
@@ -162,7 +163,9 @@ router.post('/list', function(req, res) {
 });
 
 router.post('/photos', function(req, res) {
-    activityController.getPhotos(function(err, results) {
+    var pageNumber = req.body.pageNumber || 0;
+    var itemsPerPage = req.body.itemsPerPage || Constants.PAGE_SIZE;
+    activityController.getPhotos(pageNumber, itemsPerPage, function(err, results) {
         if (err)
             return res.fail(err);
         //log.info("list photos ", results);

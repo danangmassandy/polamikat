@@ -9,14 +9,26 @@ app.controller('adminPhotosKegiatanCtrl', function ($scope, $rootScope, $mdDialo
     }
 
     $scope.photos = [];
+    $scope.totalPhotos = 0;
+    $scope.photosPerPage = 25;
 
-    $scope.getPhotos = function() {
+    $scope.pagination = {
+        current: 1
+    };
+
+    $scope.pageChanged = function(newPage) {
+        $scope.getPhotos(newPage);
+    };
+
+    $scope.getPhotos = function(pageNumber) {
         showMessage.showLoadingIndicator($scope, "Loading activity photos...");
-        rest.activities.photos(function(response){
+        rest.activities.photos(pageNumber, $scope.photosPerPage, function(response){
             showMessage.hideLoadingIndicator($scope);
-            console.log("photos ", response);
+            // console.log("photos ", response);
             if (response.data) {
-                $scope.photos = angular.copy(response.data);
+                $scope.photos = [];
+                $scope.totalPhotos = response.data.count;
+                $scope.photos = angular.copy(response.data.photos);
                 for (var i = 0; i < $scope.photos.length;++i) {
                     $rootScope.fetchImageSync($scope.photos[i], true);
                 }
@@ -60,5 +72,5 @@ app.controller('adminPhotosKegiatanCtrl', function ($scope, $rootScope, $mdDialo
 
 
     // Init
-    $scope.getPhotos();
+    $scope.getPhotos(1);
 });
